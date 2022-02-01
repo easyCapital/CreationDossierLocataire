@@ -1,0 +1,128 @@
+import { useEffect, useState } from "react";
+import "aos/dist/aos.css";
+import { Form, Input, Button } from "antd";
+import "react-inputs-validation/lib/react-inputs-validation.min.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RegisterAction } from "../../../redux/actions/AuthActions";
+import { useRouter } from "next/router";
+
+export default function SignUp() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password_confirmation, setConfirmPassword] = useState("");
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const handleUserRegister = () => {
+    const fields = {
+      email: email,
+      password: password,
+      password_confirmation: password_confirmation,
+    };
+    dispatch(RegisterAction(fields, router));
+  };
+
+  return (
+    <Form
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 13 }}
+      onFinish={handleUserRegister}
+    >
+      <Form.Item
+        label="E-mail"
+        name="email"
+        hasFeedback
+        rules={[
+          {
+            type: "email",
+            message: "Veuillez renseigner une adresse e-mail correcte.",
+          },
+          {
+            required: true,
+            message: "Veuillez renseigner votre email.",
+          },
+        ]}
+      >
+        <Input
+          id={"email"}
+          name="email"
+          type="text"
+          value={email}
+          placeholder="exemple@exemple.com"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+      </Form.Item>
+      <Form.Item
+        label="Mot de passe"
+        name="password"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez entrer votre mot de passe.",
+          },
+          {
+            min: 6,
+            message: "Veuillez entrer un mot de passe plus long.",
+          },
+        ]}
+      >
+        <Input
+          id={"password"}
+          name="password"
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+      </Form.Item>
+      <Form.Item
+        label="Confirmer le mot de passe"
+        name="password_confirmation"
+        dependencies={['password']}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez confirmer votre mot de passe.",
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+              }
+
+              return Promise.reject(
+                new Error("Les mots de passe ne correspondent pas.")
+              );
+            },
+          }),
+        ]}
+      >
+        <Input
+          id={"password_confirmation"}
+          name="password_confirmation"
+          type="password"
+          value={password_confirmation}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+          }}
+        />
+      </Form.Item>
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button type="success" htmlType="submit">
+          M'enregistrer
+        </Button>
+      </Form.Item>
+      <Form.Item
+        wrapperCol={{ offset: 4, span: 16 }}
+        className="noAccountWrapper"
+      >
+        Vous avez un compte ? <a href="/signin">Me connecter</a>
+      </Form.Item>
+    </Form>
+  );
+}
