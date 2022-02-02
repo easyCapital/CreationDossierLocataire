@@ -208,7 +208,7 @@ export default function FirstForm({formInput, setFormInput}) {
         />
       </Form.Item>
       <Form.Item
-        label="statut_s"
+        label="Statut"
         name="statut_s"
         hasFeedback
         rules={[

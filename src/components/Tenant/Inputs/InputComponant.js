@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
-import { Input, Select, Space, Cascader } from 'antd';
+import { Input, Select, Space, Cascader, Form } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
+import { Width } from "devextreme-react/chart";
 
-export default function EmployeeInput({name, label, text, addon, formInput, setFormInput}) {
+export default function InputComponant({name, label, text, addon, formInput, setFormInput}) {
 
   function onChange(value){
     setFormInput({...formInput, name:value})
@@ -14,6 +15,7 @@ export default function EmployeeInput({name, label, text, addon, formInput, setF
         label={label}
         name={name}
         hasFeedback
+        
         rules={[
           {
             required: true,
@@ -21,7 +23,7 @@ export default function EmployeeInput({name, label, text, addon, formInput, setF
           },
         ]}
         >
-        <Input addonAfter={addon} onChange={onChange} />
+        <Input addonAfter={addon} onChange={onChange} width={300} placeholder="0"/>
         </Form.Item>
     )
 

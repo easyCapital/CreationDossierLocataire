@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
+import InputComponant from "./InputComponant";
 
 export default function EmployeeInput({formInput, setFormInput}) {
 
@@ -11,25 +12,20 @@ export default function EmployeeInput({formInput, setFormInput}) {
 
   return (
     <div>
-       <Form.Item
-      label="Possibilités de garants"
-      name="garant"
-      hasFeedback
-      rules={[
-        {
-          required: true,
-          message: "Veuillez renseigner vos possibilité de garant.",
-        },
-      ]}
-      >
-      <Radio.Group onChange={onChange} value={formInput.garant}>
-        <Space direction="vertical">
-          <Radio value={"Je n’ai en ai pas"}>Je n’ai en ai pas</Radio>
-          <Radio value={"J’ai une personne physique"}>J’ai une personne physique</Radio>
-          <Radio value={"VISALE"}>VISALE</Radio>
-        </Space>
-      </Radio.Group>
-    </Form.Item>  
+       <InputComponant 
+       name="snap_1" 
+       label="Salaire net mensuel avant prélèvemment Janvier 2022" 
+       text="votre Salaire net mensuel avant prélèvemment Janvier 2022" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />
+       <InputComponant 
+       name="snap_1" 
+       label="Salaire net mensuel avant prélèvemment Décembre 2021" 
+       text="votre Salaire net mensuel avant prélèvemment Décembre 2021" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />
     </div>
   );
 }
