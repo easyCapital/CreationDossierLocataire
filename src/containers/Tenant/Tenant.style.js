@@ -6,7 +6,22 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const ConnexionWrapper = styled.div`
+  .withAddon{
+    width: 60%;
+  }
+  .inputs .ant-row{
+    diplay: flex;
+    margin-right: 10%;
 
+    .ant-col:first-child{
+      flex: 2; 
+    }
+
+    .ant-col:last-child{
+      flex: 1;
+    }
+
+  }
   .noAccountWrapper {
     text-align: center;
   }

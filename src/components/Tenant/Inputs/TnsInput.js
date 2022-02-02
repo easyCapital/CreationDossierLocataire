@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
+import InputComponant from "./InputComponant";
 
 export default function TnsInput({formInput, setFormInput}) {
 
@@ -10,26 +11,42 @@ export default function TnsInput({formInput, setFormInput}) {
   }
 
   return (
-    <div>
-       <Form.Item
-      label="Possibilités de garants"
-      name="garant"
-      hasFeedback
-      rules={[
-        {
-          required: true,
-          message: "Veuillez renseigner vos possibilité de garant.",
-        },
-      ]}
-      >
-      <Radio.Group onChange={onChange} value={formInput.garant}>
-        <Space direction="vertical">
-          <Radio value={"Je n’ai en ai pas"}>Je n’ai en ai pas</Radio>
-          <Radio value={"J’ai une personne physique"}>J’ai une personne physique</Radio>
-          <Radio value={"VISALE"}>VISALE</Radio>
-        </Space>
-      </Radio.Group>
-    </Form.Item>  
+    <div className="inputs">
+      <InputComponant 
+       name="snap_8" 
+       label="Revenu net mensuel estimé " 
+       text="votre revenu net mensuel estimé" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />
+      <InputComponant 
+       name="snap_4" 
+       label="Aide CAF mensuel (APL, ALS)" 
+       text="vos aide CAF mensuel (APL, ALS)" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />
+       <InputComponant 
+       name="snap_5" 
+       label="Impôts sur le revenu annuel de référence 2021" 
+       text="vos impôts sur le revenu annuel de référence 2021" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />
+       <InputComponant 
+       name="snap_6" 
+       label="Impôts sur le revenu annuel de référence 2020" 
+       text="vos impôts sur le revenu annuel de référence 2020" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />
+      <InputComponant 
+       name="snap_7" 
+       label="Autre(s) revenu(s) net(s) mensuel(s)" 
+       text="vos autre(s) revenu(s) net(s) mensuel(s)" 
+       addon="€" 
+       formInput={formInput} 
+       setFormInput={setFormInput} />  
     </div>
   );
 }

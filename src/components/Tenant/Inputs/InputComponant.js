@@ -12,18 +12,19 @@ export default function InputComponant({name, label, text, addon, formInput, set
   }
 
     return( <Form.Item
-        label={label}
+        label={<>{label}</>}
         name={name}
         hasFeedback
-        
         rules={[
           {
             required: true,
             message: "Veuillez renseigner "+ {text} + ".",
           },
         ]}
+        className="allWithAddon"
         >
-        <Input addonAfter={addon} onChange={onChange} placeholder="0"/>
+        <Input 
+        className="withAddon" addonAfter={addon} onChange={onChange} placeholder="0"/>
         </Form.Item>
     )
 
