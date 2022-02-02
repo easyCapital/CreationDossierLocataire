@@ -3,7 +3,7 @@ import "aos/dist/aos.css";
 import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 
-export default function EmployeeInput({formInput, setFormInput}) {
+export default function TnsInput({formInput, setFormInput}) {
 
   function onChange(value){
     setFormInput({...formInput, garant:value})
