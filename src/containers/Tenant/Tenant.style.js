@@ -6,6 +6,7 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const ConnexionWrapper = styled.div`
+
   .noAccountWrapper {
     text-align: center;
   }
