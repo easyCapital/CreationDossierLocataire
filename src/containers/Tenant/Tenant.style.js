@@ -7,6 +7,25 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
+  buttonant-btn-sm{
+    padding: 0px;
+    position: relative;
+    bottom: 10px;
+  }
+
+  .ant-upload button{
+    position: relative; 
+    bottom: 63px;
+    right: 50px;
+    margin: 0px 10px;
+
+  }
+
+  .ant-upload .ant-btn{
+    background: rgb(88, 223, 115);
+    max-width: 70%;
+  }
+
   .upload{
     padding 0px 30px;
   }

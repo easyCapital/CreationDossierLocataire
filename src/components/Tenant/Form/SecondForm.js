@@ -13,10 +13,6 @@ export default function SecondForm({formInput, setFormInput}) {
     console.log(selected[value]);
   }
 
-  function update(){
-    setFormInput({...formInput, garant:selected})
-  }
-
   const options = [
     { label: 'Je n’ai en ai pas', value: 'Je n’ai en ai pas' },
     { label: 'J’ai une personne physique', value: 'J’ai une personne physique' },
@@ -36,7 +32,7 @@ export default function SecondForm({formInput, setFormInput}) {
         },
       ]}
       >
-      <Checkbox.Group options={formInput.options} onChange={onChange} />
+      <Checkbox.Group options={options} onChange={onChange} />
       </Form.Item> 
        {/* 
       <Radio.Group onChange={onChange} value={formInput.garant}>
