@@ -38,7 +38,7 @@ export default function SignUp() {
       {String(formInput.statut_s).startsWith("e") && <StudentInput  formInput={formInput} setFormInput={setFormInput}/>}
 
       {display <= 1 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-        <Button type="success" htmlType="submit">
+        <Button type="success" onClick={handleUserRegister}>
           Suivant
         </Button>
       </Form.Item>}
