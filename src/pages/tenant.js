@@ -1,5 +1,5 @@
 import Tenant from "../components/Tenant/Tenant";
-import TenantContainer from "../containers/tenant/TenantContainer";
+import TenantContainer from "../containers/Tenant/TenantContainer";
 
 const TenantPage = () => {
   return (
