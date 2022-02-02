@@ -16,6 +16,9 @@ export default function SignUp() {
     const { Step } = Steps;
 
   const handleUserRegister = () => {
+    if (display == 1){
+      
+    }
       setDisplay(display+1)
       console.log(formInput)
   };

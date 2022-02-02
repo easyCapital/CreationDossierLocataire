@@ -7,10 +7,6 @@ import { Width } from "devextreme-react/chart";
 
 export default function InputComponant({name, label, text, addon, formInput, setFormInput}) {
 
-  function onChange(value){
-    setFormInput({...formInput, name:value})
-  }
-
     return( <Form.Item
         label={<>{label}</>}
         name={name}
@@ -24,7 +20,9 @@ export default function InputComponant({name, label, text, addon, formInput, set
         className="allWithAddon"
         >
         <Input 
-        className="withAddon" addonAfter={addon} onChange={onChange} placeholder="0"/>
+        className="withAddon" addonAfter={addon}  onChange={(e) => {
+          setFormInput({...formInput, [name]:e.target.value})
+        }} placeholder="0"/>
         </Form.Item>
     )
 

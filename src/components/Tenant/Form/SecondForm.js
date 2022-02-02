@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Radio, Space, Form, Checkbox} from 'antd';
+import { Form, Checkbox} from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
-import update from "react-addons-update";
 
 export default function SecondForm({formInput, setFormInput}) {
 
-  const [selected, setSelected] = useState({});
-
-  function onChange(value){
-    setSelected({...selected, value:selected[value]}==false ? true : false);
-    console.log(selected[value]);
+  function onChange(values){
+    console.log(values)
+    setFormInput({...formInput, garant:values})
   }
 
   const options = [
@@ -34,15 +30,6 @@ export default function SecondForm({formInput, setFormInput}) {
       >
       <Checkbox.Group options={options} onChange={onChange} />
       </Form.Item> 
-       {/* 
-      <Radio.Group onChange={onChange} value={formInput.garant}>
-        <Space direction="vertical">
-          <Radio value={"Je n’ai en ai pas"}>Je n’ai en ai pas</Radio>
-          <Radio value={"J’ai une personne physique"}>J’ai une personne physique</Radio>
-          <Radio value={"VISALE"}>VISALE</Radio>
-        </Space>
-      </Radio.Group>
-      */}
     </div>
   );
 }

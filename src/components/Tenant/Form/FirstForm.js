@@ -172,6 +172,9 @@ export default function FirstForm({formInput, setFormInput}) {
       label="Statut"
       name="statut"
       hasFeedback
+      onChange={(e) => {
+        setFormInput({...formInput, statut:e.target.value})
+      }}
       rules={[
         {
           required: true,

@@ -32,7 +32,7 @@ export default function ThirdForm({formInput, setFormInput}) {
     imgWindow.document.write(image.outerHTML);
   };
 
-  const props = {
+  const props = { 
     listType: 'picture',
     previewFile(file) {
       console.log('Your upload file:', file);
@@ -88,13 +88,23 @@ export default function ThirdForm({formInput, setFormInput}) {
       </Form.Item> 
 
 
-        {formInput.statut == "Logé à titre gratuit" && String(formInput.statut_s).startsWith("e") }
-
-
-
-
-
-
+        {formInput.statut == "Logé à titre gratuit" && String(formInput.statut_s).startsWith("e") && 
+        <Form.Item
+        label="attestation logée à titre gratuit"
+        name="altg"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner vos possibilité de garant.",
+          },
+        ]}
+        >
+          <Upload>
+            <Button icon={<UploadOutlined/>}>Téléverser </Button>
+          </Upload>
+        </Form.Item>
+        }
 
     </div>
   );
