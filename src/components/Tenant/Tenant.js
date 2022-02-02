@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Button } from "antd";
+import { Form, Button, Steps } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
@@ -13,6 +13,7 @@ export default function SignUp() {
 
     const [formInput, setFormInput] = useState({});
     const [display, setDisplay] = useState(0)
+    const { Step } = Steps;
 
   const handleUserRegister = () => {
       setDisplay(display+1)
@@ -22,13 +23,22 @@ export default function SignUp() {
     setDisplay(display-1)
   }
 
+  function set(value){
+    setDisplay(value);
+  }
+
   return (
     <Form
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 13 }}
       onFinish={handleUserRegister}
     >
-      
+       <Steps current={display} >
+        <Step title="Fichier Locataire" onClick={() => setDisplay(0)}/>
+        <Step title="Possibilités de garants" onClick={() => setDisplay(1)}/>
+        <Step title="Dossier necéssaires" onClick={() => setDisplay(2)}/>
+      </Steps>
+      <br/>
       {display == 0 && <FirstForm formInput={formInput} setFormInput={setFormInput}/>}
       {display == 1 && <SecondForm formInput={formInput} setFormInput={setFormInput}/>}
       {display == 2 && <ThirdForm formInput={formInput} setFormInput={setFormInput}/>}
