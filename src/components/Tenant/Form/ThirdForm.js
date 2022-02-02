@@ -105,6 +105,98 @@ export default function ThirdForm({formInput, setFormInput}) {
           </Upload>
         </Form.Item>
         }
+      <Form.Item
+      label="RIB"
+      name="rib"
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner votre RIB.",
+        },
+      ]}
+      >
+          <Upload {...props} >
+            <Button icon={<UploadOutlined />}>Téléverser</Button>
+          </Upload>
+      </Form.Item>
+
+      {String(formInput.statut_s).startsWith("s") 
+      &&
+      <Form.Item
+        
+      label="3 derniers bulletins de salaires"
+      name="tdbs"
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner vos 3 derniers bulletins de salaires.",
+        },
+      ]}
+      >
+          <Upload {...props} >
+            <Button icon={<UploadOutlined />}>Téléverser</Button>
+          </Upload>
+
+        
+        </Form.Item>}
+
+        {String(formInput.statut_s).startsWith("tns") && <Form.Item>
+        
+      <Form.Item
+      label="2 derniers bilans comptables"
+      name="ddbc"
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner vos 2 derniers bilans comptables.",
+        },
+      ]}
+      >
+          <Upload {...props} >
+            <Button icon={<UploadOutlined />}>Téléverser</Button>
+          </Upload>
+      </Form.Item>
+        
+        </Form.Item>} 
+
+        {String(formInput.statut_s).startsWith("e") && <Form.Item
+        
+      label="Carte d’étudiants"
+      name="tdbs"
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner votre carte d’étudiant.",
+        },
+      ]}
+      >
+          <Upload {...props} >
+            <Button icon={<UploadOutlined />}>Téléverser</Button>
+          </Upload>
+        
+        </Form.Item>}
+
+        {String(formInput.statut_s) == "e_ae" && <Form.Item
+        
+      label="3 derniers bulletins de salaires"
+      name="tdbs"
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner vos 3 derniers bulletins de salaires.",
+        },
+      ]}
+      >
+          <Upload {...props} >
+            <Button icon={<UploadOutlined />}>Téléverser</Button>
+          </Upload>
+        
+        </Form.Item>}
 
     </div>
   );
