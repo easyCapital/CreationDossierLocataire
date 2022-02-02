@@ -17,14 +17,11 @@ export default function SignUp() {
 
   const handleUserRegister = () => {
       setDisplay(display+1)
+      console.log(formInput)
   };
 
   function prev(){
     setDisplay(display-1)
-  }
-
-  function set(value){
-    setDisplay(value);
   }
 
   return (
