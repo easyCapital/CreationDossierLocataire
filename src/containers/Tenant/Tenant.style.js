@@ -6,6 +6,11 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const ConnexionWrapper = styled.div`
+
+  .upload{
+    padding 0px 30px;
+  }
+
   .withAddon{
     width: 60%;
   }
@@ -229,5 +234,8 @@ export const ConnexionWrapper = styled.div`
         }
       }
     }
+  }
+  .ant-steps {
+    padding 0px 15px;
   }
 `;

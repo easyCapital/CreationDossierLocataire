@@ -10,6 +10,7 @@ export default function SecondForm({formInput, setFormInput}) {
 
   function onChange(value){
     setSelected({...selected, value:selected[value]}==false ? true : false);
+    console.log(selected[value]);
   }
 
   function update(){
@@ -20,6 +21,7 @@ export default function SecondForm({formInput, setFormInput}) {
     { label: 'Je n’ai en ai pas', value: 'Je n’ai en ai pas' },
     { label: 'J’ai une personne physique', value: 'J’ai une personne physique' },
     { label: 'VISALE', value: 'VISALE' },
+    { label: 'Autre', value: 'Autre' },
   ];
 
   return (
@@ -34,7 +36,7 @@ export default function SecondForm({formInput, setFormInput}) {
         },
       ]}
       >
-      <Checkbox.Group options={options} onChange={onChange} />
+      <Checkbox.Group options={formInput.options} onChange={onChange} />
       </Form.Item> 
        {/* 
       <Radio.Group onChange={onChange} value={formInput.garant}>
