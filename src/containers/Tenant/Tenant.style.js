@@ -22,6 +22,7 @@ export const ConnexionWrapper = styled.div`
     }
 
   }
+  
   .inputs .ant-row{
     diplay: flex;
     margin-right: 10%;
