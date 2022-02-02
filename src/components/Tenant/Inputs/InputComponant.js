@@ -19,7 +19,7 @@ export default function InputComponant({name, label, text, addon, formInput, set
         rules={[
           {
             required: true,
-            message: "Veuillez renseigner votre"+ {text} + ".",
+            message: "Veuillez renseigner "+ {text} + ".",
           },
         ]}
         >

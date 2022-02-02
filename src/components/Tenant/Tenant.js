@@ -43,9 +43,9 @@ export default function SignUp() {
       {display == 1 && <SecondForm formInput={formInput} setFormInput={setFormInput}/>}
       {display == 2 && <ThirdForm formInput={formInput} setFormInput={setFormInput}/>}
 
-      {String(formInput.statut_s).startsWith("s") && <EmployeeInput  formInput={formInput} setFormInput={setFormInput}/>}
-      {String(formInput.statut_s).startsWith("tns") && <TnsInput  formInput={formInput} setFormInput={setFormInput}/>}
-      {String(formInput.statut_s).startsWith("e") && <StudentInput  formInput={formInput} setFormInput={setFormInput}/>}
+      {String(formInput.statut_s).startsWith("s") && display == 0 && <EmployeeInput  formInput={formInput} setFormInput={setFormInput}/>}
+      {String(formInput.statut_s).startsWith("tns") && display == 0 && <TnsInput  formInput={formInput} setFormInput={setFormInput}/>}
+      {String(formInput.statut_s).startsWith("e") && display == 0 && <StudentInput  formInput={formInput} setFormInput={setFormInput}/>}
 
       {display <= 1 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
         <Button type="success" onClick={handleUserRegister}>
