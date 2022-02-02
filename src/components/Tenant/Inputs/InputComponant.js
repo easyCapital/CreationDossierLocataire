@@ -23,7 +23,7 @@ export default function InputComponant({name, label, text, addon, formInput, set
           },
         ]}
         >
-        <Input addonAfter={addon} onChange={onChange} width={300} placeholder="0"/>
+        <Input addonAfter={addon} onChange={onChange} placeholder="0"/>
         </Form.Item>
     )
 

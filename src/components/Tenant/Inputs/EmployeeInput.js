@@ -20,7 +20,7 @@ export default function EmployeeInput({formInput, setFormInput}) {
        formInput={formInput} 
        setFormInput={setFormInput} />
        <InputComponant 
-       name="snap_1" 
+       name="snap_2" 
        label="Salaire net mensuel avant prélèvemment Décembre 2021" 
        text="votre Salaire net mensuel avant prélèvemment Décembre 2021" 
        addon="€" 

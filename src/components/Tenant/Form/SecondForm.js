@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Checkbox } from "react";
 import "aos/dist/aos.css";
 import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
@@ -8,6 +8,12 @@ export default function SecondForm({formInput, setFormInput}) {
   function onChange(value){
     setFormInput({...formInput, garant:value})
   }
+
+  const options = [
+    { label: 'Je n’ai en ai pas', value: 'Je n’ai en ai pas' },
+    { label: 'J’ai une personne physique', value: 'J’ai une personne physique' },
+    { label: 'VISALE', value: 'VISALE' },
+  ];
 
   return (
     <div>
