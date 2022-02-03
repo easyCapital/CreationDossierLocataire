@@ -9,9 +9,11 @@ export const ConnexionWrapper = styled.div`
 
 .allWithAddon{
   display: flex;
+
   .ant-col:first-child{
-    flex: 2;
+    flex: 5;
     margin-left: 10%;
+    width: 100%;
   }
   .ant-col:last-child div{
     flex: 1;
@@ -22,6 +24,12 @@ export const ConnexionWrapper = styled.div`
 .btns{
   display: flex;
   justify-content: space-between;
+  padding: 0px 80px;
+
+  div:first-child{
+  }
+  
+
 }
 
   buttonant-btn-sm{
