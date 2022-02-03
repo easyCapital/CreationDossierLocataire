@@ -34,9 +34,9 @@ export default function SignUp() {
       onFinish={handleUserRegister}
     >
        <Steps current={display} >
-        <Step title="Fichier Locataire" onClick={() => setDisplay(0)}/>
-        <Step title="Possibilités de garants" onClick={() => setDisplay(1)}/>
-        <Step title="Dossier necéssaires" onClick={() => setDisplay(2)}/>
+        <Step title="Votre situation" onClick={() => setDisplay(0)}/>
+        <Step title="Evetuels garants" onClick={() => setDisplay(1)}/>
+        <Step title="Pièces justificatives" onClick={() => setDisplay(2)}/>
       </Steps>
       <br/>
       {display == 0 && <FirstForm formInput={formInput} setFormInput={setFormInput}/>}
@@ -47,6 +47,12 @@ export default function SignUp() {
       {String(formInput.statut_s).startsWith("tns") && display == 0 && <TnsInput  formInput={formInput} setFormInput={setFormInput}/>}
       {String(formInput.statut_s).startsWith("e") && display == 0 && <StudentInput  formInput={formInput} setFormInput={setFormInput}/>}
 
+      <div className="btns">
+      {display >= 1 &&  <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button type="success" onClick={prev}>
+          Retour
+        </Button>
+      </Form.Item>}
       {display <= 1 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
         <Button type="success" onClick={handleUserRegister}>
           Suivant
@@ -57,12 +63,8 @@ export default function SignUp() {
           Envoyer
         </Button>
       </Form.Item>}
-      {display >= 1 &&  <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-        <Button type="success" onClick={prev}>
-          Retour
-        </Button>
-      </Form.Item>}
       
+      </div>
     </Form>
   );
 }

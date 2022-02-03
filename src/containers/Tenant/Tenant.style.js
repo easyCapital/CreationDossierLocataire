@@ -7,6 +7,23 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
+.allWithAddon{
+  display: flex;
+  .ant-col:first-child{
+    flex: 2;
+    margin-left: 10%;
+  }
+  .ant-col:last-child div{
+    flex: 1;
+    mrgin-left: 40%;
+  } 
+}
+
+.btns{
+  display: flex;
+  justify-content: space-between;
+}
+
   buttonant-btn-sm{
     padding: 0px;
     position: relative;
@@ -82,6 +99,11 @@ export const ConnexionWrapper = styled.div`
         color: #ffa400;
         font-weight: bold;
         margin-top: 150px;
+      }
+      .subtitle {
+        font-size: 25px;
+        color: #ffa400;
+        font-weight: bold;
         margin-bottom: 50px;
       }
       .txt {
@@ -255,6 +277,6 @@ export const ConnexionWrapper = styled.div`
     }
   }
   .ant-steps {
-    padding 0px 15px;
+    padding 0px 100px;
   }
 `;
