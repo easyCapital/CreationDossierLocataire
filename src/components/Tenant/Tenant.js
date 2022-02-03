@@ -8,11 +8,13 @@ import ThirdForm from "./Form/ThirdForm";
 import EmployeeInput from "./Inputs/EmployeeInput"
 import TnsInput from "./Inputs/TnsInput"
 import StudentInput from "./Inputs/StudentInput"
+import InitForm from "./Form/IniitForm";
 
 export default function SignUp() {
 
     const [formInput, setFormInput] = useState({});
     const [display, setDisplay] = useState(0)
+    const [folder, setFolder] = useState(0)
     const { Step } = Steps;
 
   const handleUserRegister = () => {
@@ -33,15 +35,30 @@ export default function SignUp() {
       wrapperCol={{ span: 13 }}
       onFinish={handleUserRegister}
     >
-       <Steps current={display} >
-        <Step title="Votre situation" onClick={() => setDisplay(0)}/>
-        <Step title="Evetuels garants" onClick={() => setDisplay(1)}/>
-        <Step title="Pièces justificatives" onClick={() => setDisplay(2)}/>
-      </Steps>
+      {display > 0 && <Steps current={folder-1} > 
+      
+      {
+
+        Array(formInput.folder).fill(undefined).map((e, i) => {
+          return <Step title={i+1 + "e"} onClick={() => setFolder(i+1)}/>;
+        })
+
+      }
+
+      </Steps>} 
       <br/>
-      {display == 0 && <FirstForm formInput={formInput} setFormInput={setFormInput}/>}
-      {display == 1 && <SecondForm formInput={formInput} setFormInput={setFormInput}/>}
-      {display == 2 && <ThirdForm formInput={formInput} setFormInput={setFormInput}/>}
+
+       {display > 0 && <Steps current={display-1} >
+        <Step title="Mon projet" onClick={() => setDisplay(1)}/>
+        <Step title="Mes garants" onClick={() => setDisplay(2)}/>
+        <Step title="Mes revenus" onClick={() => setDisplay(3)}/>
+        <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
+      </Steps>}
+      <br/>
+      {display == 0 && <InitForm formInput={formInput} setFormInput={setFormInput}/>}
+      {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}/>}
+      {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput}/>}
+      {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}/>}
 
       {String(formInput.statut_s).startsWith("s") && display == 0 && <EmployeeInput  formInput={formInput} setFormInput={setFormInput}/>}
       {String(formInput.statut_s).startsWith("tns") && display == 0 && <TnsInput  formInput={formInput} setFormInput={setFormInput}/>}
@@ -53,12 +70,12 @@ export default function SignUp() {
           Retour
         </Button>
       </Form.Item>}
-      {display <= 1 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+      {display <= 3 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
         <Button type="success" onClick={handleUserRegister}>
           Suivant
         </Button>
       </Form.Item>}
-      {display == 2 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+      {display == 4 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
         <Button type="success" htmlType="submit">
           Envoyer
         </Button>

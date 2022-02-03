@@ -7,44 +7,34 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
-.allWithAddon{
-  display: flex;
+.page_o{
+  display: block;
+  text-align: center;
+  padding: 0px 100px;
+}
 
+.inputs .ant-row{
+  display: flex;
+  margin-right: 10%;
   .ant-col:first-child{
-    flex: 5;
-    margin-left: 10%;
-    width: 100%;
+    flex: 2; 
   }
-  .ant-col:last-child div{
+  .ant-col:last-child{
     flex: 1;
-    mrgin-left: 40%;
-  } 
+  }
 }
 
 .btns{
   display: flex;
   justify-content: space-between;
   padding: 0px 80px;
-
-  div:first-child{
-  }
   
+  div:first-child{
+    position: relative;
+    right: 17px;
+  }
 
 }
-
-  buttonant-btn-sm{
-    padding: 0px;
-    position: relative;
-    bottom: 10px;
-  }
-
-  .ant-upload button{
-    position: relative; 
-    bottom: 63px;
-    right: 50px;
-    margin: 0px 10px;
-
-  }
 
   .ant-upload .ant-btn{
     background: rgb(88, 223, 115);
@@ -57,33 +47,6 @@ export const ConnexionWrapper = styled.div`
 
   .withAddon{
     width: 60%;
-  }
-  .inputs .ant-row{
-    diplay: flex;
-    margin-right: 10%;
-
-    .ant-col:first-child{
-      flex: 2; 
-    }
-
-    .ant-col:last-child{
-      flex: 1;
-    }
-
-  }
-  
-  .inputs .ant-row{
-    diplay: flex;
-    margin-right: 10%;
-
-    .ant-col:first-child{
-      flex: 2; 
-    }
-
-    .ant-col:last-child{
-      flex: 1;
-    }
-
   }
   .noAccountWrapper {
     text-align: center;
