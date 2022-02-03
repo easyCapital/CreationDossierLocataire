@@ -4,11 +4,15 @@ import { Form, Input, Button, Radio, Select} from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 const { Option } = Select;
 
-export default function FirstForm({formInput, setFormInput, index}) {
+export default function FirstForm({formInput, setFormInput, current}) {
 
   function changeSelect(value){
     setFormInput({...formInput, statut_s:value})
   }
+
+  useEffect(() => {
+    console.log(formInput);
+  }, [formInput[current]]);
 
   return (
     <div>
@@ -47,10 +51,16 @@ export default function FirstForm({formInput, setFormInput, index}) {
           id={"first_name"}
           name="first_name"
           type="text"
-          value={formInput.first_name}
+          value={
+            formInput[current] != null ? console.log(formInput[current].first_name) + formInput[current].first_name : " "
+        }
           placeholder=""
           onChange={(e) => {
-            setFormInput({...formInput, first_name:e.target.value})
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].first_name = e.target.value;
+              return {...formInput};
+            })
           }}
         />
       </Form.Item>
