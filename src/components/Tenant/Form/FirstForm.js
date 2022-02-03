@@ -4,7 +4,7 @@ import { Form, Input, Button, Radio, Select} from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 const { Option } = Select;
 
-export default function FirstForm({formInput, setFormInput}) {
+export default function FirstForm({formInput, setFormInput, index}) {
 
   function changeSelect(value){
     setFormInput({...formInput, statut_s:value})
@@ -239,7 +239,7 @@ export default function FirstForm({formInput, setFormInput}) {
           <Option value="e_ae">Étudiant avec emploi</Option>
     </Select>
       </Form.Item>
-      
+
     </div>
   );
 }

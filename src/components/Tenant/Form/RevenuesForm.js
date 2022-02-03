@@ -1,6 +1,9 @@
 import "aos/dist/aos.css";
 import { Form, Checkbox} from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
+import EmployeeInput from "../Inputs/EmployeeInput"
+import TnsInput from "../Inputs/TnsInput"
+import StudentInput from "../Inputs/StudentInput"
 
 export default function RevenuesForm({formInput, setFormInput}) {
 
@@ -17,19 +20,10 @@ export default function RevenuesForm({formInput, setFormInput}) {
   ];
 
   return (
-    <div><Form.Item
-      label="Possibilités de garants"
-      name="garant"
-      hasFeedback
-      rules={[
-        {
-          required: true,
-          message: "Veuillez renseigner vos possibilité de garant.",
-        },
-      ]}
-      >
-      <Checkbox.Group options={options} onChange={onChange} />
-      </Form.Item> 
+    <div>  {String(formInput.statut_s).startsWith("s") && <EmployeeInput  formInput={formInput} setFormInput={setFormInput}/>}
+    {String(formInput.statut_s).startsWith("tns") && <TnsInput  formInput={formInput} setFormInput={setFormInput}/>}
+    {String(formInput.statut_s).startsWith("e")  && <StudentInput  formInput={formInput} setFormInput={setFormInput}/>}
+
     </div>
   );
 }
