@@ -5,12 +5,14 @@ import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs } from "antd";
+import GarantForm from "./Form/GarantForm copy";
 
 export default function Tenant() {
   const [formInput, setFormInput] = useState({});
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(1);
   const [counter, setCounter] = useState(0);
+  const operations = <p className="margin-bottom-0" onClick={addTab}>Ajouter</p>;
   const { Step } = Steps;
   const { TabPane } = Tabs;
 
@@ -34,7 +36,8 @@ export default function Tenant() {
   function addTab(){
     setFormInput((formInput) => {
       if(!formInput[counter+1]) formInput[counter+1] = {};
-      formInput[counter+1].first_name = "Prenom";
+      formInput[counter+1].first_name = "Nouveau";
+      formInput[counter+1].last_name = "Dossier";
       return {...formInput};
     })
     setCounter(counter+1)
@@ -57,13 +60,21 @@ export default function Tenant() {
             current={foldersss}
           />
         )}
-        {display == 3 && (
+        {display == 3 &&
+        formInput[foldersss] && formInput[foldersss].statut_gl && (formInput[foldersss].statut_gl == "Locataire" ? (
           <SecondForm
             formInput={formInput}
             setFormInput={setFormInput}
             current={foldersss}
           />
-        )}
+        ) : (
+          <GarantForm
+            formInput={formInput}
+            setFormInput={setFormInput}
+            current={foldersss}
+          />
+        ))
+        }
         {display == 4 && (
           <ThirdForm
             formInput={formInput}
@@ -83,6 +94,7 @@ export default function Tenant() {
     >
       {display > 0 && (
         <Tabs
+          tabBarExtraContent={{left:operations}}
           onChange={(e) => {
             setDisplay(1);
             setFolder;
@@ -103,8 +115,9 @@ export default function Tenant() {
                           " " +
                           (formInput[i].last_name == null
                             ? "Nom"
-                            : formInput[i].last_name)
-                        : i == 0 ? "Prenom Nom" : ""
+                            : formInput[i].last_name) + "\n" + (formInput[i].statut_gl == null ? " " : formInput[i].statut_gl)
+                        : i == 0 ? "Nouveau Dossier" : ""
+                       
                     }
                     key={i}
                   >

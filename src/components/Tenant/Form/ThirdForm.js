@@ -76,6 +76,27 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       </Form.Item> 
       <Form.Item
       label="Justificatif de domicile -3 mois"
+      name="identity"
+      name={'justify_' + current}
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner vos possibilité de garant.",
+        },
+      ]}  
+      >
+          <Upload
+            listType="picture-card"
+            fileList={formInput[current] && formInput[current].fileList}
+            onChange={onChange}
+            onPreview={onPreview}
+          >
+            {fileList.length < 2 && '+ Téléverser'}
+          </Upload>
+      </Form.Item>
+      <Form.Item
+      label="Justificatif de domicile -3 mois"
       name="justify"
       hasFeedback
       rules={[

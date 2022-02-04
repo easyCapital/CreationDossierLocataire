@@ -7,8 +7,13 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
-
-
+.margin-bottom-0{
+  margin-bottom: 0px;
+  padding-left: 10px;
+}
+.margin-bottom-0:hover{
+  cursor: grab;
+}
 .ant-tabs-nav-wrap{
   padding: 10px 50px;
 }
@@ -260,6 +265,9 @@ export const ConnexionWrapper = styled.div`
 
   ant-btn{
     margin-top: 0px;
+  }
+  .ant-checkbox-group-item{
+    font-size: 15px;
   }
 
 `;

@@ -12,6 +12,30 @@ export default function FirstForm({formInput, setFormInput, current}) {
   return (
     <div>
       <Form.Item
+      label="Statut"
+      name={'statut_gl_' + current}
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner votre civilité.",
+        },
+      ]}
+      >
+        <Radio.Group buttonStyle="solid"
+        onChange={(e) => {
+          setFormInput((formInput) => {
+            if(!formInput[current]) formInput[current] = {};
+            formInput[current].statut_gl = e.target.value;
+            return {...formInput};
+          })
+        }}
+      >
+          <Radio.Button value="Garant">Garant</Radio.Button>
+          <Radio.Button value="Locataire">Locataire</Radio.Button>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item
       label="Civilité"
       name={'civil_' + current}
       hasFeedback
