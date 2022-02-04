@@ -36,7 +36,6 @@ export default function Tenant() {
   }, [folder]);
 
   function getForm(foldersss){
-    console.log(foldersss)
     return <>
       {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={foldersss}/>}
       {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={foldersss}/>}
@@ -55,7 +54,10 @@ export default function Tenant() {
     >
       {display > 0 &&
       
-      <Tabs onChange={setFolder}>
+      <Tabs  onChange={(e) => {
+        setDisplay(1)
+        setFolder
+      }}>
          {
 
           Array(5).fill(undefined).map((e, i) => {

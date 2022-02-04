@@ -56,6 +56,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       <Form.Item
       label="Carte d’identité ou passeport"
       name="identity"
+      name={'identity_' + current}
       hasFeedback
       rules={[
         {
