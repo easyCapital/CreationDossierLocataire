@@ -5,7 +5,7 @@ import { Upload, Form, Button } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { UploadOutlined } from '@ant-design/icons';
 
-export default function ThirdForm({formInput, setFormInput}) {
+export default function ThirdForm({formInput, setFormInput, current}) {
 
   const [fileList, setFileList] = useState([
   ]);
@@ -14,7 +14,11 @@ export default function ThirdForm({formInput, setFormInput}) {
 
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    setFormInput({...formInput, fileList:newFileList})
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList = newFileList;
+      return {...formInput};
+    })
   };
 
   const onPreview = async file => {
@@ -63,7 +67,7 @@ export default function ThirdForm({formInput, setFormInput}) {
         <ImgCrop rotate>
           <Upload
             listType="picture-card"
-            fileList={formInput.fileList}
+            fileList={formInput[current] && formInput[current].fileList}
             onChange={onChange}
             onPreview={onPreview}
           >
@@ -88,7 +92,7 @@ export default function ThirdForm({formInput, setFormInput}) {
       </Form.Item> 
 
 
-        {formInput.statut == "Logé à titre gratuit" && String(formInput.statut_s).startsWith("e") && 
+        {formInput[current] && formInput[current].statut == "Logé à titre gratuit" && String(formInput[current].statut_s).startsWith("e") && 
         <Form.Item
         label="attestation logée à titre gratuit"
         name="altg"
@@ -121,7 +125,7 @@ export default function ThirdForm({formInput, setFormInput}) {
           </Upload>
       </Form.Item>
 
-      {String(formInput.statut_s).startsWith("s") 
+      {formInput[current] &&  String(formInput[current].statut_s).startsWith("s") 
       &&
       <Form.Item
         
@@ -142,7 +146,7 @@ export default function ThirdForm({formInput, setFormInput}) {
         
         </Form.Item>}
 
-        {String(formInput.statut_s).startsWith("tns") && <Form.Item>
+        {formInput[current] &&  String(formInput[current].statut_s).startsWith("tns") && <Form.Item>
         
       <Form.Item
       label="2 derniers bilans comptables"
@@ -162,7 +166,7 @@ export default function ThirdForm({formInput, setFormInput}) {
         
         </Form.Item>} 
 
-        {String(formInput.statut_s).startsWith("e") && <Form.Item
+        {formInput[current] &&  String(formInput[current].statut_s).startsWith("e") && <Form.Item
         
       label="Carte d’étudiants"
       name="tdbs"
@@ -180,7 +184,7 @@ export default function ThirdForm({formInput, setFormInput}) {
         
         </Form.Item>}
 
-        {String(formInput.statut_s) == "e_ae" && <Form.Item
+        {formInput[current] && String(formInput[current].statut_s) == "e_ae" && <Form.Item
         
       label="3 derniers bulletins de salaires"
       name="tdbs"

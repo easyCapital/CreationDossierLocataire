@@ -5,11 +5,6 @@ import "react-inputs-validation/lib/react-inputs-validation.min.css";
 const { Option } = Select;
 
 export default function FirstForm({formInput, setFormInput, current}) {
-
-  function changeSelect(value){
-    setFormInput({...formInput, statut_s:value})
-  }
-
   useEffect(() => {
     console.log(formInput);
   }, [formInput[current]]);
@@ -29,8 +24,13 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Radio.Group buttonStyle="solid"
         onChange={(e) => {
-          setFormInput({...formInput, civil:e.target.value})
-        }}>
+          setFormInput((formInput) => {
+            if(!formInput[current]) formInput[current] = {};
+            formInput[current].civil = e.target.value;
+            return {...formInput};
+          })
+        }}
+      >
           <Radio.Button value="M">M</Radio.Button>
           <Radio.Button value="Mme">Mme</Radio.Button>
           <Radio.Button value="Mlle">Mlle</Radio.Button>
@@ -82,9 +82,13 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput.last_name}
           placeholder=""
           onChange={(e) => {
-            setFormInput({...formInput, last_name:e.target.value})
-          }}
-        />
+              setFormInput((formInput) => {
+                if(!formInput[current]) formInput[current] = {};
+                formInput[current].last_name = e.target.value;
+                return {...formInput};
+              })
+            }}
+          />
       </Form.Item>
       <Form.Item
         label="E-mail"
@@ -108,7 +112,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput.email}
           placeholder="exemple@exemple.com"
           onChange={(e) => {
-            setFormInput({...formInput, email:e.target.value})
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].email = e.target.value;
+              return {...formInput};
+            })
           }}
         />
       </Form.Item>
@@ -130,7 +138,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput.mobile}
           placeholder="0123456789"
           onChange={(e) => {
-            setFormInput({...formInput, mobile:e.target.value})
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].mobile = e.target.value;
+              return {...formInput};
+            })
           }}
         />
       </Form.Item>
@@ -152,7 +164,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput.born_place}
           placeholder=""
           onChange={(e) => {
-            setFormInput({...formInput, born_place:e.target.value})
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].born_place = e.target.value;
+              return {...formInput};
+            })
           }}
         />
       </Form.Item>
@@ -174,7 +190,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput.born_date}
           placeholder="12/03/2003"
           onChange={(e) => {
-            setFormInput({...formInput, born_date:e.target.value})
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].born_date = e.target.value;
+              return {...formInput};
+            })
           }}
         />
       </Form.Item>
@@ -183,7 +203,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
       name="statut"
       hasFeedback
       onChange={(e) => {
-        setFormInput({...formInput, statut:e.target.value})
+        setFormInput((formInput) => {
+          if(!formInput[current]) formInput[current] = {};
+          formInput[current].statut = e.target.value;
+          return {...formInput};
+        })
       }}
       rules={[
         {
@@ -216,7 +240,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput.address}
           placeholder=""
           onChange={(e) => {
-            setFormInput({...formInput, address:e.target.value})
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].address = e.target.value;
+              return {...formInput};
+            })
           }}
         />
       </Form.Item>
@@ -224,6 +252,15 @@ export default function FirstForm({formInput, setFormInput, current}) {
         label="Statut"
         name="statut_s"
         hasFeedback
+        onChange={
+          (e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].statut_s = e.target.value;
+              return {...formInput};
+            })
+          }}
+      
         rules={[
           {
             required: true,
@@ -231,7 +268,13 @@ export default function FirstForm({formInput, setFormInput, current}) {
           },
         ]}
       >
-        <Select value={formInput.statut_s} onChange={changeSelect}>
+        <Select value={formInput.statut_s} onChange={(value) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].statut_s = value;
+              return {...formInput};
+            })
+          }}>
           <Option value="s_cdi_o">CDI hors période d'essaie</Option>
           <Option value="s_cdi_i">CDI en période d'essaie</Option>
           <Option value="s_cdd">CDD</Option>

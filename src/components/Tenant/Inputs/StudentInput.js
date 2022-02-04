@@ -4,7 +4,7 @@ import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import InputComponant from "./InputComponant";
 
-export default function StudentInput({formInput, setFormInput}) {
+export default function StudentInput({formInput, setFormInput, current}) {
 
   function onChange(value){
     setFormInput({...formInput, garant:value})
@@ -18,14 +18,16 @@ export default function StudentInput({formInput, setFormInput}) {
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
        formInput={formInput} 
-       setFormInput={setFormInput} />
+       setFormInput={setFormInput}
+       current={current}/>
        <InputComponant 
        name="snap_7" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 
        formInput={formInput} 
-       setFormInput={setFormInput} />  
+       setFormInput={setFormInput}
+       current={current}/>
     </div>
   );
 }

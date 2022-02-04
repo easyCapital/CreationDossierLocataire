@@ -1,12 +1,16 @@
 import "aos/dist/aos.css";
 import { Form, Checkbox} from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
+import FirstForm from "./FirstForm";
 
-export default function SecondForm({formInput, setFormInput}) {
+export default function SecondForm({formInput, setFormInput, current}) {
 
   function onChange(values){
-    console.log(values)
-    setFormInput({...formInput, garant:values})
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].garant = values;
+      return {...formInput};
+    })
   }
 
   const options = [
@@ -17,7 +21,8 @@ export default function SecondForm({formInput, setFormInput}) {
   ];
 
   return (
-    <div><Form.Item
+    <div>
+      <Form.Item
       label="Possibilités de garants"
       name="garant"
       hasFeedback
@@ -29,7 +34,11 @@ export default function SecondForm({formInput, setFormInput}) {
       ]}
       >
       <Checkbox.Group options={options} onChange={onChange} />
-      </Form.Item> 
+      </Form.Item>
+      {formInput[current] != null && formInput[current].garant != null && formInput[current].garant.includes('J’ai une personne physique') 
+      && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={current}/>}
+
     </div>
+      
   );
 }
