@@ -24,7 +24,6 @@ export default function SecondForm({formInput, setFormInput, current}) {
     <div>
       <Form.Item
       label="Possibilités de garants"
-      name="garant"
       hasFeedback
       rules={[
         {

@@ -13,7 +13,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
     <div>
       <Form.Item
       label="Civilité"
-      name="civil"
       hasFeedback
       rules={[
         {
@@ -38,7 +37,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
        <Form.Item
         label="Prenom"
-        name="first_name"
         hasFeedback
         rules={[
           {
@@ -49,10 +47,9 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"first_name"}
-          name="first_name"
           type="text"
           value={
-            formInput[current] != null ? console.log(formInput[current].first_name) + formInput[current].first_name : " "
+            formInput[current] && formInput[current].first_name != null ? formInput[current].first_name.replace("undefined", '') : " "
         }
           placeholder=""
           onChange={(e) => {
@@ -66,7 +63,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="Nom"
-        name="last_name"
         hasFeedback
         rules={[
           {
@@ -77,7 +73,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"last_name"}
-          name="last_name"
           type="text"
           value={formInput[current] && formInput[current].last_name && formInput[current].last_name}
           placeholder=""
@@ -92,7 +87,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="E-mail"
-        name="email"
         hasFeedback
         rules={[
           {
@@ -107,7 +101,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"email"}
-          name="email"
           type="text"
           value={formInput.email}
           placeholder="exemple@exemple.com"
@@ -122,7 +115,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="Mobile"
-        name="mobile"
         hasFeedback
         rules={[
           {
@@ -133,7 +125,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"mobile"}
-          name="mobile"
           type="text"
           value={formInput.mobile}
           placeholder="0123456789"
@@ -148,7 +139,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="Lieu de naissance"
-        name="born_place"
         hasFeedback
         rules={[
           {
@@ -159,7 +149,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"born_place"}
-          name="born_place"
           type="text"
           value={formInput.born_place}
           placeholder=""
@@ -174,7 +163,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="Date de naissance"
-        name="born_date"
         hasFeedback
         rules={[
           {
@@ -185,7 +173,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"born_date"}
-          name="born_date"
           type="text"
           value={formInput.born_date}
           placeholder="12/03/2003"
@@ -200,7 +187,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
       label="Statut"
-      name="statut"
       hasFeedback
       onChange={(e) => {
         setFormInput((formInput) => {
@@ -224,7 +210,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="Adresse actuelle"
-        name="address"
         hasFeedback
         rules={[
           {
@@ -235,7 +220,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Input
           id={"address"}
-          name="address"
           type="text"
           value={formInput.address}
           placeholder=""
@@ -250,7 +234,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       </Form.Item>
       <Form.Item
         label="Statut"
-        name="statut_s"
         hasFeedback
         onChange={
           (e) => {
@@ -272,7 +255,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};
               formInput[current].statut_s = value;
-              console.log(value + " VVVVVVVVVVVVVVVVVVVVVvvv")
               return {...formInput};
             })
           }}>

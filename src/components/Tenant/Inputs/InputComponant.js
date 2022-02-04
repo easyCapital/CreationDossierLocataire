@@ -10,7 +10,6 @@ export default function InputComponant({name, label, text, addon, formInput, set
     return (
       <Form.Item
         label={label}
-        name={name}
         hasFeedback
         rules={[
           {

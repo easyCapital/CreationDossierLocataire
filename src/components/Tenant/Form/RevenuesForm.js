@@ -1,5 +1,4 @@
 import "aos/dist/aos.css";
-import { Form, Checkbox} from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import EmployeeInput from "../Inputs/EmployeeInput"
 import TnsInput from "../Inputs/TnsInput"

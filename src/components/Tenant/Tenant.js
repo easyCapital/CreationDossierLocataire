@@ -3,9 +3,9 @@ import { Form, Button, Steps } from "antd";
 import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
-import InitForm from "./Form/IniitForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs } from 'antd';
+import { Value } from "devextreme-react/range-selector";
 
 export default function Tenant() {
 
@@ -35,28 +35,6 @@ export default function Tenant() {
     console.log("folder", folder);
   }, [folder]);
 
-  function getTabs(){
-
-    {
-
-      Array(5).fill(undefined).map((e, i) => {
-        return <>
-         <TabPane tab="Tab 1" key={i}>
-         <Steps current={display-1} >
-          <Step title="Mon projet" onClick={() => setDisplay(1)}/>
-          <Step title="Mes garants" onClick={() => setDisplay(2)}/>
-          <Step title="Mes revenus" onClick={() => setDisplay(3)}/> 
-          <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
-        </Steps>
-        <br/>
-        {() => getForm(i)}
-          </TabPane>
-        </>
-      })
-
-    }
-  }
-
   function getForm(foldersss){
     console.log(foldersss)
     return <>
@@ -75,7 +53,6 @@ export default function Tenant() {
       wrapperCol={{ span: 13 }}
       onFinish={handleUserRegister}
     >
-      {}
       {display > 0 &&
       
       <Tabs onChange={setFolder}>
@@ -83,7 +60,7 @@ export default function Tenant() {
 
           Array(5).fill(undefined).map((e, i) => {
             return <>
-            <TabPane tab={(formInput[i] == null ? 'Prenom' : formInput[i].first_name ) + " " + (formInput[i] == null ? 'Nom' : formInput[i].last_name ) } key={i}>
+            <TabPane tab={formInput[i] != null ? (formInput[i].first_name == null ? 'Prenom' : formInput[i].first_name ) + " " + (formInput[i].last_name == null ? 'Nom' : formInput[i].last_name ) : 'Prenom Nom' } key={i}>
             <Steps current={display-1} >
               <Step title="Mon projet" onClick={() => setDisplay(1)}/>
               <Step title="Mes garants" onClick={() => setDisplay(2)}/>
@@ -91,10 +68,7 @@ export default function Tenant() {
               <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
             </Steps>
             <br/>
-          {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
-          {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
-          {display == 3 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
-          {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
+            {getForm(i)}
               </TabPane>
             </>
           })
@@ -112,6 +86,11 @@ export default function Tenant() {
       {display <= 3 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
         <Button type="success" onClick={handleUserRegister}>
           Suivant
+        </Button>
+      </Form.Item>}
+      {display <= 4 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button type="success" htmlType="submit">
+          Ajouter
         </Button>
       </Form.Item>}
       {display == 4 &&<Form.Item wrapperCol={{ offset: 4, span: 16 }}>
