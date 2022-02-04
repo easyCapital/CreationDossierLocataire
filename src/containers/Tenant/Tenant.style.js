@@ -7,6 +7,10 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
+.ant-tabs-nav-wrap{
+  padding: 10px 50px;
+}
+
 .page_o{
   display: block;
   text-align: center;

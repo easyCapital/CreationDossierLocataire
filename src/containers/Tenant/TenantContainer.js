@@ -37,12 +37,6 @@ export default function TenantContainer({ children }) {
             </h3>
             <div className="form">{children}</div>
           </div>
-          <div className="droite">
-            <div className="hello"> Facile, rapide et sécurisé !</div>
-            <div className="t1" />
-            <div className="cercle" />
-            <div className="t2" />
-          </div>
         </div>
         <div className="cercleBack" id="c2" />
       </ConnexionWrapper>

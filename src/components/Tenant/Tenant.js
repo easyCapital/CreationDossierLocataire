@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import "aos/dist/aos.css";
 import { Form, Button, Steps } from "antd";
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
@@ -9,10 +7,10 @@ import InitForm from "./Form/IniitForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs } from 'antd';
 
-export default function SignUp() {
+export default function Tenant() {
 
   const [formInput, setFormInput] = useState({});
-  const [display, setDisplay] = useState(0);
+  const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(1);
   const { Step } = Steps;
   const { TabPane } = Tabs;
@@ -81,39 +79,27 @@ export default function SignUp() {
       {display > 0 &&
       
       <Tabs onChange={setFolder}>
+         {
 
-      <TabPane tab={(formInput[1] == null ? 'Prenom' : formInput[1].first_name ) + " " + formInput.last_name } key={1}>
-         <>
-         <Steps current={display-1} >
-          <Step title="Mon projet" onClick={() => setDisplay(1)}/>
-          <Step title="Mes garants" onClick={() => setDisplay(2)}/>
-          <Step title="Mes revenus" onClick={() => setDisplay(3)}/> 
-          <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
-        </Steps><br/>
-        {() => getForm(i)}
-        <br/>
-        {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={1}/>}
-        {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={1}/>}
-        {display == 3 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={1}/>}
-        {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={1}/>}
-        </>
-         </TabPane>
-         <TabPane tab={(formInput[2] == null ? 'Prenom' : formInput[2].first_name ) + " " + formInput.last_name } key={2}>
-         <>
-         <Steps current={display-1} >
-          <Step title="Mon projet" onClick={() => setDisplay(1)}/>  
-          <Step title="Mes garants" onClick={() => setDisplay(2)}/>
-          <Step title="Mes revenus" onClick={() => setDisplay(3)}/> 
-          <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
-        </Steps><br/>
-        {() => getForm(i)}
-        <br/>
-        {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={2}/>}
-        {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={2}/>}
-        {display == 3 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={2}/>}
-        {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={2}/>}
-        </>
-         </TabPane>
+          Array(5).fill(undefined).map((e, i) => {
+            return <>
+            <TabPane tab={(formInput[i] == null ? 'Prenom' : formInput[i].first_name ) + " " + (formInput[i] == null ? 'Nom' : formInput[i].last_name ) } key={i}>
+            <Steps current={display-1} >
+              <Step title="Mon projet" onClick={() => setDisplay(1)}/>
+              <Step title="Mes garants" onClick={() => setDisplay(2)}/>
+              <Step title="Mes revenus" onClick={() => setDisplay(3)}/> 
+              <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
+            </Steps>
+            <br/>
+            {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
+            {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
+            {display == 3 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
+            {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
+              </TabPane>
+            </>
+          })
+
+          }
       </Tabs>
       } 
      
