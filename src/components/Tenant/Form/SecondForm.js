@@ -6,6 +6,7 @@ import FirstForm from "./FirstForm";
 import ThirdForm from "./ThirdForm";
 import RevenuesForm from "./RevenuesForm";
 import GarantForm from "./GarantForm copy";
+import { check } from "prettier";
 
 export default function SecondForm({formInput, setFormInput, current}) {
 
@@ -65,7 +66,7 @@ export default function SecondForm({formInput, setFormInput, current}) {
       >
       <Checkbox.Group options={options} onChange={onChange} />
       </Form.Item>
-      {formInput[current] && formInput[current].garant.includes("J’ai une personne physique") && showGarant(current + '_garant')}
+      {formInput[current] && formInput[current].garant  && formInput[current].garant.includes("J’ai une personne physique") && showGarant(current + '_garant')}
 
     </div>
       

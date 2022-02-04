@@ -15,8 +15,6 @@ export default function Tenant() {
   const { TabPane } = Tabs;
 
   const handleUserRegister = () => {
-    if (display == 1) {
-    }
     setDisplay(display + 1);
     console.log(formInput);
   };
