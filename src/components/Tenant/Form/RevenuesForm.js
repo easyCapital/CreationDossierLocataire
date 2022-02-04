@@ -9,11 +9,10 @@ export default function RevenuesForm({formInput, setFormInput, current}) {
 
   return (
     <div>  
-      {formInput[current] != null &&(
-    String(formInput[current].statut_s).startsWith("s") && <EmployeeInput  formInput={formInput} setFormInput={setFormInput} current={current}/>,
-    String(formInput[current].statut_s).startsWith("tns") && <TnsInput  formInput={formInput} setFormInput={setFormInput} current={current}/>,
-    String(formInput[current].statut_s).startsWith("e")  && <StudentInput  formInput={formInput} setFormInput={setFormInput} current={current}/>
-      )}
+      {formInput[current] != null &&(String(formInput[current].statut_s).startsWith("s") && <EmployeeInput  formInput={formInput} setFormInput={setFormInput} current={current}/>)}
+      {formInput[current] != null &&(String(formInput[current].statut_s).startsWith("tns") && <TnsInput  formInput={formInput} setFormInput={setFormInput} current={current}/>)}
+      {formInput[current] != null &&(String(formInput[current].statut_s).startsWith("e")  && <StudentInput  formInput={formInput} setFormInput={setFormInput} current={current}/>)}
+
     </div>
   );
 }

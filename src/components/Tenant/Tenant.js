@@ -91,10 +91,10 @@ export default function Tenant() {
               <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
             </Steps>
             <br/>
-            {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
-            {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
-            {display == 3 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
-            {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
+          {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
+          {display == 2 && <SecondForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
+          {display == 3 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={i}/>}
+          {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={i}/>}
               </TabPane>
             </>
           })

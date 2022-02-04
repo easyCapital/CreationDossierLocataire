@@ -79,7 +79,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           id={"last_name"}
           name="last_name"
           type="text"
-          value={formInput.last_name}
+          value={formInput[current] && formInput[current].last_name && formInput[current].last_name}
           placeholder=""
           onChange={(e) => {
               setFormInput((formInput) => {
@@ -272,6 +272,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};
               formInput[current].statut_s = value;
+              console.log(value + " VVVVVVVVVVVVVVVVVVVVVvvv")
               return {...formInput};
             })
           }}>

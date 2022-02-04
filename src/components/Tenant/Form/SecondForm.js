@@ -36,7 +36,7 @@ export default function SecondForm({formInput, setFormInput, current}) {
       <Checkbox.Group options={options} onChange={onChange} />
       </Form.Item>
       {formInput[current] != null && formInput[current].garant != null && formInput[current].garant.includes('J’ai une personne physique') 
-      && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={current}/>}
+      && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={current  + "_garant"}/>}
 
     </div>
       
