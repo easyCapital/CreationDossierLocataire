@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import "aos/dist/aos.css";
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { Upload, Form, Button } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { UploadOutlined } from '@ant-design/icons';

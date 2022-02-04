@@ -5,7 +5,6 @@ import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs } from 'antd';
-import { Value } from "devextreme-react/range-selector";
 
 export default function Tenant() {
 

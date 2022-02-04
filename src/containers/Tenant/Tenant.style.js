@@ -7,6 +7,8 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
+
+
 .ant-tabs-nav-wrap{
   padding: 10px 50px;
 }
@@ -19,12 +21,13 @@ export const ConnexionWrapper = styled.div`
 
 .inputs .ant-row{
   display: flex;
-  margin-right: 10%;
   .ant-col:first-child{
     flex: 2; 
+    margin-left: 100px;
   }
   .ant-col:last-child{
     flex: 1;
+    margin-left: 50px;
   }
 }
 
@@ -254,4 +257,5 @@ export const ConnexionWrapper = styled.div`
   .ant-steps {
     padding 0px 100px;
   }
+
 `;

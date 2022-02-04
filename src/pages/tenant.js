@@ -8,6 +8,7 @@ const TenantPage = () => {
 
       <Head>
         <title>Mon projet</title>
+        
       </Head>
       
     <TenantContainer>

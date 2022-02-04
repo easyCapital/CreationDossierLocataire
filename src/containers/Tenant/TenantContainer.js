@@ -29,12 +29,12 @@ export default function TenantContainer({ children }) {
       <ConnexionWrapper>
         <div className="signIn">
           <div className="gauche">
-            <h2 className="title">
+            <h1 className="title">
             Créez votre dossier locataire,
-            </h2>
-            <h3 className="subtitle">
+            </h1>
+            <h2 className="subtitle">
               Améliorez votre présentation auprès des propriétaires 
-            </h3>
+            </h2>
             <div className="form">{children}</div>
           </div>
         </div>
