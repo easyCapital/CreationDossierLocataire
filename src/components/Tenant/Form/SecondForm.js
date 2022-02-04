@@ -1,9 +1,16 @@
+import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Checkbox} from 'antd';
+import { Form, Checkbox, Steps} from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import FirstForm from "./FirstForm";
+import ThirdForm from "./ThirdForm";
+import RevenuesForm from "./RevenuesForm";
+import GarantForm from "./GarantForm copy";
 
 export default function SecondForm({formInput, setFormInput, current}) {
+
+  const [display, setDisplay] = useState(1);
+  const { Step } = Steps;
 
   function onChange(values){
     setFormInput((formInput) => {
@@ -19,7 +26,30 @@ export default function SecondForm({formInput, setFormInput, current}) {
     { label: 'VISALE', value: 'VISALE' },
     { label: 'Autre', value: 'Autre' },
   ];
+  
+  function getForm(index){
+    return <>
+      {display == 1 && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={index}/>}
+      {display == 2 && <RevenuesForm formInput={formInput} setFormInput={setFormInput} current={index}/>}
+      {display == 3 && <GarantForm formInput={formInput} setFormInput={setFormInput} current={index}/>}
+      {display == 4 && <ThirdForm formInput={formInput} setFormInput={setFormInput}  current={index}/>}
+    </>;
 
+  }
+  function showGarant(index){
+           return (<>
+            <Steps current={display-1} >
+            <Step title="Mon projet" onClick={() => setDisplay(1)}/>
+            <Step title="Mes revenus" onClick={() => setDisplay(2)}/>
+            <Step title="Les personnes que je garanti" onClick={() => setDisplay(3)}/> 
+            <Step title="Mes justificatifs" onClick={() => setDisplay(4)}/>
+          </Steps>
+          <br/>
+          {console.log("SecondForm: " + index)}
+          {getForm(index)}
+          </>)
+  }
+  
   return (
     <div>
       <Form.Item
@@ -35,8 +65,7 @@ export default function SecondForm({formInput, setFormInput, current}) {
       >
       <Checkbox.Group options={options} onChange={onChange} />
       </Form.Item>
-      {formInput[current] != null && formInput[current].garant != null && formInput[current].garant.includes('J’ai une personne physique') 
-      && <FirstForm formInput={formInput} setFormInput={setFormInput}  current={current  + "_garant"}/>}
+      {formInput[current] && formInput[current].garant.includes("J’ai une personne physique") && showGarant(current + '_garant')}
 
     </div>
       

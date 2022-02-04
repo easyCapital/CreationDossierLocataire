@@ -258,4 +258,8 @@ export const ConnexionWrapper = styled.div`
     padding 0px 100px;
   }
 
+  ant-btn{
+    margin-top: 0px;
+  }
+
 `;
