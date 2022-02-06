@@ -142,28 +142,28 @@ export default function Tenant() {
       <div className="btns">
         {display >= 1 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" onClick={prev}>
+            <Button type="success" onClick={prev} className="bottom_button">
               Retour
             </Button>
           </Form.Item>
         )}
         {display <= 4 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" onClick={addTab}>
+            <Button type="success" onClick={addTab} className="bottom_button">
               Ajouter
             </Button>
           </Form.Item>
         )}
         {display <= 3 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" onClick={handleUserRegister}>
+            <Button type="success" onClick={handleUserRegister} className="bottom_button">
               Suivant
             </Button>
           </Form.Item>
         )}
         {display == 4 && (
-          <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" htmlType="submit">
+          <Form.Item wrapperCol={{ offset: 4, span: 16 }} > 
+            <Button type="success" htmlType="submit" className="bottom_button">
               Envoyer
             </Button>
           </Form.Item>

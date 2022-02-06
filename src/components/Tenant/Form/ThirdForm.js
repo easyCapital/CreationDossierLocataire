@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Upload, Form, Button } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import { UploadOutlined } from '@ant-design/icons';
 
 export default function ThirdForm({formInput, setFormInput, current}) {
 
@@ -76,27 +75,6 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       </Form.Item> 
       <Form.Item
       label="Justificatif de domicile -3 mois"
-      name="identity"
-      name={'justify_' + current}
-      hasFeedback
-      rules={[
-        {
-          required: true,
-          message: "Veuillez renseigner vos possibilité de garant.",
-        },
-      ]}  
-      >
-          <Upload
-            listType="picture-card"
-            fileList={formInput[current] && formInput[current].fileList}
-            onChange={onChange}
-            onPreview={onPreview}
-          >
-            {fileList.length < 2 && '+ Téléverser'}
-          </Upload>
-      </Form.Item>
-      <Form.Item
-      label="Justificatif de domicile -3 mois"
       name="justify"
       hasFeedback
       rules={[
@@ -107,7 +85,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} >
-            <Button icon={<UploadOutlined />}>Téléverser</Button>
+            <Button >Téléverser</Button>
           </Upload>
       </Form.Item> 
 
@@ -125,7 +103,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         ]}
         >
           <Upload>
-            <Button icon={<UploadOutlined/>}>Téléverser </Button>
+            <Button>Téléverser </Button>
           </Upload>
         </Form.Item>
         }
@@ -141,7 +119,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} >
-            <Button icon={<UploadOutlined />}>Téléverser</Button>
+            <Button >Téléverser</Button>
           </Upload>
       </Form.Item>
 
@@ -160,7 +138,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} >
-            <Button icon={<UploadOutlined />}>Téléverser</Button>
+            <Button >Téléverser</Button>
           </Upload>
 
         
@@ -180,7 +158,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} >
-            <Button icon={<UploadOutlined />}>Téléverser</Button>
+            <Button >Téléverser</Button>
           </Upload>
       </Form.Item>
         
@@ -199,7 +177,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} >
-            <Button icon={<UploadOutlined />}>Téléverser</Button>
+            <Button >Téléverser</Button>
           </Upload>
         
         </Form.Item>}
@@ -217,7 +195,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} >
-            <Button icon={<UploadOutlined />}>Téléverser</Button>
+            <Button >Téléverser</Button>
           </Upload>
         
         </Form.Item>}

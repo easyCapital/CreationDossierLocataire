@@ -51,6 +51,7 @@ export const ConnexionWrapper = styled.div`
   .ant-upload .ant-btn{
     background: rgb(88, 223, 115);
     max-width: 70%;
+    padding: 0px 50px;
   }
 
   .upload{
@@ -95,7 +96,7 @@ export const ConnexionWrapper = styled.div`
       }
       .form {
         text-align: left;
-        .ant-btn {
+        .bottom_button {
           font-size: 30px;
           height: 50px;
           margin-top: 50px;
