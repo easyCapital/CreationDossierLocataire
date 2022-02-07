@@ -36,7 +36,7 @@ export default function Header(props) {
         <a href="/">
           <div className="logoImage">
             <img
-              src={"../../../easycapital_logo.svg"}
+              src={"../../../passloc-logo.png"}
               className={"logoImage_start"}
               alt="logo EasyCapital"
             />

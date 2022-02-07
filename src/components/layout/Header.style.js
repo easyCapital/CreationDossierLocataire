@@ -91,6 +91,7 @@ export const HeaderWrapper = styled.div`
   .logoImage {
     width: 220px;
     padding-right: 20px;
+    margin-bottom: 50px;
   }
   .logoImage:hover {
     cursor: pointer;

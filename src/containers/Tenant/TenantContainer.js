@@ -1,4 +1,4 @@
-import { ConnexionWrapper } from "./Tenant.style";
+import { TenantWrapper } from "./Tenant.style";
 import { useState, useEffect } from "react";
 import "aos/dist/aos.css";
 import { Form, Input, Button, Checkbox, Spin, Space } from "antd";
@@ -24,9 +24,9 @@ export default function TenantContainer({ children }) {
         </Space>
       </div>
     );
-  else
+  else  
     return (
-      <ConnexionWrapper>
+      <TenantWrapper>
         <div className="signIn">
           <div className="gauche">
             <h1 className="title">
@@ -39,7 +39,7 @@ export default function TenantContainer({ children }) {
           </div>
         </div>
         <div className="cercleBack" id="c2" />
-      </ConnexionWrapper>
+      </TenantWrapper>
     );
 }
 

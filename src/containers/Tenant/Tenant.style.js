@@ -5,7 +5,7 @@ import styled from "styled-components";
 //vert : #2CC84D;
 //bleu : #4ca6e2;
 
-export const ConnexionWrapper = styled.div`
+export const TenantWrapper = styled.div`
 
 .center{
   text-align: center;
@@ -53,7 +53,7 @@ export const ConnexionWrapper = styled.div`
 }
 
   .ant-upload .ant-btn{
-    background: rgb(88, 223, 115);
+    background: #005fc3;
     max-width: 70%;
     padding: 0px 50px;
   }
@@ -84,13 +84,13 @@ export const ConnexionWrapper = styled.div`
 
       .title {
         font-size: 40px;
-        color: #ffa400;
+        color: #005fc3;
         font-weight: bold;
         margin-top: 150px;
       }
       .subtitle {
         font-size: 25px;
-        color: #ffa400;
+        color: #005fc3;
         font-weight: bold;
         margin-bottom: 50px;
       }
@@ -207,7 +207,7 @@ export const ConnexionWrapper = styled.div`
     right: 100px;
   }
   #c2 {
-    background-color: #2cc84d;
+    background-color: #005fc3;
     top: 170px;
     left: 100px;
   }

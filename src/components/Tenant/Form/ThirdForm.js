@@ -60,7 +60,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       rules={[
         {
           required: true,
-          message: "Veuillez renseigner vos possibilité de garant.",
+          message: "Veuillez renseigner votre carte d'identité et/ou votre passeport.",
         },
       ]}  
       >

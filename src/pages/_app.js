@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
       <Navbar />
       <Head>
         <title>
-          Outil de gestion de patrimoine – Easy Capital, cabinet à Bordeaux
+          Passloc 
         </title>
         <meta
           name="description"

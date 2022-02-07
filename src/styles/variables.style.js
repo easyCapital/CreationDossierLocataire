@@ -1,5 +1,5 @@
 export const green = '#2CC84D';
-export const lightgreen = '#58df73';
+export const lightgreen = '#005fc3';
 export const blue = '#4CA6E2';
 export const lightblue = '#7EBDE8';
 export const orange = '#FFA400';
