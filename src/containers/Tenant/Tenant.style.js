@@ -7,6 +7,10 @@ import styled from "styled-components";
 
 export const ConnexionWrapper = styled.div`
 
+.center{
+  text-align: center;
+}
+
 .margin-bottom-0{
   margin-bottom: 0px;
   padding-left: 10px;
@@ -60,7 +64,7 @@ export const ConnexionWrapper = styled.div`
 
   .withAddon{
     width: 60%;
-  }
+  }<
   .noAccountWrapper {
     text-align: center;
   }

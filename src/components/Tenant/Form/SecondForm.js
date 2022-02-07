@@ -5,7 +5,7 @@ import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import FirstForm from "./FirstForm";
 import ThirdForm from "./ThirdForm";
 import RevenuesForm from "./RevenuesForm";
-import GarantForm from "./GarantForm copy";
+import GarantForm from "./GarantForm";
 
 export default function SecondForm({formInput, setFormInput, current}) {
 

@@ -33,18 +33,20 @@ export default function ThirdForm({formInput, setFormInput, current}) {
     imgWindow.document.write(image.outerHTML);
   };
 
+
   const props = { 
     listType: 'picture',
-    previewFile(file) {
-      console.log('Your upload file:', file);
-      // Your process logic. Here we just mock to the same file
-      return fetch('https://next.json-generator.com/api/json/get/4ytyBoLK8', {
-        method: 'POST',
-        body: file,
-      })
-        .then(res => res.json())
-        .then(({ thumbnail }) => thumbnail);
-    },
+    // Marche pas, c'est un exemple du site
+    // previewFile(file) {
+    //   console.log('Your upload file:', file);
+    //   // Your process logic. Here we just mock to the same file
+    //   return fetch('https://next.json-generator.com/api/json/get/', {
+    //     method: 'POST',
+    //     body: file,
+    //   })
+    //     .then(res => res.json())
+    //     .then(({ thumbnail }) => thumbnail);
+    // },
   };
 
 
@@ -67,8 +69,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
             listType="picture-card"
             fileList={formInput[current] && formInput[current].fileList}
             onChange={onChange}
-            onPreview={onPreview}
-          >
+          > 
             {fileList.length < 2 && '+ Téléverser'}
           </Upload>
         </ImgCrop>
