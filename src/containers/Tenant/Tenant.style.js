@@ -15,8 +15,9 @@ export const TenantWrapper = styled.div`
   margin-bottom: 0px;
   padding-left: 10px;
 }
-.margin-bottom-0:hover{
-  cursor: grab;
+.margin-bottom-0:hover{ 
+  color: #005fc3;
+
 }
 .ant-tabs-nav-wrap{
   padding: 10px 50px;
@@ -64,15 +65,12 @@ export const TenantWrapper = styled.div`
 
   .withAddon{
     width: 60%;
-  }<
+  }
   .noAccountWrapper {
     text-align: center;
   }
   .signIn {
-    margin-top: 120px;
     display: flex;
-    margin-left: 200px;
-    margin-right: 200px;
     box-shadow: 0.2px -0.2px gray, -0.1em -0.1em 3em #a4adba;
     border-radius: 40px;
     text-align: center;
@@ -81,18 +79,21 @@ export const TenantWrapper = styled.div`
       background: white;
       border-top-left-radius: 40px;
       border-bottom-left-radius: 40px;
+      border-top-right-radius: 40px;
+      border-bottom-right-radius: 40px;
 
       .title {
         font-size: 40px;
+        padding-top: 25px;
         color: #005fc3;
         font-weight: bold;
-        margin-top: 150px;
+        margin-top: 50px;
+        margin-bottom: 0px;
       }
       .subtitle {
         font-size: 25px;
         color: #005fc3;
         font-weight: bold;
-        margin-bottom: 50px;
       }
       .txt {
         color: #718096;

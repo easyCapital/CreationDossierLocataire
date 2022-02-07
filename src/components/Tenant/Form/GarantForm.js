@@ -23,9 +23,10 @@ export default function GarantForm({ formInput, setFormInput, current }) {
       .fill(undefined)
       .map((e, i) => {
         return (
-          formInput[i].statut_gl == "Locataire" ? <Col>
+          formInput[i].garant && 
+          (formInput[i].statut_gl == "Locataire" && formInput[i].garant.includes("Personne physique") ? <Col>
           <Checkbox value={i}>{formInput[i].first_name + " " + formInput[i].last_name}</Checkbox>
-        </Col>: ''
+        </Col>: '')
         );
       });
   }
