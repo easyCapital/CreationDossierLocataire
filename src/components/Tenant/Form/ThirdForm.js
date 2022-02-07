@@ -18,35 +18,9 @@ export default function ThirdForm({formInput, setFormInput, current}) {
     })
   };
 
-  const onPreview = async file => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow.document.write(image.outerHTML);
-  };
-
 
   const props = { 
     listType: 'picture',
-    // Marche pas, c'est un exemple du site
-    // previewFile(file) {
-    //   console.log('Your upload file:', file);
-    //   // Your process logic. Here we just mock to the same file
-    //   return fetch('https://next.json-generator.com/api/json/get/', {
-    //     method: 'POST',
-    //     body: file,
-    //   })
-    //     .then(res => res.json())
-    //     .then(({ thumbnail }) => thumbnail);
-    // },
   };
 
 
@@ -54,7 +28,6 @@ export default function ThirdForm({formInput, setFormInput, current}) {
     <div className="upload">
       <Form.Item
       label="Carte d’identité ou passeport"
-      name="identity"
       name={'identity_' + current}
       hasFeedback
       rules={[
@@ -104,7 +77,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         ]}
         >
           <Upload>
-            <Button>Téléverser </Button>
+            <Button>Téléverser</Button>
           </Upload>
         </Form.Item>
         }
