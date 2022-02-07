@@ -217,7 +217,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
         />
       </Form.Item>
       <Form.Item
-      label="Statut"
+      label="Logement actuel"
       name={'statut_' + current}
       hasFeedback
       onChange={(e) => {
@@ -266,7 +266,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
         />
       </Form.Item>
       <Form.Item
-        label="Statut"
+        label="Activité principale"
         name={'statut_s_' + current}
         hasFeedback
         onChange={

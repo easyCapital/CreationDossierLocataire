@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Checkbox, Steps, C } from "antd";
+import { Form, Checkbox, Steps, C, Col } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import FirstForm from "./FirstForm";
 import ThirdForm from "./ThirdForm";
@@ -19,12 +19,19 @@ export default function GarantForm({ formInput, setFormInput, current }) {
   }
 
   function getCols() {
-    console.log(Object.values(formInput))
+    return Array(Object.values(formInput).length)
+      .fill(undefined)
+      .map((e, i) => {
+        return (
+          formInput[i].statut_gl == "Locataire" ? <Col>
+          <Checkbox value={i}>{formInput[i].first_name + " " + formInput[i].last_name}</Checkbox>
+        </Col>: ''
+        );
+      });
   }
 
   return (
     <div>
-      {console.log(Object.values(formInput))}
       <Form.Item
         label="Les personnes que je garanti"
         name={"garant_" + current}
