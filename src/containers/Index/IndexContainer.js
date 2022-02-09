@@ -31,7 +31,7 @@ export default function IndexContainer({ children }) {
 
         <h2><strong>Créer votre dossier locataire</strong></h2>
         <h2><strong>rapidement</strong></h2>
-        <h4>Passloc vous permet de transmettre à n'importe quel propriétaire ou agence immobilière votre dossier de candidature propre et conforme.</h4>
+        <h3>Passloc vous permet de transmettre à n'importe quel propriétaire ou agence immobilière votre dossier de candidature propre et conforme.</h3>
 
         <div className="btns" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
           <Button className="home_btn" type="primary" shape="round" icon={<QuestionOutlined />} size={"large"} >Qui sommes nous </Button>

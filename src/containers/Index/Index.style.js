@@ -7,8 +7,9 @@ export const IndexWrapper = styled.div`
   text-align: center;
   h2{
     font-size: 60px;
-  h4{
-    font-size: 40px;
+  }
+  h3{
+    font-size: 20px;
   }
   .btns{
     display: flex;
