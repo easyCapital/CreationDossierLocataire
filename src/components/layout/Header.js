@@ -40,42 +40,50 @@ export default function Header(props) {
                 src={"../../../passloc-logo.png"}
                 className={"logoImage_start"}
                 alt="logo EasyCapital"
+                onClick={() => router.push('/')}
               />
             </div>
             <div className="btn_login">
-              <Button>Connexion</Button>
+              <Button onClick={() => router.push("/signin")}>Connexion</Button>
             </div>
           </div>
         </a>
-        {router.asPath != "/signin" && router.asPath != "/signup" && token !== null && token !== "" && (
-          <Button
-            className="button"
-            type="primary"
-            type="link"
-            style={{
-              borderBottom: router.asPath == "/conformite" ? "solid" : "none",
-              borderColor: router.asPath == "/conformite" ? "#4ca6e2" : "black",
-              color: "black",
-            }}
-          >
-            <Link href="/conformite">Ma conformité</Link>
-          </Button>
-        )}
+        {router.asPath != "/signin" &&
+          router.asPath != "/signup" &&
+          token !== null &&
+          token !== "" && (
+            <Button
+              className="button"
+              type="primary"
+              type="link"
+              style={{
+                borderBottom: router.asPath == "/conformite" ? "solid" : "none",
+                borderColor:
+                  router.asPath == "/conformite" ? "#4ca6e2" : "black",
+                color: "black",
+              }}
+            >
+              <Link href="/conformite">Ma conformité</Link>
+            </Button>
+          )}
       </div>
-      {router.asPath != "/signin" && router.asPath != "/signup" && token !== null && token !== "" && (
-        <div className="push">
-          {/* {token !== null && token !== "" ? ( */}
+      {router.asPath != "/signin" &&
+        router.asPath != "/signup" &&
+        token !== null &&
+        token !== "" && (
+          <div className="push">
+            {/* {token !== null && token !== "" ? ( */}
             <Button className="button" id="btn1" onClick={logOut}>
               Me déconnecter
             </Button>
-          {/* ) 
+            {/* ) 
           : (
             <Button className="button" id="btn1" onClick={login}>
               Me connecter
             </Button>
           )} */}
-        </div>
-      )}
+          </div>
+        )}
     </HeaderWrapper>
   );
 }

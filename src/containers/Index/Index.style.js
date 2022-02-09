@@ -22,9 +22,11 @@ export const IndexWrapper = styled.div`
   .btns{
     display: flex;
   }
-  
 }
 
+.btns_2{
+  margin-top: 60px;
+}
 .home_btn{
   margin: 10px 20px;
   font-size: 18px;

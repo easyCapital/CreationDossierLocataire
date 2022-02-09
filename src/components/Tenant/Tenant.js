@@ -6,6 +6,7 @@ import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs } from "antd";
 import GarantForm from "./Form/GarantForm";
+import {PlusOutlined} from "@ant-design/icons";
 
 export default function Tenant() {
   const [formInput, setFormInput] = useState({});
@@ -14,7 +15,7 @@ export default function Tenant() {
   const [counter, setCounter] = useState(0);
   const operations = (
     <p className="margin-bottom-0" onClick={addTab}>
-      Ajouter
+      <PlusOutlined />
     </p>
   );
   const { Step } = Steps;
