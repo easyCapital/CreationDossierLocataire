@@ -62,7 +62,7 @@ export default function IndexContainer({ children }) {
               icon={<RightOutlined />}
               size={"large"}
               onClick={() => router.push('/tenant')}
-            >
+              >
               Commencer maintenant
             </Button>
           </div>
