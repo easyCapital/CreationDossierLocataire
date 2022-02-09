@@ -30,10 +30,10 @@ export default function TenantContainer({ children }) {
         <div className="signIn">
           <div className="gauche">
             <h1 className="title">
-            Créez votre dossier locataire,
+            Constituez votre dossier locataire
             </h1>
             <h2 className="subtitle">
-              Améliorez votre présentation auprès des propriétaires 
+            Partagez le en toute sécurité
             </h2>
             <div className="form">{children}</div>
           </div>

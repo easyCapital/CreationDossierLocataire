@@ -122,7 +122,7 @@ export default function Tenant() {
             console.log("NEW FOLDER: " + e)
           }}
         >
-          {Array(11)
+          {Array(8)
             .fill(undefined)
             .map((e, i) => {
               return (

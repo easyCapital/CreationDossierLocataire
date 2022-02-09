@@ -10,8 +10,9 @@ export default function FirstForm({formInput, setFormInput, current}) {
   }, [formInput[current]]);
 
   return (
-    <div>
+    <div className="current-form">
       <Form.Item
+
       label="Statut"
       name={'statut_gl_' + current}
       hasFeedback
@@ -35,6 +36,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           <Radio.Button value="Locataire">Locataire</Radio.Button>
         </Radio.Group>
       </Form.Item>
+      <div className="to-flex" id="to-flex-fc">
       <Form.Item
       label="Civilité"
       name={'civil_' + current}
@@ -112,6 +114,8 @@ export default function FirstForm({formInput, setFormInput, current}) {
             }}
           />
       </Form.Item>
+      </div>
+      <div className="to-flex">
       <Form.Item
         label="E-mail"
         name={'email_' + current}
@@ -166,6 +170,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           }}
         />
       </Form.Item>
+      </div>
       <Form.Item
         label="Lieu de naissance"
         name={'born_place_' + current}
@@ -221,6 +226,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
       name={'statut_' + current}
       hasFeedback
       onChange={(e) => {
+        
         setFormInput((formInput) => {
           if(!formInput[current]) formInput[current] = {};
           formInput[current].statut = e.target.value;

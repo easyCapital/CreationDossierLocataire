@@ -6,11 +6,7 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const TenantWrapper = styled.div`
-
-.ant-form-item-required{
-  font-size: 18px;
-}
-
+ 
 .ant-input{
   height: 38px;
 }
@@ -93,15 +89,17 @@ export const TenantWrapper = styled.div`
       .title {
         font-size: 40px;
         padding-top: 25px;
-        color: #005fc3;
+        color: black;
         font-weight: bold;
         margin-top: 50px;
         margin-bottom: 0px;
       }
       .subtitle {
-        font-size: 25px;
+        font-size: 40px;
         color: #005fc3;
         font-weight: bold;
+        position: relative;
+        bottom: 20px;
       }
       .txt {
         color: #718096;
@@ -243,15 +241,44 @@ export const TenantWrapper = styled.div`
     }
   }
   
+  @media (min-width: 811px){
+    .gauche{
+      margin: 0 15%;
+    }
+    
+    .to-flex {
+      .ant-row .ant-col-13 .ant-form-item-control-input{
+        width: 150%;
+      }
+      .ant-row:last-child{
+        .ant-col-6{
+          margin-left: 10%;   
+        }
+      }
+       display: flex;
+       margin-left: 19%;
+     }
+     #to-flex-fc{
+       margin-left: 20%;
+     }
+     
+  }
+  @media (max-width: 810px) {
+    .to-flex .ant-row .ant-col-13 .ant-form-item-control-input{
+      width: 100%;
+    }
 
-  @media (max-width: 800px) {
+    .ant-col label{
+      font-size: 18px;
+    }
+    
     .gauche {
       margin-top: 100px;
       text-align: center;
       .title {
         font-size: 30px;
         font-weight: bold;
-        color: #ffa400;
+        color: black;
         margin-bottom:80px;
       }
       .txt{
