@@ -11,8 +11,6 @@ export const HeaderWrapper = styled.div`
   display: flex;
   .logoImage{
     flex: 1;
-    position: relative:
-    bottom: 50px;
   }
   .btn_login button{
     flex: 2;

@@ -36,6 +36,10 @@ export const IndexWrapper = styled.div`
   bottom: 45px;
 }
 
+.home_btn:first-child{
+  background: #iaiaia;
+}
+
 @media screen and (max-width: 1500px)
 {
   .upper{
