@@ -30,12 +30,12 @@ export default function IndexContainer({ children }) {
       <div className="upper">
 
         <h2><strong>Créer votre dossier locataire</strong></h2>
-        <h2><strong>rapidement</strong></h2>
+        <h2 className="seconds"><strong>rapidement</strong></h2>
         <h3>Passloc vous permet de transmettre à n'importe quel propriétaire ou agence immobilière votre dossier de candidature propre et conforme.</h3>
 
         <div className="btns" style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
-          <Button className="home_btn" type="primary" shape="round" icon={<QuestionOutlined />} size={"large"} >Qui sommes nous </Button>
-          <Button className="home_btn" type="primary" shape="round" icon={<RightOutlined />} size={"large"} >Commencer maintenant</Button>
+          <Button className="home_btn"  shape="round" type="primary" icon={<QuestionOutlined />} size={"large"} >Qui sommes nous </Button>
+          <Button className="home_btn"  shape="round" type="primary" icon={<RightOutlined />} size={"large"} >Commencer maintenant</Button>
         </div>
       </div>
       </IndexWrapper>
