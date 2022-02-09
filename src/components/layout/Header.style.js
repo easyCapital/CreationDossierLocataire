@@ -293,4 +293,77 @@ export const HeaderWrapper = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 1460px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 800px;
+    }
+  }
+}
+@media screen and (max-width: 1360px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 700px;
+    }
+  }
+}
+@media screen and (max-width: 1260px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 600px;
+    }
+  }
+}
+@media screen and (max-width: 1160px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 500px;
+    }
+  }
+}
+@media screen and (max-width: 1060px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 400px;
+    }
+  }
+}
+@media screen and (max-width: 960px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 300px;
+    }
+  }
+}
+@media screen and (max-width: 860px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 200px;
+    }
+  }
+}
+@media screen and (max-width: 760px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: 100px;
+    }
+  }
+}
+@media screen and (max-width: 660px)
+{
+  .ubar{
+    .btn_login button{
+      margin-left: -40px;
+    }
+  }
+}
 `;
