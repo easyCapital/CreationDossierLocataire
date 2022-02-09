@@ -28,15 +28,11 @@ export default function IndexContainer({ children }) {
       <IndexWrapper>
         <div className="upper">
           <h2>
-            <strong>Créer votre dossier locataire</strong>
+            <strong>Constituez votre dossier locataire</strong>
           </h2>
           <h2 className="seconds">
-            <strong>rapidement</strong>
+          <strong> Partagez le en toute sécurité</strong>
           </h2>
-          <h3>
-            Passloc vous permet de transmettre à n'importe quel propriétaire ou
-            agence immobilière votre dossier de candidature propre et conforme.
-          </h3>
 
           <div
             className="btns"

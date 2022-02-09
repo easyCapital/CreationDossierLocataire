@@ -33,21 +33,21 @@ export default function Header(props) {
   return (
     <HeaderWrapper>
       <div className="barre">
-        <a href="/">
-          <div className="ubar">
-            <div className="logoImage">
+        <div className="ubar">
+          <div className="logoImage">
+            <a href="/">
               <img
                 src={"../../../passloc-logo.png"}
                 className={"logoImage_start"}
                 alt="logo EasyCapital"
-                onClick={() => router.push('/')}
+                onClick={() => router.push("/")}
               />
-            </div>
-            <div className="btn_login">
-              <Button onClick={() => router.push("/signin")}>Connexion</Button>
-            </div>
+            </a>
           </div>
-        </a>
+          <div className="btn_login">
+            <Button onClick={() => router.push("/signin")}>Connexion</Button>
+          </div>
+        </div>
         {router.asPath != "/signin" &&
           router.asPath != "/signup" &&
           token !== null &&

@@ -37,7 +37,7 @@ export const IndexWrapper = styled.div`
 }
 
 .home_btn:first-child{
-  background: #iaiaia;
+  background: #a1a1a1;
 }
 
 @media screen and (max-width: 1500px)

@@ -7,17 +7,22 @@ import styled from "styled-components";
 
 export const HeaderWrapper = styled.div`
 
+.barre{
+  width: 100%;
+  
 .ubar{
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   .logoImage{
-    flex: 1;
+    margin-top: 10px;
   }
   .btn_login button{
-    flex: 2;
-    margin-left: 900px;
     background-color: #005fc3;
   }
 }
+}
+
 
   display: flex;
   padding-top: 20px;
@@ -27,9 +32,6 @@ export const HeaderWrapper = styled.div`
   padding-right: 5%;
   position: sticky;
 
-  div {
-    flex: 1;
-  }
 
   .barre {
     display: flex;
@@ -292,76 +294,4 @@ export const HeaderWrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 1460px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 800px;
-    }
-  }
-}
-@media screen and (max-width: 1360px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 700px;
-    }
-  }
-}
-@media screen and (max-width: 1260px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 600px;
-    }
-  }
-}
-@media screen and (max-width: 1160px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 500px;
-    }
-  }
-}
-@media screen and (max-width: 1060px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 400px;
-    }
-  }
-}
-@media screen and (max-width: 960px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 300px;
-    }
-  }
-}
-@media screen and (max-width: 860px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 200px;
-    }
-  }
-}
-@media screen and (max-width: 760px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: 100px;
-    }
-  }
-}
-@media screen and (max-width: 660px)
-{
-  .ubar{
-    .btn_login button{
-      margin-left: -40px;
-    }
-  }
-}
 `;
