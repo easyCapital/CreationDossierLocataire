@@ -89,14 +89,14 @@ export const IndexWrapper = styled.div`
     margin: 100px 2px;
     font-size: 18px;
   }
-  .home_btn:first-child{
-    position: relative;
-    top: 50px;
-    left: 150px;
-  }
   .home_btn:last-child{
     position: relative;
+    top: 50px;
     right: 120px;
+  }
+  .home_btn:first-child{
+    position: relative;
+    left: 150px;
   }
   
 }
