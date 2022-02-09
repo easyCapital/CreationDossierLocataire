@@ -7,6 +7,14 @@ import styled from "styled-components";
 
 export const TenantWrapper = styled.div`
 
+.ant-form-item-required{
+  font-size: 18px;
+}
+
+.ant-input{
+  height: 38px;
+}
+
 .center{
   text-align: center;
 }

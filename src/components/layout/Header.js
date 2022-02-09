@@ -34,12 +34,17 @@ export default function Header(props) {
     <HeaderWrapper>
       <div className="barre">
         <a href="/">
-          <div className="logoImage">
-            <img
-              src={"../../../passloc-logo.png"}
-              className={"logoImage_start"}
-              alt="logo EasyCapital"
-            />
+          <div className="ubar">
+            <div className="logoImage">
+              <img
+                src={"../../../passloc-logo.png"}
+                className={"logoImage_start"}
+                alt="logo EasyCapital"
+              />
+            </div>
+            <div className="btn_login">
+              <Button>Connexion</Button>
+            </div>
           </div>
         </a>
         {router.asPath != "/signin" && router.asPath != "/signup" && token !== null && token !== "" && (

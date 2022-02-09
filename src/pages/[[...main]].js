@@ -18,21 +18,23 @@ import SignUpPage from "./signup";
 import Conformite from "../containers/Conformite/Conformite";
 import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner";
 import SecondHome from "../containers/SecondHome/SecondHome";
+import IndexPage from "./indd";
 
 const Main = () => {
   const router = useRouter();
 
   if (router.asPath != "/[[...main]]") {
     switch (router.asPath) {
+      case "/":
+        return <IndexPage />;
+      case "/index":
+        return <IndexPage />;
       case "/signin":
         return <SignInPage />;
       case "/signup":
         return <SignUpPage />;
       case "/conformite":
-        return <Conformite />;
-      case "/":
-        return <Home />;
-
+        return <Conformite />;npm
       case "/home":
         return <SecondHome />;
       case "/nous":

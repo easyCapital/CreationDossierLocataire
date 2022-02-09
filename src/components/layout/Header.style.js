@@ -6,6 +6,21 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const HeaderWrapper = styled.div`
+
+.ubar{
+  display: flex;
+  .logoImage{
+    flex: 1;
+    position: relative:
+    bottom: 50px;
+  }
+  .btn_login button{
+    flex: 2;
+    margin-left: 900px;
+    background-color: #005fc3;
+  }
+}
+
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -14,7 +29,7 @@ export const HeaderWrapper = styled.div`
   padding-right: 5%;
   position: sticky;
 
-  > div {
+  div {
     flex: 1;
   }
 
@@ -89,6 +104,8 @@ export const HeaderWrapper = styled.div`
   }
 
   .logoImage {
+    position: relative;
+    bottom: 15px;
     width: 220px;
     padding-right: 20px;
     margin-bottom: 50px;

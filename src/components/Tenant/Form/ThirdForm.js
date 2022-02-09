@@ -39,6 +39,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       >
         <ImgCrop rotate>
           <Upload
+            multiple
             listType="picture-card"
             fileList={formInput[current] && formInput[current].fileList}
             onChange={onChange}
