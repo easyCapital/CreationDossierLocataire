@@ -27,12 +27,13 @@ export default function Header(props) {
     if (authResponse !== "" && authResponse.success === true) {
       localStorage.removeItem("user-token");
     }
+    
     return () => {};
   }, [authResponse]);
-
   return (
-    <HeaderWrapper>
-      <div className="barre">
+    <HeaderWrapper style={ {"backgroundColor":router.asPath == "/" && '#f5f5f9'}}>
+      <div className="barre" >
+        
         <div className="ubar">
           <div className="logoImage">
             <a href="/">

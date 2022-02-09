@@ -6,9 +6,23 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const TenantWrapper = styled.div`
+
+.text-left{
+  position: relative;
+  top: 250px;
+  left: 75px;
+}
  
 .ant-input{
   height: 38px;
+}
+
+.ant-tabs-content{
+  padding-top: 15px;
+}
+
+.hover-pointer:hover{
+  cursor: pointer;
 }
 
 .center{
@@ -18,9 +32,19 @@ export const TenantWrapper = styled.div`
 .margin-bottom-0{
   margin-bottom: 0px;
   padding-left: 10px;
+  background:  #005fc3;
+  margin-right: 15px;
+  position: relative;
+}
+
+.margin-bottom-0:hover{
+  margin-bottom: 0px;
+  padding-left: 10px;
+  background:  #f5f5f9;
 }
 .margin-bottom-0:hover{ 
   color: #005fc3;
+  cursor: pointer;
 
 }
 .ant-tabs-nav-wrap{
@@ -32,7 +56,6 @@ export const TenantWrapper = styled.div`
   text-align: center;
   padding: 0px 100px;
 }
-
 .inputs .ant-row{
   display: flex;
   .ant-col:first-child{
@@ -44,15 +67,28 @@ export const TenantWrapper = styled.div`
     margin-left: 50px;
   }
 }
+.whiteBoard{
+  height: 200px;
+}
 
 .btns{
+  position:absolute;
+left:0;
+bottom:0;
+right:0;
+padding-bottom:60px;
+
   display: flex;
   justify-content: space-between;
   padding: 0px 80px;
   
   div:first-child{
     position: relative;
-    right: 17px;
+    right: 50px;
+  }
+  div:last-child{
+    position: relative;
+    left: 0px;
   }
 
 }
@@ -66,7 +102,11 @@ export const TenantWrapper = styled.div`
   .upload{
     padding 0px 30px;
   }
+.steps-p{
+  margin-left: 90px;
+  padding-right: 50px;
 
+}
   .withAddon{
     width: 60%;
   }
@@ -74,10 +114,10 @@ export const TenantWrapper = styled.div`
     text-align: center;
   }
   .signIn {
-    display: flex;
-    box-shadow: 0.2px -0.2px gray, -0.1em -0.1em 3em #a4adba;
+    display: flex;  
     border-radius: 40px;
     text-align: center;
+    background: white;
     .gauche {
       flex: 2;
       background: white;
@@ -85,6 +125,7 @@ export const TenantWrapper = styled.div`
       border-bottom-left-radius: 40px;
       border-top-right-radius: 40px;
       border-bottom-right-radius: 40px;
+      margin: 0px;
 
       .title {
         font-size: 40px;
@@ -275,6 +316,8 @@ export const TenantWrapper = styled.div`
     .gauche {
       margin-top: 100px;
       text-align: center;
+      margin: 0px 40px;
+      margin-right: 40px;
       .title {
         font-size: 30px;
         font-weight: bold;

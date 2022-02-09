@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "devextreme": "21.1.5",
     "devextreme-react": "21.1.5",
+    "disable-scroll": "^0.6.0",
     "downloadjs": "^1.4.7",
     "email-validator": "^2.0.4",
     "jwt-decode": "^3.1.2",

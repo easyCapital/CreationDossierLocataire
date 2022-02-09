@@ -7,16 +7,16 @@ import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs } from "antd";
 import GarantForm from "./Form/GarantForm";
 import {PlusOutlined} from "@ant-design/icons";
+import disableScroll from 'disable-scroll';
 
 export default function Tenant() {
   const [formInput, setFormInput] = useState({});
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [counter, setCounter] = useState(0);
+  disableScroll.on();
   const operations = (
-    <p className="margin-bottom-0" onClick={addTab}>
-      <PlusOutlined />
-    </p>
+    <Button className="margin-bottom-0" onClick={addTab}>Ajouter une personne</Button>
   );
   const { Step } = Steps;
   const { TabPane } = Tabs;
@@ -114,7 +114,7 @@ export default function Tenant() {
     >
       {display > 0 && (
         <Tabs
-          tabBarExtraContent={{ left: operations }}
+          tabBarExtraContent={{ right: operations }}
           onChange={(e) => {
             setDisplay(1);
             setFolder(e);
@@ -122,7 +122,7 @@ export default function Tenant() {
             console.log("NEW FOLDER: " + e)
           }}
         >
-          {Array(8)
+          {Array(7)
             .fill(undefined)
             .map((e, i) => {
               return (
@@ -147,10 +147,10 @@ export default function Tenant() {
                     }
                     key={i}
                   >
-                    <Steps current={display - 1}>
-                      <Step title="Projet" onClick={() => showDisplay(1,)} />
-                      <Step title="Ressources" onClick={() => showDisplay(2)} />
-                      <Step title="Garants" onClick={() => showDisplay(3)} />
+                    <Steps current={display - 1} className="steps-p">
+                      <Step title="Projet" onClick={() => showDisplay(1,)} className="hover-pointer" />
+                      <Step title="Ressources" onClick={() => showDisplay(2)} className="hover-pointer" />
+                      <Step title="Garants" onClick={() => showDisplay(3)} className="hover-pointer" />
                       <Step
                         title="Justificatifs"
                         onClick={() => showDisplay(4)  }
@@ -164,7 +164,7 @@ export default function Tenant() {
             })}
         </Tabs>
       )}
-
+      <div className="whiteBoard"></div>
       <div className="btns">
         {display >= 1 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>

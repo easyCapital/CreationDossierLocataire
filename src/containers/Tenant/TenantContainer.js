@@ -28,17 +28,19 @@ export default function TenantContainer({ children }) {
     return (
       <TenantWrapper>
         <div className="signIn">
-          <div className="gauche">
-            <h1 className="title">
-            Constituez votre dossier locataire
+          <div className="text-left">
+          <h1 className="title">
+          Lorem ipsum dolor sit amet
             </h1>
+          </div>
+          <div className="gauche">
+            
+          <h1 className="title"></h1>
             <h2 className="subtitle">
-            Partagez le en toute sécurité
-            </h2>
+            </h2> 
             <div className="form">{children}</div>
           </div>
         </div>
-        <div className="cercleBack" id="c2" />
       </TenantWrapper>
     );
 }

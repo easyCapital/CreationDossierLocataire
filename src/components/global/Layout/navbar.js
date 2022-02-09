@@ -80,6 +80,9 @@ const Navbar = () => {
     case "/guides":
       color = "#F7F9FA";
       break;
+    case "/tenant":
+      color = "#fff";
+      break;
   }
 
   if (!loaded) return <div></div>;

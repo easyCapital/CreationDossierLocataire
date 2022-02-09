@@ -36,7 +36,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
           <Radio.Button value="Locataire">Locataire</Radio.Button>
         </Radio.Group>
       </Form.Item>
-      <div className="to-flex" id="to-flex-fc">
       <Form.Item
       label="Civilité"
       name={'civil_' + current}
@@ -62,6 +61,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           <Radio.Button value="Mlle">Mlle</Radio.Button>
         </Radio.Group>
       </Form.Item>
+      <div className="to-flex" id="to-flex-fc">
        <Form.Item
         label="Prenom"
         name={'first_name_' + current}

@@ -15,7 +15,7 @@ export const IndexWrapper = styled.div`
   }
   h3{
     font-size: 20px;
-    margin: 10px 600px;
+    margin: 10px 500px;
     position: relative;
     bottom: 45px;
   }

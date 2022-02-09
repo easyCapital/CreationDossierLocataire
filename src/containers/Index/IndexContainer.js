@@ -33,7 +33,10 @@ export default function IndexContainer({ children }) {
           <h2 className="seconds">
           <strong> Partagez le en toute sécurité</strong>
           </h2>
-
+          <h3>
+            Passloc vous permet de transmettre à n'importe quel propriétaire ou
+            agence immobilière votre dossier de candidature propre et conforme.
+          </h3>
           <div
             className="btns"
             style={{
@@ -42,15 +45,7 @@ export default function IndexContainer({ children }) {
               alignItems: "center",
             }}
           >
-            <Button
-              className="home_btn"
-              shape="round"
-              type="primary"
-              size={"large"}
-              onClick={() => router.push('/help')}
-            >
-              Qui sommes nous <QuestionOutlined />
-            </Button>
+            <Input placeholder="Votre mail" style={{'width':400, height:60, 'marginBottom':90}}/>
             <Button
               className="home_btn"
               shape="round"
@@ -59,12 +54,13 @@ export default function IndexContainer({ children }) {
               size={"large"}
               onClick={() => router.push('/tenant')}
               >
-              Commencer maintenant
+              Commencer 
+                
             </Button>
           </div>
           <Divider />
           <div className="cert">
-            <img src="../../../rgpd.png" width={250} height={150} alt="RGPD" />
+            <img src="../../../rgpd.png" width={250} height={150} alt="RGPD"/>
           </div>
         </div>
       </IndexWrapper>
