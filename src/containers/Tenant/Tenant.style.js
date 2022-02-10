@@ -293,9 +293,8 @@ padding-bottom:60px;
        margin-left: 4.11%;
      }
      .text{
-       padding: 0px 700px;
        position: relative;
-       left: 550px;
+       left: 65%;
        bottom: 500px;
      }
      .last-p{

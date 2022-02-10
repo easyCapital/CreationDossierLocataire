@@ -162,11 +162,15 @@ export default function Tenant() {
   }
 
   return (
+    
     <Form
+    
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 13 }}
       onFinish={handleUserRegister}
     >
+      <div className="formss">
+        <div className="tabss">
       {display > 0 && (
         <Tabs
           className="tabs"
@@ -190,8 +194,16 @@ export default function Tenant() {
             }
         </Tabs>
       )}
+      </div>
       <div className="text">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur iaculis dui libero, a eleifend dolor mollis sed. Proin semper suscipit purus, vitae tempus nisl sodales id. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer hendrerit vitae tellus vitae porta. Nunc tincidunt leo ante, at condimentum purus interdum sit amet. Mauris ac auctor mi. Mauris non pellentesque mi. Donec maximus, ipsum ac rhoncus consequat, erat massa convallis leo, nec aliquet neque purus vitae tellus. Phasellus consequat, augue et tristique interdum, erat lorem cursus magna, sollicitudin porttitor ante elit ac leo. </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
+      </div>
       </div>
       <div className="btns">  
         {display >= 2 && (
