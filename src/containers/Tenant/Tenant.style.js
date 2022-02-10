@@ -7,6 +7,11 @@ import styled from "styled-components";
 
 export const TenantWrapper = styled.div`
 
+.tabs{
+  margin-left: 10%;
+  margin-right: 6%;
+}
+
 .text-left{
   position: relative;
   top: 250px;
@@ -28,25 +33,6 @@ export const TenantWrapper = styled.div`
 .center{
   text-align: center;
 }
-
-.margin-bottom-0{
-  margin-bottom: 0px;
-  padding-left: 10px;
-  background:  #005fc3;
-  margin-right: 15px;
-  position: relative;
-}
-
-.margin-bottom-0:hover{
-  margin-bottom: 0px;
-  padding-left: 10px;
-  background:  #f5f5f9;
-}
-.margin-bottom-0:hover{ 
-  color: #005fc3;
-  cursor: pointer;
-
-}
 .ant-tabs-nav-wrap{
   padding: 10px 50px;
 }
@@ -66,9 +52,6 @@ export const TenantWrapper = styled.div`
     flex: 1;
     margin-left: 50px;
   }
-}
-.whiteBoard{
-  height: 200px;
 }
 
 .btns{
@@ -104,7 +87,6 @@ padding-bottom:60px;
   }
 .steps-p{
   margin-left: 90px;
-  padding-right: 50px;
 
 }
   .withAddon{
@@ -151,7 +133,6 @@ padding-bottom:60px;
         .bottom_button {
           font-size: 30px;
           height: 50px;
-          margin-top: 50px;
           margin-left: auto;
           margin-right: auto;
           padding-left: 100px;
@@ -286,7 +267,16 @@ padding-bottom:60px;
     .gauche{
       margin: 0 15%;
     }
-    
+    .sgl{
+      margin-right: 65%;
+    }
+    .clvt{
+      margin-right: 65%;
+    }
+    .to-the-left{
+      position: relative;
+      right: 247px;
+    }
     .to-flex {
       .ant-row .ant-col-13 .ant-form-item-control-input{
         width: 150%;
@@ -297,14 +287,29 @@ padding-bottom:60px;
         }
       }
        display: flex;
-       margin-left: 19%;
+       margin-left: 4.3%;
      }
      #to-flex-fc{
-       margin-left: 20%;
+       margin-left: 4.11%;
+     }
+     .text{
+       padding: 0px 700px;
+       position: relative;
+       left: 550px;
+       bottom: 500px;
+     }
+     .last-p{
+       margin-right: 400px;
      }
      
   }
   @media (max-width: 810px) {
+    .text{
+      display: none;
+    }
+    .bottom_button{
+      left: 125px;
+    }
     .to-flex .ant-row .ant-col-13 .ant-form-item-control-input{
       width: 100%;
     }

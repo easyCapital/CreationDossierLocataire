@@ -16,6 +16,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
       label="Statut"
       name={'statut_gl_' + current}
       hasFeedback
+      className="sgl"
       rules={[
         {
           required: true,
@@ -40,6 +41,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
       label="Civilité"
       name={'civil_' + current}
       hasFeedback
+      className="clvt"
       rules={[
         {
           required: true,
@@ -171,6 +173,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
         />
       </Form.Item>
       </div>
+      <div className="to-the-left">
       <Form.Item
         label="Lieu de naissance"
         name={'born_place_' + current}
@@ -314,7 +317,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           <Option value="e_se">Étudiant sans emploi</Option>
           <Option value="e_ae">Étudiant avec emploi</Option>
     </Select>
-      </Form.Item>
+      </Form.Item></div>
 
     </div>
   );

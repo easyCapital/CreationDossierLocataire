@@ -14,12 +14,67 @@ export default function Tenant() {
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [counter, setCounter] = useState(0);
-  disableScroll.on();
-  const operations = (
-    <Button className="margin-bottom-0" onClick={addTab}>Ajouter une personne</Button>
-  );
+  const [ammount, setAmmount] = useState(1);
+  const [i, seti] = useState(1)
+  disableScroll.on(); // prevent scrolling
+
+
+  function getTitle(index){
+    return formInput[index] != null
+               ? (formInput[index].first_name == null
+                   ? "Prenom"
+                   : formInput[index].first_name) +
+                 " " +
+                 (formInput[index].last_name == null
+                   ? "Nom"
+                   : formInput[index].last_name) +
+                 "\n" +
+                 (formInput[index].statut_gl == null
+                   ? " "
+                   : formInput[index].statut_gl)
+               : "Nouveau Dossier"
+  }
+
+  function getContent(index){
+    return <>
+    <Steps current={display - 1} className="steps-p">
+             <Step title="Projet" onClick={() => showDisplay(1,)} className="hover-pointer" />
+             <Step title="Ressources" onClick={() => showDisplay(2)} className="hover-pointer" />
+             <Step title="Garants" onClick={() => showDisplay(3)} className="hover-pointer" />
+             <Step
+               title="Justificatifs"
+               onClick={() => showDisplay(4)  }
+             />
+           </Steps>
+           <br />
+           {getForm(index)}
+    </>
+  }
+
+  const [panes, setPanes] = useState([
+    {key:0}
+  ])
+
   const { Step } = Steps;
   const { TabPane } = Tabs;
+
+  function add(){
+    seti(i+1)
+    panes.push({key:i});
+  }
+  function remove(){
+    setAmmount(ammount-1);
+  }
+
+  function editPanes(targetKey, action){
+    if (action == "add"){
+      seti(i+1)
+      add();
+    }
+    if (action == "remove"){
+      setPanes(panes.slice)
+    }
+  }
 
   function showDisplay(value){
     if(!formInput[folder]) formInput[folder] = {};
@@ -114,59 +169,32 @@ export default function Tenant() {
     >
       {display > 0 && (
         <Tabs
-          tabBarExtraContent={{ right: operations }}
+          className="tabs"
+          type="editable-card"
           onChange={(e) => {
             setDisplay(1);
             setFolder(e);
             console.log("FOLDER: " + folder)
             console.log("NEW FOLDER: " + e)
           }}
+          onEdit={
+            editPanes
+          }
         >
-          {Array(7)
-            .fill(undefined)
-            .map((e, i) => {
-              return (
-                <>
-                  <TabPane
-                    tab={
-                      formInput[i] != null
-                        ? (formInput[i].first_name == null
-                            ? "Prenom"
-                            : formInput[i].first_name) +
-                          " " +
-                          (formInput[i].last_name == null
-                            ? "Nom"
-                            : formInput[i].last_name) +
-                          "\n" +
-                          (formInput[i].statut_gl == null
-                            ? " "
-                            : formInput[i].statut_gl)
-                        : i == 0
-                        ? "Nouveau Dossier"
-                        : ""
-                    }
-                    key={i}
-                  >
-                    <Steps current={display - 1} className="steps-p">
-                      <Step title="Projet" onClick={() => showDisplay(1,)} className="hover-pointer" />
-                      <Step title="Ressources" onClick={() => showDisplay(2)} className="hover-pointer" />
-                      <Step title="Garants" onClick={() => showDisplay(3)} className="hover-pointer" />
-                      <Step
-                        title="Justificatifs"
-                        onClick={() => showDisplay(4)  }
-                      />
-                    </Steps>
-                    <br />
-                    {getForm(i)}
-                  </TabPane>
-                </>
-              );
-            })}
+        {console.log(panes)}
+          {panes.map(pane => (
+             <TabPane tab={getTitle(pane.key)} key={pane.key} closable={false}>
+               {getContent(pane.key)}
+             </TabPane>
+        ))
+            }
         </Tabs>
       )}
-      <div className="whiteBoard"></div>
-      <div className="btns">
-        {display >= 1 && (
+      <div className="text">
+        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur iaculis dui libero, a eleifend dolor mollis sed. Proin semper suscipit purus, vitae tempus nisl sodales id. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer hendrerit vitae tellus vitae porta. Nunc tincidunt leo ante, at condimentum purus interdum sit amet. Mauris ac auctor mi. Mauris non pellentesque mi. Donec maximus, ipsum ac rhoncus consequat, erat massa convallis leo, nec aliquet neque purus vitae tellus. Phasellus consequat, augue et tristique interdum, erat lorem cursus magna, sollicitudin porttitor ante elit ac leo. </h2>
+      </div>
+      <div className="btns">  
+        {display >= 2 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
             <Button type="success" onClick={prev} className="bottom_button">
               Retour
