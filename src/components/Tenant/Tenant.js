@@ -42,6 +42,7 @@ export default function Tenant() {
              <Step title="Ressources" onClick={() => showDisplay(2)} className="hover-pointer" />
              <Step title="Garants" onClick={() => showDisplay(3)} className="hover-pointer" />
              <Step
+              className="last-p"
                title="Justificatifs"
                onClick={() => showDisplay(4)  }
              />
