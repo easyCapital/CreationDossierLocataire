@@ -311,6 +311,7 @@ min-height:100vh;
        flex-wrap: wrap;
        .tabWrapper{
          flex: 2;
+         margin-top: 100px;
        }
        .text{
          flex: 1;
