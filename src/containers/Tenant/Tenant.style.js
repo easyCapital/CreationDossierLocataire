@@ -259,6 +259,7 @@ min-height:100vh;
     .mailItem{
       display: flex;
       flex-direction: row;
+      margin-left: 2px;
     } 
     .wrapperInput{
       margin-left: 18%; 
@@ -275,7 +276,6 @@ min-height:100vh;
     }
     .nameItem{
       margin-bottom: 0px;
-      margin-left: 1px;
     }
     .lastnameItem{
       margin-bottom: 0px;
