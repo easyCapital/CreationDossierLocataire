@@ -311,7 +311,9 @@ export default function Tenant() {
           </div>
           <div className="text">
             <Affix style={{ position: "absolute", top: 380 }}>
+              <div className="rightText">
               {getText()}
+              </div>
             </Affix>
           </div>
         </div>

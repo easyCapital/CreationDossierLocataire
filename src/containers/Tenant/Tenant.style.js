@@ -63,6 +63,12 @@ min-height:100vh;
   justify-content: space-between;
   padding: 0px 100px;
 
+  div{
+    > div{
+      margin-left: 0px;
+    }
+  }
+
 }
 
   .ant-upload .ant-btn{
@@ -212,38 +218,12 @@ min-height:100vh;
       }
     }
   }
-  .cercleBack {
-    position: absolute;
-    height: 300px;
-    width: 300px;
-    border-radius: 200px;
-    z-index: -1;
-  }
-  #c1 {
-    background-color: #ffa400;
-    top: 700px;
-    right: 100px;
-  }
-  #c2 {
-    background-color: #005fc3;
-    top: 170px;
-    left: 100px;
-  }
-  .carre {
-    position: absolute;
-    background-color: #4ca6e2;
-    top: 800px;
-    left: 100px;
-    height: 300px;
-    width: 300px;
-    z-index: -1;
-  }
   .alreadyConnected{
     text-align:center;
     margin-top:400px;
     font-size:40px;
   }
-  .mailSent{
+  .mailSent{  
     font-size:30px;
     font-weight:bold;
     margin-top:30%;
@@ -253,6 +233,11 @@ min-height:100vh;
   }
   
   @media (min-width: 900px){
+
+    .rightText{
+      margin-right: 50px;
+      text-align: justify;
+    }
     h2{
       font-size: 19px;
     }
@@ -328,6 +313,31 @@ min-height:100vh;
      
   }
   @media (max-width: 810px) {
+    .mailItem{
+      display: flex;
+      flex-direction: row;
+      margin-left: 2px;
+    } 
+    .mailItem{
+      margin-bottom: 0px;
+    }
+    nameItem{
+      margin-bottom: 0px;
+    }
+    .lastnameItem{
+      margin-bottom: 0px;
+      margin-left: 45px;
+    }
+    .Headerstyle__HeaderWrapper-sc-henjy6-0{
+      padding-bottom: 0px;
+    }
+    .btns{
+
+      display: inline;
+      padding: 0px 100px;
+      margin-left: 500px;
+    
+    }
     .btns{
       div:first-child{
         right: 10%;
