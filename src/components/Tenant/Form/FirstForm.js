@@ -10,13 +10,12 @@ export default function FirstForm({formInput, setFormInput, current}) {
   }, [formInput[current]]);
 
   return (
-    <div className="current-form">
+    <div className="currentForm">
       <Form.Item
 
       label="Statut"
       name={'statut_gl_' + current}
       hasFeedback
-      className="sgl"
       rules={[
         {
           required: true,
@@ -41,7 +40,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
       label="Civilité"
       name={'civil_' + current}
       hasFeedback
-      className="clvt"
+      // className="clvt"
       rules={[
         {
           required: true,
@@ -63,10 +62,12 @@ export default function FirstForm({formInput, setFormInput, current}) {
           <Radio.Button value="Mlle">Mlle</Radio.Button>
         </Radio.Group>
       </Form.Item>
-      <div className="to-flex" id="to-flex-fc">
+      {/* <div className="to-flex" id="to-flex-fc"> */}
+      <Form.Item className="wrapperInput">
        <Form.Item
         label="Prenom"
         name={'first_name_' + current}
+        className="nameItem"
         hasFeedback
         rules={[
           {
@@ -94,6 +95,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
       <Form.Item
         label="Nom"
         name={'last_name_' + current}
+        className="lastnameItem"
         hasFeedback
         rules={[
           {
@@ -116,12 +118,15 @@ export default function FirstForm({formInput, setFormInput, current}) {
             }}
           />
       </Form.Item>
-      </div>
-      <div className="to-flex">
+      </Form.Item>
+      {/* </div>
+      <div className="to-flex"> */}
+      <Form.Item className="wrapperInputs">
       <Form.Item
         label="E-mail"
         name={'email_' + current}
         hasFeedback
+        className="mailItem"
         rules={[
           {
             type: "email",
@@ -138,6 +143,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           type="text"
           value={formInput.email}
           placeholder="exemple@exemple.com"
+          className="mailInput"
           onChange={(e) => {
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};
@@ -150,6 +156,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
       <Form.Item
         label="Mobile"
         name={'mobile_' + current}
+        className="mobileItem"
         hasFeedback
         rules={[
           {
@@ -163,6 +170,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
           type="text"
           value={formInput.mobile}
           placeholder="0123456789"
+          className="mobileInput"
           onChange={(e) => {
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};
@@ -172,8 +180,9 @@ export default function FirstForm({formInput, setFormInput, current}) {
           }}
         />
       </Form.Item>
-      </div>
-      <div className="to-the-left">
+      </Form.Item>
+      {/* </div>
+      <div className="to-the-left"> */}
       <Form.Item
         label="Lieu de naissance"
         name={'born_place_' + current}
@@ -319,6 +328,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
     </Select>
       </Form.Item></div>
 
-    </div>
+    // </div>
   );
 }

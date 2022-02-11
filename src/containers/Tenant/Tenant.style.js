@@ -6,16 +6,22 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const TenantWrapper = styled.div`
-
+min-height:100vh;
+.signIn{
+  height: 100vh;
+}
+.form{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.mailItem{
+  display: flex;
+  flex-direction: row;
+}
 .tabs{
   margin-left: 10%;
-  margin-right: 6%;
-}
-
-.text-left{
-  position: relative;
-  top: 250px;
-  left: 75px;
 }
  
 .ant-input{
@@ -55,24 +61,10 @@ export const TenantWrapper = styled.div`
 }
 
 .btns{
-  position:absolute;
-left:0;
-bottom:0;
-right:0;
-padding-bottom:60px;
 
   display: flex;
   justify-content: space-between;
-  padding: 0px 80px;
-  
-  div:first-child{
-    position: relative;
-    right: 50px;
-  }
-  div:last-child{
-    position: relative;
-    left: 0px;
-  }
+  padding: 0px 400px;
 
 }
 
@@ -130,7 +122,7 @@ padding-bottom:60px;
       }
       .form {
         text-align: left;
-        .bottom_button {
+        .bottomButton {
           font-size: 30px;
           height: 50px;
           margin-left: auto;
@@ -264,55 +256,86 @@ padding-bottom:60px;
   }
   
   @media (min-width: 811px){
-    .gauche{
-      margin: 0 15%;
+
+    .wrapperInput{
+      margin-left: 199px; 
     }
-    .sgl{
-      margin-right: 65%;
+    .wrapperInputs{
+      margin-left: 206px; 
     }
-    .clvt{
-      margin-right: 65%;
+
+    .mailItem{
+      margin-bottom: 0px;
     }
-    .to-the-left{
-      position: relative;
-      right: 247px;
+    .mobileItem{
+      margin-bottom: 0px;
+      margin-left: 10px;
     }
-    .to-flex {
-      .ant-row .ant-col-13 .ant-form-item-control-input{
-        width: 150%;
-      }
-      .ant-row:last-child{
-        .ant-col-6{
-          margin-left: 10%;   
+    .nameItem{
+      margin-bottom: 0px;
+    }
+    .lastnameItem{
+      margin-bottom: 0px;
+      margin-left: 45px;
+    }
+
+    .currentForm {
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+    
+      // > div {
+      //   display: flex;
+      // }
+    
+      // .ant-form-item-control .ant-form-item-control-input {
+      //   display: flex;
+      // }
+    
+       .ant-form-item-control {
+        .ant-form-item-control-input-content {
+          display: flex;
+          flex-direction: row;
+          .ant-form-item {
+            width: 100%;
+          }
+          > div { 
+            flex: 1;
+          }
         }
       }
+    }
+
+     .formWrapper{
        display: flex;
-       margin-left: 4.3%;
-     }
-     #to-flex-fc{
-       margin-left: 4.11%;
-     }
-     .text{
-       position: relative;
-       left: 65%;
-       bottom: 500px;
+       flex-wrap: wrap;
+       .tabWrapper{
+         flex: 2;
+       }
+       .text{
+         flex: 1;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+       }
      }
      .last-p{
-       margin-right: 400px;
      }
      
   }
   @media (max-width: 810px) {
+    
+    .btns{
+      div:first-child{
+        right: 10%;
+      }
+    }
     .text{
       display: none;
     }
-    .bottom_button{
+    .bottomButton{
       left: 125px;
     }
-    .to-flex .ant-row .ant-col-13 .ant-form-item-control-input{
-      width: 100%;
-    }
-
     .ant-col label{
       font-size: 18px;
     }

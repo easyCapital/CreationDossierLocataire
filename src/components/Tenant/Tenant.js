@@ -4,10 +4,9 @@ import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
-import { Tabs } from "antd";
+import { Tabs, Affix } from "antd";
 import GarantForm from "./Form/GarantForm";
 import {PlusOutlined} from "@ant-design/icons";
-import disableScroll from 'disable-scroll';
 
 export default function Tenant() {
   const [formInput, setFormInput] = useState({});
@@ -16,7 +15,6 @@ export default function Tenant() {
   const [counter, setCounter] = useState(0);
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1)
-  disableScroll.on(); // prevent scrolling
 
 
   function getTitle(index){
@@ -163,76 +161,86 @@ export default function Tenant() {
   }
 
   return (
-    
+    <>
     <Form
-    
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 13 }}
       onFinish={handleUserRegister}
     >
-      <div className="formss">
-        <div className="tabss">
-      {display > 0 && (
-        <Tabs
-          className="tabs"
-          type="editable-card"
-          onChange={(e) => {
-            setDisplay(1);
-            setFolder(e);
-            console.log("FOLDER: " + folder)
-            console.log("NEW FOLDER: " + e)
-          }}
-          onEdit={
-            editPanes
-          }
-        >
-        {console.log(panes)}
-          {panes.map(pane => (
-             <TabPane tab={getTitle(pane.key)} key={pane.key} closable={false}>
-               {getContent(pane.key)}
-             </TabPane>
-        ))
-            }
-        </Tabs>
-      )}
-      </div>
-      <div className="text">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-        <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/> Curabitur iaculis dui libero, a eleifend dolor mollis sed.  </h2>
-      </div>
-      </div>
-      <div className="btns">  
-        {display >= 2 && (
-          <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" onClick={prev} className="bottom_button">
-              Retour
-            </Button>
-          </Form.Item>
-        )}
-        {display <= 3 && (
-          <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button
-              type="success"
-              onClick={handleUserRegister}
-              className="bottom_button"
+      <div className="formWrapper">
+        <div className="tabWrapper">
+          {display > 0 && (
+            <Tabs
+              className="tabs"
+              type="editable-card"
+              onChange={(e) => {
+                setDisplay(1);
+                setFolder(e);
+              }}
+              onEdit={editPanes}
             >
-              Suivant
-            </Button>
-          </Form.Item>
-        )}
-        {display == 4 && (
-          <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" htmlType="submit" className="bottom_button">
-              Envoyer
-            </Button>
-          </Form.Item>
-        )}
+              {console.log(panes)}
+              {panes.map((pane) => (
+                <TabPane
+                  tab={getTitle(pane.key)}
+                  key={pane.key}
+                  closable={false}
+                >
+                  {getContent(pane.key)}
+                </TabPane>
+              ))}
+            </Tabs>
+          )}
+        </div>
+        <div className="text">
+          <Affix style={{"position": 'absolute', 'top': 380}}>
+          <h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            <br /> Curabitur iaculis dui libero, a eleifend dolor mollis sed.{" "}
+          </h2>
+          <h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            <br /> Curabitur iaculis dui libero, a eleifend dolor mollis sed.{" "}
+          </h2>
+          </Affix>
+        </div>
       </div>
+      
     </Form>
+    <div className="btns">
+    {display == 1 && (
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button type="success" className="bottomButton">
+          Retour
+        </Button>
+      </Form.Item>
+    )}
+    {display >= 2 && (
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button type="success" onClick={prev} className="bottomButton">
+          Retour
+        </Button>
+      </Form.Item>
+    )}
+    {display <= 3 && (
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button
+          type="success"
+          onClick={handleUserRegister}
+          className="bottomButton"
+        >
+          Suivant
+        </Button>
+      </Form.Item>
+    )}
+    {display == 4 && (
+      <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+        <Button type="success" className="bottomButton">
+          Envoyer
+        </Button>
+      </Form.Item>
+    )}
+  </div>
+    </>
   );
 }

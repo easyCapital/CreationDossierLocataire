@@ -28,14 +28,7 @@ export default function TenantContainer({ children }) {
     return (
       <TenantWrapper>
         <div className="signIn">
-          <div className="text-left">
-            
-          </div>
           <div className="gauche">
-          <h1 className="title">
-            </h1> 
-            <h2 className="subtitle">
-            </h2> 
             <div className="form">{children}</div>
           </div>
         </div>
