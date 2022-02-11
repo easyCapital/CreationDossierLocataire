@@ -8,14 +8,25 @@ import { Tabs, Affix } from "antd";
 import GarantForm from "./Form/GarantForm";
 import { PlusOutlined } from "@ant-design/icons";
 import { set } from "react-hook-form";
+import { getCookies } from 'cookies-next';
 
-export default function Tenant() {
+export default function Tenant(param) {
   const [formInput, setFormInput] = useState({});
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [counter, setCounter] = useState(0);
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
+  
+  useEffect(() => {
+    if (getCookies('mail')){
+      setFormInput((formInput) => {
+        if (!formInput[folder]) formInput[folder] = {};
+        formInput[folder].email = getCookies('mail').mail;
+        return { ...formInput };
+      });
+    }
+  }, []);
 
   function getText() {
     if (display == 1) {
@@ -144,7 +155,7 @@ export default function Tenant() {
               : formInput[index].first_name) + " " +
             (!formInput[index].last_name ? "Nom" : formInput[index].last_name)}
         <br />
-        {formInput[index] && formInput[index].statut_gl ? formInput[index].statut_gl : ''}
+        {formInput[index] && formInput[index].statut_gl ? formInput[index].statut_gl : ' \n '}
       </>
     );
   }
@@ -287,12 +298,20 @@ export default function Tenant() {
     );
   }
 
+  const [fields, setFields] = useState([
+    {
+      name: ['email_0'],
+      value: String(getCookies('mail')?.mail).replace('%40', '@') ?? "",
+    },
+  ]);
+
   return (
     <>
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserRegister}
+        fields={fields}
       >
         <div className="formWrapper">
           <div className="tabWrapper">

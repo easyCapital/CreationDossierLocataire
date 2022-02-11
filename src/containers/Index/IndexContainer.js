@@ -6,6 +6,8 @@ import { useSession, getProviders } from "next-auth/client";
 import { useRouter } from "next/router";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { QuestionOutlined, RightOutlined } from "@ant-design/icons";
+import Tenant from "../../components/Tenant/Tenant";
+import { setCookies } from 'cookies-next';
 
 export default function IndexContainer({ children }) {
   const [loaded, setLoaded] = useState(false);
@@ -14,6 +16,10 @@ export default function IndexContainer({ children }) {
   useEffect(() => {
     setLoaded(true);
   }, []);
+
+  function setMail(e){
+    setCookies('mail', e)
+  }
 
   if (!loaded)
     return (
@@ -45,14 +51,16 @@ export default function IndexContainer({ children }) {
               alignItems: "center",
             }}
           >
-            <Input placeholder="Votre mail" style={{'width':400, height:60, 'marginBottom':90}}/>
+            <Input onChange={(e) => {setMail(e.target.value)}} placeholder="Votre mail" style={{'width':400, height:60, 'marginBottom':90}}/>
             <Button
               className="home_btn"
               shape="round"
               type="primary"
               icon={<RightOutlined />}
               size={"large"}
-              onClick={() => router.push('/tenant')}
+              onClick={() => {
+                router.push('/tenant');
+              }}
               >
               Commencer 
                 

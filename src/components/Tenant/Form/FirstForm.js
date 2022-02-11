@@ -6,7 +6,7 @@ const { Option } = Select;
 
 export default function FirstForm({formInput, setFormInput, current}) {
   useEffect(() => {
-    console.log(formInput);
+    console.log(current);
   }, [formInput[current]]);
 
   return (
@@ -127,6 +127,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
         name={'email_' + current}
         hasFeedback
         className="mailItem"
+        initialValue={formInput[current]?.email}
         rules={[
           {
             type: "email",
@@ -141,7 +142,8 @@ export default function FirstForm({formInput, setFormInput, current}) {
         <Input
           id={"email"}
           type="text"
-          value={formInput.email}
+          defaultValue={formInput[current]?.email}
+          value={formInput[current]?.email}
           placeholder="exemple@exemple.com"
           className="mailInput"
           onChange={(e) => {
@@ -184,31 +186,6 @@ export default function FirstForm({formInput, setFormInput, current}) {
       {/* </div>
       <div className="to-the-left"> */}
       <Form.Item
-        label="Lieu de naissance"
-        name={'born_place_' + current}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner votre lieu de naissance.",
-          },
-        ]}
-      >
-        <Input
-          id={"born_place"}
-          type="text"
-          value={formInput.born_place}
-          placeholder=""
-          onChange={(e) => {
-            setFormInput((formInput) => {
-              if(!formInput[current]) formInput[current] = {};
-              formInput[current].born_place = e.target.value;
-              return {...formInput};
-            })
-          }}
-        />
-      </Form.Item>
-      <Form.Item
         label="Date de naissance"
         name={'born_date_' + current}
         hasFeedback
@@ -233,6 +210,32 @@ export default function FirstForm({formInput, setFormInput, current}) {
           }}
         />
       </Form.Item>
+      <Form.Item
+        label="Lieu de naissance"
+        name={'born_place_' + current}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner votre lieu de naissance.",
+          },
+        ]}
+      >
+        <Input
+          id={"born_place"}
+          type="text"
+          value={formInput.born_place}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].born_place = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>
+      
       <Form.Item
       label="Logement actuel"
       name={'statut_' + current}

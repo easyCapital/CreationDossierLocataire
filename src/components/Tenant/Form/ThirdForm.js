@@ -12,6 +12,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
   const [fileList5, setFileList5] = useState([]);
   const [fileList6, setFileList6] = useState([]);
   const [fileList7, setFileList7] = useState([]);
+  const [fileList8, setFileList8] = useState([]);
 
   const {  Dragger } = Upload;
 
@@ -73,10 +74,18 @@ export default function ThirdForm({formInput, setFormInput, current}) {
     })
   };
   const onChange7 = ({ fileList: newFileList }) => {
-    setFileList6(newFileList);
+    setFileList7(newFileList);
     setFormInput((formInput) => {
       if(!formInput[current]) formInput[current] = {};
       formInput[current].fileList7 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange8 = ({ fileList: newFileList }) => {
+    setFileList8(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList8 = newFileList;
       return {...formInput};
     })
   };
@@ -245,6 +254,47 @@ export default function ThirdForm({formInput, setFormInput, current}) {
           </Upload>
         
         </Form.Item>}
+
+          {formInput[current] && String(formInput[current].statut_s) == "e_ae" && <Form.Item
+        
+      label="3 derniers bulletins de salaires"
+      name="tdbs"
+      hasFeedback
+      rules={[
+        {
+          required: true,
+          message: "Veuillez renseigner vos 3 derniers bulletins de salaires.",
+        },
+      ]}
+      >
+          <Upload {...props} fileList={formInput[current] && formInput[current].fileList6}
+            onChange={onChange6} >
+            {fileList6.length < 3 && '+ Téléverser'}
+          </Upload>
+        
+        </Form.Item>}
+
+
+
+
+        {formInput[current] && formInput[current].statut == "Locataire" && <Form.Item
+        
+        label="3dernières quittances "
+        name="tdbs"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner vos 3 dernières quittances.",
+          },
+        ]}
+        >
+            <Upload {...props} fileList={formInput[current] && formInput[current].fileList6}
+              onChange={onChange8} >
+              {fileList8.length < 3 && '+ Téléverser'}
+            </Upload>
+          
+          </Form.Item>}
 
     </div>
   );

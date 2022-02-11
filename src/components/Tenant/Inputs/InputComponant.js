@@ -25,6 +25,7 @@ export default function InputComponant({name, label, text, addon, formInput, set
           type="text"
           value={formInput[{name}]}
           placeholder=""
+          className={"input"+name} 
           onChange={(e) => {
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};

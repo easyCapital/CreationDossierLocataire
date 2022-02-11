@@ -233,6 +233,10 @@ min-height:100vh;
   
   @media (min-width: 900px){
 
+    .inputsnap_loyer{
+      margin-left: 100px;
+    }
+
     #garant_0{
       width: 700px;
     }
