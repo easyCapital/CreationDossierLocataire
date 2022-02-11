@@ -255,7 +255,7 @@ min-height:100vh;
     }
   }
   
-  @media (min-width: 811px){
+  @media (min-width: 900px){
 
     .wrapperInput{
       margin-left: 199px; 
@@ -334,7 +334,7 @@ min-height:100vh;
       display: none;
     }
     .bottomButton{
-      left: 125px;
+      right: 400px;
     }
     .ant-col label{
       font-size: 18px;
