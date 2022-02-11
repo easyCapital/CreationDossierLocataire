@@ -4,23 +4,23 @@ import ImgCrop from 'antd-img-crop';
 
 export default function ThirdForm({formInput, setFormInput, current}) {
 
-  const [fileList, setFileList] = useState([
-  ]);
+  const [fileList, setFileList] = useState([[],[],[],[],[],[],[]]);
 
   const {  Dragger } = Upload;
 
-  const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+  const onChange = ({ fileList: newFileList, index}) => {
+    setFileList(fileList[index]=newFileList);
     setFormInput((formInput) => {
       if(!formInput[current]) formInput[current] = {};
-      formInput[current].fileList = newFileList;
+      if(!formInput[current]['fileList']) formInput[current]['fileList'] = [];
+      formInput[current]['fileList'][index] = newFileList;
       return {...formInput};
     })
   };
 
 
   const props = { 
-    listType: 'picture',
+    listType: 'picture-card',
   };
 
 
@@ -44,7 +44,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
             fileList={formInput[current] && formInput[current].fileList}
             onChange={onChange}
           > 
-            {fileList.length < 2 && '+ Téléverser'}
+            {fileList[0].length < 2 && '+ Téléverser'}
           </Upload>
         </ImgCrop>
       </Form.Item> 

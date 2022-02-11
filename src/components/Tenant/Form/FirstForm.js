@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Input, Button, Radio, Select} from "antd";
+import { Form, Badge,Input, Button, Radio, Select} from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 const { Option } = Select;
 
@@ -33,7 +33,7 @@ export default function FirstForm({formInput, setFormInput, current}) {
         }}
       >
           <Radio.Button value="Garant">Garant</Radio.Button>
-          <Radio.Button value="Locataire">Locataire</Radio.Button>
+         <Radio.Button value="Locataire">Locataire</Radio.Button>
         </Radio.Group>
       </Form.Item>
       <Form.Item

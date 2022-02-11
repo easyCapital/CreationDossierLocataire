@@ -53,7 +53,6 @@ min-height:100vh;
   }
   .ant-col:last-child{
     flex: 1;
-    margin-left: 50px;
   }
 }
 
@@ -234,12 +233,26 @@ min-height:100vh;
   
   @media (min-width: 900px){
 
+    #garant_0{
+      width: 700px;
+    }
+    .center .inputs div{
+       .ant-col-6{
+          width: 1400px;
+        }
+        .ant-col-13{
+          margin-left: 0px;
+        }
+    }
+
     .rightText{
       margin-right: 50px;
       text-align: justify;
     }
     h2{
       font-size: 19px;
+      margin-right: 5%;
+      align-text: justify;
     }
     .mailItem{
       display: flex;
@@ -252,8 +265,12 @@ min-height:100vh;
     .wrapperInputs{
       margin-left: 206px; 
     } 
+    .nameItem{
+      margin-left: 9px;
+    }
     .mailItem{
       margin-bottom: 0px;
+      margin-left: 28px;
     }
     .mobileItem{
       margin-bottom: 0px;
@@ -298,11 +315,11 @@ min-height:100vh;
        display: flex;
        flex-wrap: wrap;
        .tabWrapper{
-         flex: 2;
+         flex: 4;
          margin-top: 100px;
        }
        .text{
-         flex: 1;
+         flex: 1.5;
          display: flex;
          flex-direction: column;
          justify-content: center;
@@ -335,7 +352,6 @@ min-height:100vh;
 
       display: inline;
       padding: 0px 100px;
-      margin-left: 500px;
     
     }
     .btns{

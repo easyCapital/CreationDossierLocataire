@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Button, Steps } from "antd";
+import { Form, Badge, Button, Steps } from "antd";
 import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
@@ -7,6 +7,7 @@ import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs, Affix } from "antd";
 import GarantForm from "./Form/GarantForm";
 import { PlusOutlined } from "@ant-design/icons";
+import { set } from "react-hook-form";
 
 export default function Tenant() {
   const [formInput, setFormInput] = useState({});
@@ -119,24 +120,33 @@ export default function Tenant() {
       );
     }
     if (display == 4) {
-      return (<><h2>Vos pièces justificatives sont stockées en France, non revendues et peuvent être supprimées à tout moment. Elles peuvent être, selon votre choix, transmises ou non. </h2></>)
+      return (
+        <>
+          <h2>
+            Vos pièces justificatives sont stockées en France, non revendues et
+            peuvent être supprimées à tout moment. Elles peuvent être, selon
+            votre choix, transmises ou non.{" "}
+          </h2>
+        </>
+      );
     }
   }
 
+
+
   function getTitle(index) {
-    return formInput[index] != null
-      ? (formInput[index].first_name == null
-          ? "Prenom"
-          : formInput[index].first_name) +
-          " " +
-          (formInput[index].last_name == null
-            ? "Nom"
-            : formInput[index].last_name) +
-          "\n" +
-          (formInput[index].statut_gl == null
-            ? " "
-            : formInput[index].statut_gl)
-      : "Nouveau Dossier";
+    return (
+      <>
+        {!formInput[index]
+          ? "Nouveau Dossier"
+          : (!formInput[index].first_name
+              ? "Prenom"
+              : formInput[index].first_name) + " " +
+            (!formInput[index].last_name ? "Nom" : formInput[index].last_name)}
+        <br />
+        {formInput[index] && formInput[index].statut_gl ? formInput[index].statut_gl : ''}
+      </>
+    );
   }
 
   function getContent(index) {
@@ -311,9 +321,7 @@ export default function Tenant() {
           </div>
           <div className="text">
             <Affix style={{ position: "absolute", top: 380 }}>
-              <div className="rightText">
-              {getText()}
-              </div>
+              <div className="rightText">{getText()}</div>
             </Affix>
           </div>
         </div>
