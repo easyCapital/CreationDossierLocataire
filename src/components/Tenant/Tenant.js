@@ -359,6 +359,14 @@ export default function Tenant() {
             </Button>
           </Form.Item>
         )}
+         {display == 4 && (
+          <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
+            <Button type="success" 
+              onClick={add}className="bottomButton">
+              Ajouter une personne
+            </Button>
+          </Form.Item>
+        )}
       </div>
     </>
   );
