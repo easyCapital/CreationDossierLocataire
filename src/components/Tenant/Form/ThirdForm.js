@@ -11,6 +11,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
   const [fileList4, setFileList4] = useState([]);
   const [fileList5, setFileList5] = useState([]);
   const [fileList6, setFileList6] = useState([]);
+  const [fileList7, setFileList7] = useState([]);
 
   const {  Dragger } = Upload;
 
@@ -68,6 +69,14 @@ export default function ThirdForm({formInput, setFormInput, current}) {
     setFormInput((formInput) => {
       if(!formInput[current]) formInput[current] = {};
       formInput[current].fileList6 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange7 = ({ fileList: newFileList }) => {
+    setFileList6(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList7 = newFileList;
       return {...formInput};
     })
   };
@@ -129,12 +138,13 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         rules={[
           {
             required: true,
-            message: "Veuillez renseigner vos possibilité de garant.",
+            message: "Veuillez renseigner votre attestation logée à titre gratuit.",
           },
         ]}
         >
-          <Upload>
-            <Button>Téléverser</Button>
+          <Upload {... props}  fileList={formInput[current] && formInput[current].fileList7}
+            onChange={onChange7} >
+            {fileList7.length < 1 && '+ Téléverser'}
           </Upload>
         </Form.Item>
         }
