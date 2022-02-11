@@ -16,10 +16,7 @@ min-height:100vh;
   flex-direction: column;
   justify-content: space-between;
 }
-.mailItem{
-  display: flex;
-  flex-direction: row;
-}
+
 .tabs{
   margin-left: 10%;
 }
@@ -64,7 +61,7 @@ min-height:100vh;
 
   display: flex;
   justify-content: space-between;
-  padding: 0px 400px;
+  padding: 0px 100px;
 
 }
 
@@ -127,10 +124,10 @@ min-height:100vh;
           height: 50px;
           margin-left: auto;
           margin-right: auto;
-          padding-left: 100px;
-          padding-right: 100px;
-          padding-top: 35px;
-          padding-bottom: 35px;
+          padding-left: 70px;
+          padding-right: 70px;
+          padding-top: 30px;
+          padding-bottom: 30px;
           font-size: 35px;
           color: white;
           &.ant-btn-primary {
@@ -256,14 +253,19 @@ min-height:100vh;
   }
   
   @media (min-width: 900px){
-
+    h2{
+      font-size: 19px;
+    }
+    .mailItem{
+      display: flex;
+      flex-direction: row;
+    } 
     .wrapperInput{
-      margin-left: 199px; 
+      margin-left: 18%; 
     }
     .wrapperInputs{
       margin-left: 206px; 
-    }
-
+    } 
     .mailItem{
       margin-bottom: 0px;
     }
@@ -273,6 +275,7 @@ min-height:100vh;
     }
     .nameItem{
       margin-bottom: 0px;
+      margin-left: 1px;
     }
     .lastnameItem{
       margin-bottom: 0px;
@@ -282,7 +285,7 @@ min-height:100vh;
     .currentForm {
       display: flex;
       flex-direction: column;
-      // align-items: center;
+      //align-items: center;
     
       // > div {
       //   display: flex;
@@ -325,7 +328,6 @@ min-height:100vh;
      
   }
   @media (max-width: 810px) {
-    
     .btns{
       div:first-child{
         right: 10%;
