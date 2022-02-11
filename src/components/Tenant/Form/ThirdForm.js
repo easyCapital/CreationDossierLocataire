@@ -4,16 +4,70 @@ import ImgCrop from 'antd-img-crop';
 
 export default function ThirdForm({formInput, setFormInput, current}) {
 
-  const [fileList, setFileList] = useState([[],[],[],[],[],[],[]]);
+  const [fileList, setFileList] = useState([]);
+  const [fileList1, setFileList1] = useState([]);
+  const [fileList2, setFileList2] = useState([]);
+  const [fileList3, setFileList3] = useState([]);
+  const [fileList4, setFileList4] = useState([]);
+  const [fileList5, setFileList5] = useState([]);
+  const [fileList6, setFileList6] = useState([]);
 
   const {  Dragger } = Upload;
 
-  const onChange = ({ fileList: newFileList, index}) => {
-    setFileList(fileList[index]=newFileList);
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
     setFormInput((formInput) => {
       if(!formInput[current]) formInput[current] = {};
-      if(!formInput[current]['fileList']) formInput[current]['fileList'] = [];
-      formInput[current]['fileList'][index] = newFileList;
+      formInput[current].fileList = newFileList;
+      return {...formInput};
+    })
+  };
+
+  const onChange1 = ({ fileList: newFileList }) => {
+    setFileList1(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList1 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange2 = ({ fileList: newFileList }) => {
+    setFileList2(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList2 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange3 = ({ fileList: newFileList }) => {
+    setFileList3(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList3 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange4 = ({ fileList: newFileList }) => {
+    setFileList4(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList4 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange5 = ({ fileList: newFileList }) => {
+    setFileList5(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList5 = newFileList;
+      return {...formInput};
+    })
+  };
+  const onChange6 = ({ fileList: newFileList }) => {
+    setFileList6(newFileList);
+    setFormInput((formInput) => {
+      if(!formInput[current]) formInput[current] = {};
+      formInput[current].fileList6 = newFileList;
       return {...formInput};
     })
   };
@@ -44,7 +98,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
             fileList={formInput[current] && formInput[current].fileList}
             onChange={onChange}
           > 
-            {fileList[0].length < 2 && '+ Téléverser'}
+            {fileList.length < 2 && '+ Téléverser'}
           </Upload>
         </ImgCrop>
       </Form.Item> 
@@ -59,8 +113,10 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} >
-            <Button >Téléverser</Button>
+          <Upload {...props} 
+            fileList={formInput[current] && formInput[current].fileList1}
+            onChange={onChange1} >
+            {fileList1.length < 1 && '+ Téléverser'}
           </Upload>
       </Form.Item> 
 
@@ -93,8 +149,9 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} >
-            <Button >Téléverser</Button>
+          <Upload {...props} fileList={formInput[current] && formInput[current].fileList2}
+            onChange={onChange2} >
+            {fileList2.length < 1 && '+ Téléverser'}
           </Upload>
       </Form.Item>
 
@@ -112,8 +169,9 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} >
-            <Button >Téléverser</Button>
+          <Upload {...props} fileList={formInput[current] && formInput[current].fileList3}
+            onChange={onChange3} >
+            {fileList1.length < 3 && '+ Téléverser'}
           </Upload>
 
         
@@ -132,8 +190,9 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} >
-            <Button >Téléverser</Button>
+          <Upload {...props} fileList={formInput[current] && formInput[current].fileList4}
+            onChange={onChange4} >
+            {fileList4.length < 2 && '+ Téléverser'}
           </Upload>
       </Form.Item>
         
@@ -151,8 +210,9 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} >
-            <Button >Téléverser</Button>
+          <Upload {...props} fileList={formInput[current] && formInput[current].fileList5}
+            onChange={onChange5} >
+            {fileList5.length < 1 && '+ Téléverser'}
           </Upload>
         
         </Form.Item>}
@@ -169,8 +229,9 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} >
-            <Button >Téléverser</Button>
+          <Upload {...props} fileList={formInput[current] && formInput[current].fileList6}
+            onChange={onChange6} >
+            {fileList6.length < 3 && '+ Téléverser'}
           </Upload>
         
         </Form.Item>}
