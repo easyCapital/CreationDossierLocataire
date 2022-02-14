@@ -409,7 +409,7 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
       </Form.Item>
 
       {formInput[current]?.statut_s && !String(formInput[current]?.statut_s).startsWith("e_") && <Form.Item
-        label="Nomde l'employeur actuel"
+        label="Nom de l'employeur actuel"
         hasFeedback
         rules={[
           {
