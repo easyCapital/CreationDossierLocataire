@@ -233,6 +233,7 @@ min-height:100vh;
   
   @media (min-width: 900px){
 
+
     .inputsnap_loyer{
       margin-left: 100px;
     }
@@ -334,6 +335,27 @@ min-height:100vh;
      
   }
   @media (max-width: 810px) {
+
+    .wrapperInputs{
+      > div{
+        > div{
+          margin-left: 99px;
+        }
+      }
+    }
+
+    .nameItem{
+      margin-left: 91px;
+    }
+
+    .lastnameItem{
+      margin-left: 118px;
+    }
+
+    .bottomButton{
+      left: 30%;
+    }
+
     .mailItem{
       display: flex;
       flex-direction: row;
@@ -366,9 +388,7 @@ min-height:100vh;
     .text{
       display: none;
     }
-    .bottomButton{
-      right: 400px;
-    }
+    
     .ant-col label{
       font-size: 18px;
     }
@@ -412,6 +432,24 @@ min-height:100vh;
   }
   .ant-checkbox-group-item{
     font-size: 15px;
+  }
+
+
+  @media (max-width: 375px) {
+    .lastnameItem{
+      margin-left: 0px;
+    }
+    .wrapperInputs{
+      > div{
+        > div{
+          margin-left: 0px;
+        }
+      }
+    }
+
+    .nameItem{
+      margin-left: 0px;
+    }
   }
 
 `;

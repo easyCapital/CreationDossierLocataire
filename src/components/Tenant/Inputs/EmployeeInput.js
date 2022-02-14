@@ -66,7 +66,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
   return (
     <div className="inputs">
        <InputComponant 
-       name="snap_1" 
+       name="snmap_1" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
@@ -74,7 +74,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_2" 
+       name="snmap_2" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
@@ -82,7 +82,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput} 
        current={current}/>
        <InputComponant 
-       name="snap_3" 
+       name="snmap_3" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
@@ -90,7 +90,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_4" 
+       name="caf" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
@@ -98,7 +98,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_5" 
+       name="isr_1" 
        label="Impôts sur le revenu annuel de référence 2021" 
        text="vos impôts sur le revenu annuel de référence 2021" 
        addon="€" 
@@ -106,7 +106,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_6" 
+       name="isr_2" 
        label="Impôts sur le revenu annuel de référence 2020" 
        text="vos impôts sur le revenu annuel de référence 2020" 
        addon="€" 
@@ -114,7 +114,7 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
         <InputComponant 
-       name="snap_7" 
+       name="otherR" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 

@@ -13,7 +13,7 @@ export default function StudentInput({formInput, setFormInput, current}) {
   return (
     <div className="inputs">
         <InputComponant 
-       name="snap_4" 
+       name="caf" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
@@ -21,7 +21,7 @@ export default function StudentInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_7" 
+       name="otherR" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 

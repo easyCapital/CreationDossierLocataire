@@ -4,7 +4,7 @@ import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import InputComponant from "./InputComponant";
 
-export default function TnsInput({formInput, setFormInput, current}) {
+export default function TnsInput({formInput, setFormInput, current, fields, setFields}) {
 
   
   function getPrevDate(val){
@@ -63,7 +63,7 @@ export default function TnsInput({formInput, setFormInput, current}) {
   return (
     <div className="inputs">
       <InputComponant 
-       name="snap_8" 
+       name="rnme" 
        label="Revenu net mensuel estimé " 
        text="votre revenu net mensuel estimé" 
        addon="€" 
@@ -71,7 +71,7 @@ export default function TnsInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
       <InputComponant 
-       name="snap_4" 
+       name="caf" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
@@ -79,7 +79,7 @@ export default function TnsInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_5" 
+       name="snmap_1" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
@@ -87,7 +87,7 @@ export default function TnsInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
        <InputComponant 
-       name="snap_6" 
+       name="snmap_2" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
@@ -95,7 +95,7 @@ export default function TnsInput({formInput, setFormInput, current}) {
        setFormInput={setFormInput}
        current={current}/>
       <InputComponant 
-       name="snap_7" 
+       name="otherR" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 

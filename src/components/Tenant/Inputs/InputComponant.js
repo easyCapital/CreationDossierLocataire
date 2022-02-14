@@ -11,6 +11,7 @@ export default function InputComponant({name, label, text, addon, formInput, set
       <Form.Item
         label={label}
         hasFeedback
+        name={name+"_" + current}
         rules={[
           {
             required: true,

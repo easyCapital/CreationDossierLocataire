@@ -262,6 +262,8 @@ export default function Tenant(param) {
             formInput={formInput}
             setFormInput={setFormInput}
             current={foldersss}
+            fields={fields}
+            setFields={setFields}
           />
         )}
         {display == 2 && (
@@ -269,6 +271,8 @@ export default function Tenant(param) {
             formInput={formInput}
             setFormInput={setFormInput}
             current={foldersss}
+            fields={fields}
+            setFields={setFields}
           />
         )}
         {display == 3 &&
@@ -279,12 +283,16 @@ export default function Tenant(param) {
               formInput={formInput}
               setFormInput={setFormInput}
               current={foldersss}
+              fields={fields}
+              setFields={setFields}
             />
           ) : (
             <GarantForm
               formInput={formInput}
               setFormInput={setFormInput}
               current={foldersss}
+              fields={fields}
+              setFields={setFields}
             />
           ))}
         {display == 4 && (
@@ -292,6 +300,8 @@ export default function Tenant(param) {
             formInput={formInput}
             setFormInput={setFormInput}
             current={foldersss}
+            fields={fields}
+            setFields={setFields}
           />
         )}
       </>
@@ -381,7 +391,7 @@ export default function Tenant(param) {
         )}
         {display == 4 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" className="bottomButton">
+            <Button type="success" onClick={console.log(JSON.stringify(formInput))} className="bottomButton">
               Enregistrer
             </Button>
           </Form.Item>

@@ -4,7 +4,7 @@ import { Form, Badge,Input, Button, Radio, Select} from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 const { Option } = Select;
 
-export default function FirstForm({formInput, setFormInput, current}) {
+export default function FirstForm({formInput, setFormInput, current, fields, setFields}) {
   useEffect(() => {
     console.log(current);
   }, [formInput[current]]);
@@ -25,12 +25,13 @@ export default function FirstForm({formInput, setFormInput, current}) {
       >
         <Radio.Group buttonStyle="solid"
         onChange={(e) => {
+          
           setFormInput((formInput) => {
             if(!formInput[current]) formInput[current] = {};
             formInput[current].statut_gl = e.target.value;
             return {...formInput};
           })
-        }}
+         }}
       >
           <Radio.Button value="Garant">Garant</Radio.Button>
          <Radio.Button value="Locataire">Locataire</Radio.Button>
@@ -110,12 +111,11 @@ export default function FirstForm({formInput, setFormInput, current}) {
           value={formInput[current] && formInput[current].last_name && formInput[current].last_name}
           placeholder=""
           onChange={(e) => {
-              setFormInput((formInput) => {
-                if(!formInput[current]) formInput[current] = {};
-                formInput[current].last_name = e.target.value;
-                return {...formInput};
-              })
-            }}
+            setFields(...fields, {
+              name: ['last_name_' + current],
+              value: e.target.value,
+            },
+            )}}
           />
       </Form.Item>
       </Form.Item>
