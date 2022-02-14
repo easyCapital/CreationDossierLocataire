@@ -406,7 +406,85 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           <Option value="e_se">Étudiant sans emploi</Option>
           <Option value="e_ae">Étudiant avec emploi</Option>
     </Select>
-      </Form.Item></div>
+      </Form.Item>
+
+      {formInput[current]?.statut_s && !String(formInput[current]?.statut_s).startsWith("e_") && <Form.Item
+        label="Nomde l'employeur actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le nom de l'employeur actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"nea"}
+          name={'nea_' + current}
+          type="text"
+          value={formInput[current].nea}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].nea = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+      {formInput[current]?.statut_s && !String(formInput[current]?.statut_s).startsWith("e_") &&  <Form.Item
+        label="Prenom de l'employeur actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le nom de l'employeur actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"pea"}
+          name={'pea_' + current}
+          type="text"
+          value={formInput[current].pea}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].pea = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+      {formInput[current]?.statut_s && !String(formInput[current]?.statut_s).startsWith("e_") &&  <Form.Item
+        label="Mobilede l'employeur actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"tea"}
+          name={'tea_' + current}
+          type="text"
+          value={formInput[current].tea}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].tea = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+      
+      </div>
 
     // </div>
   );

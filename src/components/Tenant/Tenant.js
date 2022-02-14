@@ -9,6 +9,7 @@ import GarantForm from "./Form/GarantForm";
 import { PlusOutlined } from "@ant-design/icons";
 import { set } from "react-hook-form";
 import { getCookies } from 'cookies-next';
+import HttpService from "../../services/HttpService";
 
 export default function Tenant(param) {
   const [formInput, setFormInput] = useState({});
@@ -17,7 +18,11 @@ export default function Tenant(param) {
   const [counter, setCounter] = useState(0);
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
-  
+
+  const fetcher = url => fetch(url).then(res => res.json())
+  const baseUrl = "https://jsonplaceholder.typicode.com"
+  const http = new HttpService();
+
   useEffect(() => {
     if (getCookies('mail')){
       setFormInput((formInput) => {
