@@ -276,12 +276,12 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           id={"npa"}
           name={'npa_' + current}
           type="text"
-          value={formInput.address}
+          value={formInput[current].npa}
           placeholder=""
           onChange={(e) => {
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};
-              formInput[current].npa = e.target.value;
+              formInput[current]?.npa = e.target.value;
               return {...formInput};
             })
           }}
@@ -301,7 +301,7 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           id={"ppa"}
           name={'ppa_' + current}
           type="text"
-          value={formInput[current].ppa}
+          value={formInput[current]?.ppa}
           placeholder=""
           onChange={(e) => {
             setFormInput((formInput) => {
@@ -326,7 +326,7 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           id={"tpa"}
           name={'tpa_' + current}
           type="text"
-          value={formInput.address}
+          value={formInput[current]?.tpa}
           placeholder=""
           onChange={(e) => {
             setFormInput((formInput) => {
@@ -352,7 +352,7 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           id={"address"}
           name={'address_' + current}
           type="text"
-          value={formInput[current].address}
+          value={formInput[current]?.address}
           placeholder=""
           onChange={(e) => {
             setFormInput((formInput) => {
