@@ -28,6 +28,12 @@ export default function Tenant(param) {
     }
   }, []);
 
+  function finish(){
+    console.log("---------------------------")
+    console.log(JSON.stringify(formInput))
+    console.log("---------------------------")
+  }
+
   function getText() {
     if (display == 1) {
       if (formInput[folder] == null) {
@@ -391,7 +397,7 @@ export default function Tenant(param) {
         )}
         {display == 4 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" onClick={console.log(JSON.stringify(formInput))} className="bottomButton">
+            <Button type="success" onClick={() => finish()} className="bottomButton">
               Enregistrer
             </Button>
           </Form.Item>

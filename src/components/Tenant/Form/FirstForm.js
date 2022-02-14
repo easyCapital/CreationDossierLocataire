@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import { Form, Badge,Input, Button, Radio, Select} from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
+import InputComponant from "../Inputs/InputComponant";
 const { Option } = Select;
 
 export default function FirstForm({formInput, setFormInput, current, fields, setFields}) {
@@ -261,6 +262,82 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           <Radio.Button value="Logé à titre gratuit">Logé à titre gratuit</Radio.Button>
         </Radio.Group>
       </Form.Item>
+      {formInput[current]?.statut == "Locataire" &&  <Form.Item
+        label="Nom du propriétaire actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le nom du propriétaire actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"npa"}
+          name={'npa_' + current}
+          type="text"
+          value={formInput.address}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].npa = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+      {formInput[current]?.statut == "Locataire" &&  <Form.Item
+        label="Prenom du propriétaire actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le nom du propriétaire actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"ppa"}
+          name={'ppa_' + current}
+          type="text"
+          value={formInput[current].ppa}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].ppa = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+      {formInput[current]?.statut == "Locataire" &&  <Form.Item
+        label="Mobile du propriétaire actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le numéro de téléphone du propriétaire actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"tpa"}
+          name={'tpa_' + current}
+          type="text"
+          value={formInput.address}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].tpa = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+      
       <Form.Item
         label="Adresse actuelle"
         hasFeedback
@@ -275,7 +352,7 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           id={"address"}
           name={'address_' + current}
           type="text"
-          value={formInput.address}
+          value={formInput[current].address}
           placeholder=""
           onChange={(e) => {
             setFormInput((formInput) => {
