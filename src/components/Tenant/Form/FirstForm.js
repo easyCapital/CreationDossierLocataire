@@ -337,6 +337,31 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
           }}
         />
       </Form.Item>}
+      {formInput[current]?.statut == "Locataire" &&  <Form.Item
+        label="Mail du propriétaire actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le mail du propriétaire actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"mpa"}
+          name={'mpa_' + current}
+          type="text"
+          value={formInput[current].mpa}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].mpa = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
       
       <Form.Item
         label="Adresse actuelle"
@@ -459,7 +484,7 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
         />
       </Form.Item>}
       {formInput[current]?.statut_s && !String(formInput[current]?.statut_s).startsWith("e_") &&  <Form.Item
-        label="Mobilede l'employeur actuel"
+        label="Mobile de l'employeur actuel"
         hasFeedback
         rules={[
           {
@@ -478,6 +503,32 @@ export default function FirstForm({formInput, setFormInput, current, fields, set
             setFormInput((formInput) => {
               if(!formInput[current]) formInput[current] = {};
               formInput[current].tea = e.target.value;
+              return {...formInput};
+            })
+          }}
+        />
+      </Form.Item>}
+
+      {formInput[current]?.statut_s && !String(formInput[current]?.statut_s).startsWith("e_") &&  <Form.Item
+        label="Mail de l'employeur actuel"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
+          },
+        ]}
+      >
+        <Input
+          id={"mea"}
+          name={'mea_' + current}
+          type="text"
+          value={formInput[current].mea}
+          placeholder=""
+          onChange={(e) => {
+            setFormInput((formInput) => {
+              if(!formInput[current]) formInput[current] = {};
+              formInput[current].mea = e.target.value;
               return {...formInput};
             })
           }}

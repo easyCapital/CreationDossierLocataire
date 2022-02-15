@@ -8,7 +8,7 @@ import { Tabs, Affix } from "antd";
 import GarantForm from "./Form/GarantForm";
 import { PlusOutlined } from "@ant-design/icons";
 import { set } from "react-hook-form";
-import { getCookies } from 'cookies-next';
+import { getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
 
 export default function Tenant(param) {
@@ -19,24 +19,69 @@ export default function Tenant(param) {
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
 
-  const fetcher = url => fetch(url).then(res => res.json())
-  const baseUrl = "https://jsonplaceholder.typicode.com"
-  const http = new HttpService();
-
   useEffect(() => {
-    if (getCookies('mail')){
+    if (getCookies("mail")) {
       setFormInput((formInput) => {
         if (!formInput[folder]) formInput[folder] = {};
-        formInput[folder].email = getCookies('mail').mail;
+        formInput[folder].email = getCookies("mail").mail;
         return { ...formInput };
       });
     }
   }, []);
 
-  function finish(){
-    console.log("---------------------------")
-    console.log(JSON.stringify(formInput))
-    console.log("---------------------------")
+  const saveFolder = (datas) => {
+    const http = new HttpService();
+    let signupUrl = "folder/save";
+    return http
+      .postData(datas, signupUrl)
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
+
+  const http = new HttpService();
+  let signupUrl = "folder/save";
+  http
+    .postData([], signupUrl)
+    .then((data) => {
+      console.log(data);
+      if (data == '404'){
+        alert('404')
+        return data;
+      }
+      alert("Status: " + data['status'])
+      return data;
+    })
+    .catch((error) => {
+      console.log(error);
+      return error;
+    });
+
+  function submit() {
+    console.log("---------------------------");
+    console.log(JSON.stringify(formInput));
+    console.log("---------------------------");
+
+    /*
+    1. Enregistre le dossier
+    2. Si l'utilisateur n'est pas login ->
+    3. Definir un mdp dans la page suivante
+    */
+   let resp = saveFolder(JSON.stringify(formInput));
+   console.log(resp);
+   if (/*utilisateur existe*/ true){
+     if (/*utilisateur non connecté*/ true){
+       /* Rediriger vers la page de connexion */
+       return;
+     }
+     return;
+   }
+   /* Redirection vers la page de définition de mot de passe */
+   return;
+
   }
 
   function getText() {
@@ -154,8 +199,6 @@ export default function Tenant(param) {
     }
   }
 
-
-
   function getTitle(index) {
     return (
       <>
@@ -163,10 +206,13 @@ export default function Tenant(param) {
           ? "Nouveau Dossier"
           : (!formInput[index].first_name
               ? "Prenom"
-              : formInput[index].first_name) + " " +
+              : formInput[index].first_name) +
+            " " +
             (!formInput[index].last_name ? "Nom" : formInput[index].last_name)}
         <br />
-        {formInput[index] && formInput[index].statut_gl ? formInput[index].statut_gl : ' \n '}
+        {formInput[index] && formInput[index].statut_gl
+          ? formInput[index].statut_gl
+          : " \n "}
       </>
     );
   }
@@ -321,8 +367,11 @@ export default function Tenant(param) {
 
   const [fields, setFields] = useState([
     {
-      name: ['email_0'],
-      value: String(getCookies('mail')?.mail).replace('%40', '@') ?? "",
+      name: ["email_0"],
+      value:
+        String(getCookies("mail")?.mail)
+          .replace("%40", "@")
+          .replace("undefined", "") ?? "",
     },
   ]);
 
@@ -394,20 +443,22 @@ export default function Tenant(param) {
         )}
         {display == 4 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" 
-              onClick={add}className="bottomButton">
+            <Button type="success" onClick={add} className="bottomButton">
               Ajouter une personne
             </Button>
           </Form.Item>
         )}
         {display == 4 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-            <Button type="success" onClick={() => finish()} className="bottomButton">
+            <Button
+              type="success"
+              onClick={() => submit()}
+              className="bottomButton"
+            >
               Enregistrer
             </Button>
           </Form.Item>
         )}
-         
       </div>
     </>
   );

@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { QuestionOutlined, RightOutlined } from "@ant-design/icons";
 import Tenant from "../../components/Tenant/Tenant";
-import { setCookies } from 'cookies-next';
+import { setCookies, getCookies } from 'cookies-next';
+import HttpService from "../../services/HttpService";
 
 export default function IndexContainer({ children }) {
   const [loaded, setLoaded] = useState(false);
@@ -20,6 +21,19 @@ export default function IndexContainer({ children }) {
   function setMail(e){
     setCookies('mail', e)
   }
+
+  const checkUser = (mail) => {
+    const http = new HttpService();
+    let signupUrl = "user/mail";
+    return http
+      .postData(mail, signupUrl)
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  };
 
   if (!loaded)
     return (
@@ -59,6 +73,18 @@ export default function IndexContainer({ children }) {
               icon={<RightOutlined />}
               size={"large"}
               onClick={() => {
+                /*
+                1. Vérifier si il existe dans la table user
+                2. SI OUI -> Remplir avec les données de l'API
+                3. SINON -> Rien
+                */
+               const mail = String(getCookies("mail")?.mail)
+               .replace("%40", "@")
+               .replace("undefined", "") ?? "";
+               if (checkUser(mail)){
+
+               }
+
                 router.push('/tenant');
               }}
               >

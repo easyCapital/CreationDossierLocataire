@@ -4,7 +4,8 @@ export default class HttpService {
     const token = await localStorage.getItem(tokenId);
     const requestOptions = this.postRequestOptions(token, item, pdf);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
-      pdf ? response : response.json()
+      // pdf ? response : response.json()
+      response.status == "404"? response : response
     );
   };
 
