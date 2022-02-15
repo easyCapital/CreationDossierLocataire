@@ -6,26 +6,179 @@ import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs, Affix } from "antd";
 import GarantForm from "./Form/GarantForm";
-import { PlusOutlined } from "@ant-design/icons";
-import { set } from "react-hook-form";
 import { getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
 
 export default function Tenant(param) {
+  const initFormData = [
+    {
+      name: "statut_gl",
+      value: "",
+    },
+    {
+      name: "civil",
+      value: "",
+    },
+    {
+      name: "first_name",
+      value: "",
+    },
+    {
+      name: "last_name",
+      value: "",
+    },
+    {
+      name: "mail",
+      value: "",
+    },
+    {
+      name: "mobile",
+      value: "",
+    },
+    {
+      name: "born_date",
+      value: "",
+    },
+    {
+      name: "born_place",
+      value: "",
+    },
+    {
+      name: "statut",
+      value: "",
+    },
+    {
+      name: "address",
+      value: "",
+    },
+    {
+      name: "statut_s",
+      value: "",
+    },
+    {
+      name: "npa",
+      value: "",
+    },
+    {
+      name: "ppa",
+      value: "",
+    },
+    {
+      name: "tpa",
+      value: "",
+    },
+    {
+      name: "mpa",
+      value: "",
+    },
+    {
+      name: "nea",
+      value: "",
+    },
+    {
+      name: "pea",
+      value: "",
+    },
+    {
+      name: "tea",
+      value: "",
+    },
+    {
+      name: "mea",
+      value: "",
+    },
+    {
+      name: "snmap1",
+      value: "",
+    },
+    {
+      name: "snmap2",
+      value: "",
+    },
+    {
+      name: "snmap3",
+      value: "",
+    },
+    {
+      name: "caf",
+      value: "",
+    },
+    {
+      name: "isr",
+      value: "",
+    },
+    {
+      name: "otherR",
+      value: "",
+    },
+    {
+      name: "rnme",
+      value: "",
+    },
+    {
+      name: "caf",
+      value: "",
+    },
+    {
+      name: "identity",
+      value: [],
+    },
+    {
+      name: "justify",
+      value: [],
+    },
+    {
+      name: "altg",
+      value: [],
+    },
+    {
+      name: "rib",
+      value: [],
+    },
+    {
+      name: "tdbs",
+      value: [],
+    },
+    {
+      name: "ddbc",
+      value: [],
+    },
+    {
+      name: "studentCard",
+      value: [],
+    },
+    {
+      name: "tdq",
+      value: [],
+    },
+    {
+      name: "garant",
+      value: [],
+    },
+  ]
+  const [formData, setFormData] = useState(
+    [
+   initFormData,
+  ]
+  );
+
   const [formInput, setFormInput] = useState({});
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
-  const [counter, setCounter] = useState(0);
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
-
+  const [fields, setFields] = useState([
+    {
+      name: ["mail_0"],
+      value:
+        String(getCookies("mail")?.mail)
+          .replace("%40", "@")
+          .replace("undefined", "") ?? "",
+    },
+  ]);
   useEffect(() => {
     if (getCookies("mail")) {
-      setFormInput((formInput) => {
-        if (!formInput[folder]) formInput[folder] = {};
-        formInput[folder].email = getCookies("mail").mail;
-        return { ...formInput };
-      });
+      setCurrentData("mail", getCookies("mail"))
     }
   }, []);
 
@@ -42,23 +195,12 @@ export default function Tenant(param) {
       });
   };
 
-  const http = new HttpService();
-  let signupUrl = "folder/save";
-  http
-    .postData([], signupUrl)
-    .then((data) => {
-      console.log(data);
-      if (data == '404'){
-        alert('404')
-        return data;
-      }
-      alert("Status: " + data['status'])
-      return data;
-    })
-    .catch((error) => {
-      console.log(error);
-      return error;
+  function setCurrentData(name, value) {
+    setFormData((formData) => {
+      formData[folder].find((e) => e.name == name).value = value;
+      return [ ...formData ];
     });
+  }
 
   function submit() {
     console.log("---------------------------");
@@ -70,18 +212,17 @@ export default function Tenant(param) {
     2. Si l'utilisateur n'est pas login ->
     3. Definir un mdp dans la page suivante
     */
-   let resp = saveFolder(JSON.stringify(formInput));
-   console.log(resp);
-   if (/*utilisateur existe*/ true){
-     if (/*utilisateur non connecté*/ true){
-       /* Rediriger vers la page de connexion */
-       return;
-     }
-     return;
-   }
-   /* Redirection vers la page de définition de mot de passe */
-   return;
-
+    let resp = saveFolder(JSON.stringify(formInput));
+    console.log(resp);
+    if (/*utilisateur existe*/ true) {
+      if (/*utilisateur non connecté*/ true) {
+        /* Rediriger vers la page de connexion */
+        return;
+      }
+      return;
+    }
+    /* Redirection vers la page de définition de mot de passe */
+    return;
   }
 
   function getText() {
@@ -253,7 +394,15 @@ export default function Tenant(param) {
   const { Step } = Steps;
   const { TabPane } = Tabs;
 
+  useEffect (() => {
+    console.log(formData)
+  }, [formData])
+
   function add() {
+    console.log("------------------")
+    console.log(formData)
+    console.log("------------------")
+    setFormData([...formData, initFormData])
     seti(i + 1);
     panes.push({ key: i });
   }
@@ -292,129 +441,91 @@ export default function Tenant(param) {
   function prev() {
     setDisplay(display - 1);
   }
-
-  useEffect(() => {
-    console.log(formInput);
-  }, [formInput]);
-
   useEffect(() => {
     console.log("folder", folder);
   }, [folder]);
 
-  function addTab() {
-    setFormInput((formInput) => {
-      if (!formInput[counter + 1]) formInput[counter + 1] = {};
-      formInput[counter + 1].first_name = "Nouveau";
-      formInput[counter + 1].last_name = "Dossier";
-      return { ...formInput };
-    });
-    setCounter(counter + 1);
-  }
-
   function getForm(foldersss) {
     return (
-      <>
-        {display == 1 && (
-          <FirstForm
-            formInput={formInput}
-            setFormInput={setFormInput}
-            current={foldersss}
-            fields={fields}
-            setFields={setFields}
-          />
-        )}
-        {display == 2 && (
-          <RevenuesForm
-            formInput={formInput}
-            setFormInput={setFormInput}
-            current={foldersss}
-            fields={fields}
-            setFields={setFields}
-          />
-        )}
-        {display == 3 &&
-          formInput[foldersss] &&
-          formInput[foldersss].statut_gl &&
-          (formInput[foldersss].statut_gl == "Locataire" ? (
-            <SecondForm
-              formInput={formInput}
-              setFormInput={setFormInput}
-              current={foldersss}
-              fields={fields}
-              setFields={setFields}
-            />
-          ) : (
-            <GarantForm
-              formInput={formInput}
-              setFormInput={setFormInput}
-              current={foldersss}
-              fields={fields}
-              setFields={setFields}
-            />
-          ))}
-        {display == 4 && (
-          <ThirdForm
-            formInput={formInput}
-            setFormInput={setFormInput}
-            current={foldersss}
-            fields={fields}
-            setFields={setFields}
-          />
-        )}
-      </>
-    );
-  }
-
-  const [fields, setFields] = useState([
-    {
-      name: ["email_0"],
-      value:
-        String(getCookies("mail")?.mail)
-          .replace("%40", "@")
-          .replace("undefined", "") ?? "",
-    },
-  ]);
-
-  return (
-    <>
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserRegister}
-        fields={fields}
+        fields={formData[folder]}
       >
-        <div className="formWrapper">
-          <div className="tabWrapper">
-            {display > 0 && (
-              <Tabs
-                className="tabs"
-                type="editable-card"
-                onChange={(e) => {
-                  setDisplay(1);
-                  setFolder(e);
-                }}
-                onEdit={editPanes}
-              >
-                {console.log(panes)}
-                {panes.map((pane) => (
-                  <TabPane
-                    tab={getTitle(pane.key)}
-                    key={pane.key}
-                    closable={false}
-                  >
-                    {getContent(pane.key)}
-                  </TabPane>
-                ))}
-              </Tabs>
-            )}
-          </div>
-          <div className="text">
-            <Affix style={{ position: "absolute", top: 380 }}>
-              <div className="rightText">{getText()}</div>
-            </Affix>
-          </div>
-        </div>
+        {display == 1 && (
+          <FirstForm
+            current={foldersss}
+            data={formData[folder]}
+            setFormData={setFormData}
+            setCurrentData={setCurrentData}
+          />
+        )}
+        {display == 2 && (
+          <RevenuesForm
+          current={foldersss}
+          data={formData[folder]}
+          setCurrentData={setCurrentData}
+          />
+        )}
+        {display == 3 &&
+         (formData[folder].find((e) => e.name == 'statut_gl').value == "Locataire" ? (
+            <SecondForm
+            current={foldersss}
+            data={formData[folder]}
+            setCurrentData={setCurrentData}
+            />
+          ) : (
+            <GarantForm
+            current={foldersss}
+            data={formData[folder]}
+            setCurrentData={setCurrentData}
+            formData={formData}
+            />
+          ))}
+        {display == 4 && (
+          <ThirdForm
+          current={foldersss}
+          data={formData[folder]}
+          setCurrentData={setCurrentData}
+          />
+        )}
       </Form>
+    );
+  }
+
+  return (
+    <>
+      <div className="formWrapper">
+        <div className="tabWrapper">
+          {display > 0 && (
+            <Tabs
+              className="tabs"
+              type="editable-card"
+              onChange={(e) => {
+                setDisplay(1);
+                setFolder(e);
+              }}
+              onEdit={editPanes}
+            >
+              {panes.map((pane) => (
+                <TabPane
+                  tab={getTitle(pane.key)}
+                  key={pane.key}
+                  closable={false}
+                >
+                  {getContent(pane.key)}
+                </TabPane>
+              ))}
+            </Tabs>
+          )}
+        </div>
+        <div className="text">
+          <Affix style={{ position: "absolute", top: 380 }}>
+            <div className="rightText">{getText()}</div>
+          </Affix>
+        </div>
+      </div>
       <div className="btns">
         {display == 1 && (
           <Form.Item wrapperCol={{ offset: 4, span: 16 }}>

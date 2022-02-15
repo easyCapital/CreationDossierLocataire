@@ -4,9 +4,8 @@ import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import InputComponant from "./InputComponant";
 
-export default function TnsInput({formInput, setFormInput, current, fields, setFields}) {
+export default function TnsInput({data, setFormData, setCurrentData}) {
 
-  
   function getPrevDate(val){
     var x = new Date();
     x.setDate(1);
@@ -67,41 +66,41 @@ export default function TnsInput({formInput, setFormInput, current, fields, setF
        label="Revenu net mensuel estimé " 
        text="votre revenu net mensuel estimé" 
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
       <InputComponant 
        name="caf" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_1" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_2" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
       <InputComponant 
        name="otherR" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
     </div>
   );
 }

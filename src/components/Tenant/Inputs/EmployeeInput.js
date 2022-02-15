@@ -4,11 +4,7 @@ import { Radio, Space, Form } from 'antd';
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import InputComponant from "./InputComponant";
 
-export default function EmployeeInput({formInput, setFormInput, current}) {
-
-  function onChange(value){
-    setFormInput({...formInput, garant:value})
-  }
+export default function EmployeeInput({data, setFormData, setCurrentData}) {
 
   function getPrevDate(val){
     var x = new Date();
@@ -70,57 +66,57 @@ export default function EmployeeInput({formInput, setFormInput, current}) {
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_2" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput} 
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_3" 
        label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
        text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="caf" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="isr_1" 
        label="Impôts sur le revenu annuel de référence 2021" 
        text="vos impôts sur le revenu annuel de référence 2021" 
-       addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       addon="€"  
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
        <InputComponant 
        name="isr_2" 
        label="Impôts sur le revenu annuel de référence 2020" 
        text="vos impôts sur le revenu annuel de référence 2020" 
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
         <InputComponant 
        name="otherR" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 
-       formInput={formInput} 
-       setFormInput={setFormInput}
-       current={current}/>
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>
     </div>
   );
 }

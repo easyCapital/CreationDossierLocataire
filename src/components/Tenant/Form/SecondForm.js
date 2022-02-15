@@ -7,14 +7,15 @@ import ThirdForm from "./ThirdForm";
 import RevenuesForm from "./RevenuesForm";
 import GarantForm from "./GarantForm";
 
-export default function SecondForm({formInput, setFormInput, current}) {
+export default function SecondForm({
+  current,
+  data,
+  setFormData,
+  setCurrentData,
+}) {
 
   function onChange(values){
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].garant = values;
-      return {...formInput};
-    })
+    setCurrentData('garant', values)
   }
 
   const options = [

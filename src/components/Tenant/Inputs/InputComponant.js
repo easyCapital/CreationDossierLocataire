@@ -5,7 +5,7 @@ import { Input, Select, Space, Cascader, Form } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import { Label, Width } from "devextreme-react/chart";
 
-export default function InputComponant({name, label, text, addon, formInput, setFormInput, current}) {
+export default function InputComponant({name, label, text, addon, data, setCurrentData, setFormData, current}) {
 
     return (
       <Form.Item
@@ -24,15 +24,10 @@ export default function InputComponant({name, label, text, addon, formInput, set
           id={name}
           name={name}
           type="text"
-          value={formInput[{name}]}
           placeholder=""
           className={"input"+name} 
           onChange={(e) => {
-            setFormInput((formInput) => {
-              if(!formInput[current]) formInput[current] = {};
-              formInput[current][name] = e.target.value;
-              return {...formInput};
-            })
+            setCurrentData(name, e.target.value)
           }}
         />
       </Form.Item>

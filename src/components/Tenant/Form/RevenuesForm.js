@@ -5,22 +5,35 @@ import TnsInput from "../Inputs/TnsInput"
 import StudentInput from "../Inputs/StudentInput"
 import InputComponant from "../Inputs/InputComponant";
 
-export default function RevenuesForm({formInput, setFormInput, current}) {
+export default function RevenuesForm({
+  current,
+  data,
+  setFormData,
+  setCurrentData,
+}) {
 
   return (
     <div className="center">  
-      {formInput[current] == null && <h2>Veuillez selectionner un statut sur le formulaire précedent</h2>}
-      {formInput[current] != null && formInput[current].statut_s == null && <h2>Veuillez selectionner un statut sur le formulaire précedent</h2>}
-      {formInput[current] != null &&(String(formInput[current].statut_s).startsWith("s") && <EmployeeInput  formInput={formInput} setFormInput={setFormInput} current={current}/>)}
-      {formInput[current] != null &&(String(formInput[current].statut_s).startsWith("tns") && <TnsInput  formInput={formInput} setFormInput={setFormInput} current={current}/>)}
-      {formInput[current] != null &&(String(formInput[current].statut_s).startsWith("e")  && <StudentInput  formInput={formInput} setFormInput={setFormInput} current={current}/>)}
-      {formInput[current] != null && formInput[current].statut == "Locataire" && <InputComponant
-       name="snap_loyer" 
+      {(String(data.find((e) => e.name == "statut_s").value).startsWith("s") && <EmployeeInput 
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>)}
+      {(String(data.find((e) => e.name == "statut_s").value).startsWith("tns") && <TnsInput  
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>)}
+      {(String(data.find((e) => e.name == "statut_s").value).startsWith("e")  && <StudentInput
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}/>)}
+      {String(data.find((e) => e.name == "statut").value) == "Locataire" && <InputComponant
+       name="loyer" 
        label="Montant du loyer actuel" 
        text="votre montant du loyer actuel" 
        addon="€"
-       formInput={formInput} 
-       setFormInput={setFormInput}
+       data={data}
+       setFormData={setFormData}
+       setCurrentData={setCurrentData}
        current={current}/>}
 
     </div>

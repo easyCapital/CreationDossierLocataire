@@ -276,7 +276,7 @@ export const TenantWrapper = styled.div`
     }
     .mailItem{
       margin-bottom: 0px;
-      margin-left: 28px;
+      margin-left: 44px;
     }
     .mobileItem{
       margin-bottom: 0px;

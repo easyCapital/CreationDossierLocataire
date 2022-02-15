@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { Upload, Form, Button } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-export default function ThirdForm({formInput, setFormInput, current}) {
+export default function ThirdForm({
+  current,
+  data,
+  setFormData,
+  setCurrentData,
+}) {
 
   const [fileList, setFileList] = useState([]);
   const [fileList1, setFileList1] = useState([]);
@@ -18,76 +23,40 @@ export default function ThirdForm({formInput, setFormInput, current}) {
 
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].identity = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('identity', newFileList)
   };
 
   const onChange1 = ({ fileList: newFileList }) => {
     setFileList1(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].justify = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('justify', newFileList)
   };
   const onChange2 = ({ fileList: newFileList }) => {
     setFileList2(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].rib = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('rib', newFileList)
   };
   const onChange3 = ({ fileList: newFileList }) => {
     setFileList3(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].tdbs = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('tdbs', newFileList)
   };
   const onChange4 = ({ fileList: newFileList }) => {
     setFileList4(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].ddbc = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('ddbc', newFileList)
   };
   const onChange5 = ({ fileList: newFileList }) => {
     setFileList5(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].studenCard = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('studentCard', newFileList)
   };
   const onChange6 = ({ fileList: newFileList }) => {
     setFileList6(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].tdbs = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('tdbs', newFileList)
   };
   const onChange7 = ({ fileList: newFileList }) => {
     setFileList7(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].altg = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('altg', newFileList)
   };
   const onChange8 = ({ fileList: newFileList }) => {
     setFileList8(newFileList);
-    setFormInput((formInput) => {
-      if(!formInput[current]) formInput[current] = {};
-      formInput[current].tdq = newFileList;
-      return {...formInput};
-    })
+    setCurrentData('tdq', newFileList)
   };
 
 
@@ -113,7 +82,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
           <Upload
             multiple
             listType="picture-card"
-            fileList={formInput[current] && formInput[current].identity}
+            fileList={data.find((e) => e.name == "identity").value}
             onChange={onChange}
           > 
             {fileList.length < 2 && '+ Téléverser'}
@@ -132,14 +101,15 @@ export default function ThirdForm({formInput, setFormInput, current}) {
       ]}
       >
           <Upload {...props} 
-            fileList={formInput[current] && formInput[current].justify}
+            fileList={data.find((e) => e.name == "identity").justify}
             onChange={onChange1} >
             {fileList1.length < 1 && '+ Téléverser'}
           </Upload>
       </Form.Item> 
 
 
-        {formInput[current] && formInput[current].statut == "Logé à titre gratuit" && String(formInput[current].statut_s).startsWith("e") && 
+        {data.find((e) => e.name == 'statut').value == "Logé à titre gratuit" && 
+        String(data.find((e) => e.name == 'statut_s').value).startsWith("e") && 
         <Form.Item
         label="Attestation logée à titre gratuit"
         name="altg"
@@ -151,7 +121,8 @@ export default function ThirdForm({formInput, setFormInput, current}) {
           },
         ]}
         >
-          <Upload {... props}  fileList={formInput[current] && formInput[current].altg}
+          <Upload {... props}  
+            fileList={data.find((e) => e.name == "altg").value}
             onChange={onChange7} >
             {fileList7.length < 1 && '+ Téléverser'}
           </Upload>
@@ -168,13 +139,14 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} fileList={formInput[current] && formInput[current].rib}
+          <Upload {...props} 
+            fileList={data.find((e) => e.name == "rib").value}
             onChange={onChange2} >
             {fileList2.length < 1 && '+ Téléverser'}
           </Upload>
       </Form.Item>
 
-      {formInput[current] &&  String(formInput[current].statut_s).startsWith("s") 
+      {String(data.find((e) => e.name == 'statut_s').value).startsWith("s") 
       &&
       <Form.Item
         
@@ -188,7 +160,8 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} fileList={formInput[current] && formInput[current].tdbs}
+          <Upload {...props} 
+            fileList={data.find((e) => e.name == "tdbs").value}
             onChange={onChange3} >
             {fileList3.length < 3 && '+ Téléverser'}
           </Upload>
@@ -196,7 +169,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         
         </Form.Item>}
 
-        {formInput[current] &&  String(formInput[current].statut_s).startsWith("tns") && <Form.Item>
+        {String(data.find((e) => e.name == 'statut_s').value).startsWith("tns") && <Form.Item>
         
       <Form.Item
       label="2 derniers bilans comptables"
@@ -209,7 +182,8 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} fileList={formInput[current] && formInput[current].ddbc}
+          <Upload {...props} 
+            fileList={data.find((e) => e.name == "ddbc").value}
             onChange={onChange4} >
             {fileList4.length < 2 && '+ Téléverser'}
           </Upload>
@@ -217,7 +191,7 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         
       </Form.Item>} 
 
-      {formInput[current] &&  String(formInput[current].statut_s).startsWith("e") && <Form.Item
+      {String(data.find((e) => e.name == 'statut_s').value).startsWith("e") && <Form.Item
         
       label="Carte d’étudiants"
       name="studenCard"
@@ -229,14 +203,15 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} fileList={formInput[current] && formInput[current].studenCard}
+          <Upload {...props}
+            fileList={data.find((e) => e.name == "studentCard").value}
             onChange={onChange5} >
             {fileList5.length < 1 && '+ Téléverser'}
           </Upload>
         
         </Form.Item>}
 
-        {formInput[current] && String(formInput[current].statut_s) == "e_ae" && <Form.Item
+        {String(data.find((e) => e.name == 'statut_s').value) == "e_ae" && <Form.Item
         
       label="3 derniers bulletins de salaires"
       name="tdbs"
@@ -248,14 +223,15 @@ export default function ThirdForm({formInput, setFormInput, current}) {
         },
       ]}
       >
-          <Upload {...props} fileList={formInput[current] && formInput[current].tdbs}
+          <Upload {...props} 
+            fileList={data.find((e) => e.name == "tdbs").value}
             onChange={onChange6} >
             {fileList6.length < 3 && '+ Téléverser'}
           </Upload>
         
         </Form.Item>}
 
-        {formInput[current] && formInput[current].statut == "Locataire" && <Form.Item
+        {data.find((e) => e.name == 'statut').value == "Locataire" && <Form.Item
         
         label="3 dernières quittances "
         name="tdq"
@@ -267,7 +243,8 @@ export default function ThirdForm({formInput, setFormInput, current}) {
           },
         ]}
         >
-            <Upload {...props} fileList={formInput[current] && formInput[current].tdq}
+            <Upload {...props} 
+            fileList={data.find((e) => e.name == "tdq").value}
               onChange={onChange8} >
               {fileList8.length < 3 && '+ Téléverser'}
             </Upload>
