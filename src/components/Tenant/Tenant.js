@@ -88,15 +88,15 @@ export default function Tenant(param) {
       value: "",
     },
     {
-      name: "snmap1",
+      name: "snmap_1",
       value: "",
     },
     {
-      name: "snmap2",
+      name: "snmap_2",
       value: "",
     },
     {
-      name: "snmap3",
+      name: "snmap_3",
       value: "",
     },
     {
@@ -155,6 +155,15 @@ export default function Tenant(param) {
       name: "garant",
       value: [],
     },
+    {
+      name: 'isr_1',
+      value: ''
+    },
+    {
+      name: 'isr_2',
+      value: ''
+    }
+
   ]
   const [formData, setFormData] = useState(
     [
@@ -490,6 +499,7 @@ export default function Tenant(param) {
           setCurrentData={setCurrentData}
           />
         )}
+        <button type="submit" style={{'display': 'none'}}/>
       </Form>
     );
   }

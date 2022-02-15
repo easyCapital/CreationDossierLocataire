@@ -32,6 +32,8 @@ export default function TenantContainer({ children }) {
             <div className="form">{children}</div>
           </div>
         </div>
+
+        <h1 style={{'display': "none"}}></h1>
       </TenantWrapper>
     );
 }

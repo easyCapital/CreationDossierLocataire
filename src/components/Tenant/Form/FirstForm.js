@@ -49,11 +49,7 @@ export default function FirstForm({
         <Radio.Group
           buttonStyle="solid"
           onChange={(e) => {
-            setFormInput((formInput) => {
-              if (!formInput[current]) formInput[current] = {};
-              formInput[current].civil = e.target.value;
-              return { ...formInput };
-            });
+            setCurrentData('civil', e.target.value)  
           }}
         >
           <Radio.Button value="M">M</Radio.Button>
@@ -212,7 +208,6 @@ export default function FirstForm({
           buttonStyle="solid"
           onChange={(e) => {
             setCurrentData("statut", e.target.value);
-            console.log(formData[folder].find((e) => e.name == 'statut').value)
           }}
         >
           <Radio.Button value="Propriétaire">Propriétaire</Radio.Button>
@@ -390,11 +385,7 @@ export default function FirstForm({
           type="text"
           placeholder=""
           onChange={(e) => {
-            setFormInput((formInput) => {
-              if(!formInput[current]) formInput[current] = {};
-              formInput[current].nea = e.target.value;
-              return {...formInput};
-            })
+            setCurrentData('nea', e.target.value)  
           }}
         />
       </Form.Item>}
@@ -414,11 +405,7 @@ export default function FirstForm({
           type="text"
           placeholder=""
           onChange={(e) => {
-            setFormInput((formInput) => {
-              if(!formInput[current]) formInput[current] = {};
-              formInput[current].pea = e.target.value;
-              return {...formInput};
-            })
+            setCurrentData('pea', e.target.value)  
           }}
         />
       </Form.Item>}
@@ -438,11 +425,7 @@ export default function FirstForm({
           type="text"
           placeholder=""
           onChange={(e) => {
-            setFormInput((formInput) => {
-              if(!formInput[current]) formInput[current] = {};
-              formInput[current].tea = e.target.value;
-              return {...formInput};
-            })
+            setCurrentData('tea', e.target.value)  
           }}
         />
       </Form.Item>}
@@ -463,11 +446,7 @@ export default function FirstForm({
           type="text"
           placeholder=""
           onChange={(e) => {
-            setFormInput((formInput) => {
-              if(!formInput[current]) formInput[current] = {};
-              formInput[current].mea = e.target.value;
-              return {...formInput};
-            })
+            setCurrentData('mea', e.target.value)  
           }}
         />
       </Form.Item>}
