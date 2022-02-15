@@ -162,6 +162,10 @@ export default function Tenant(param) {
     {
       name: 'isr_2',
       value: ''
+    },
+    {
+      name: 'loyer',
+      value: ''
     }
 
   ]

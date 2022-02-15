@@ -234,7 +234,9 @@ export const TenantWrapper = styled.div`
   
   @media (min-width: 900px){
 
-
+    .loyerActuel{
+      margin-left: 100px;
+    }
     .inputsnap_loyer{
       margin-left: 100px;
     }
