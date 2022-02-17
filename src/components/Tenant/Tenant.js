@@ -167,6 +167,10 @@ export default function Tenant(param) {
       name: "loyer",
       value: "",
     },
+    {
+      name: "displayDone",
+      value: 0,
+    },
   ];
   const [formData, setFormData] = useState([initFormData]);
 
@@ -423,16 +427,11 @@ export default function Tenant(param) {
   }
 
   function showDisplay(value) {
-    if (!formInput[folder]) formInput[folder] = {};
-    if (formInput[folder].displayDone >= value - 1) setDisplay(value);
+    if (getData('displayDone', folder )>= value - 1) setDisplay(value);
   }
 
   function setDisplayDone(value) {
-    setFormInput((formInput) => {
-      if (!formInput[folder]) formInput[folder] = {};
-      formInput[folder].displayDone = value;
-      return { ...formInput };
-    });
+    setCurrentData('displayDone', value)
   }
 
   const handleUserRegister = () => {
