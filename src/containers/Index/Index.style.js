@@ -2,6 +2,18 @@ import styled from "styled-components";
 
 export const IndexWrapper = styled.div`
 
+.main .steps{
+  display: flex;
+  justify-content: center;
+  .column{
+    align-text: center;
+    padding: 0px 100px;
+    width: 500px;
+    h3{
+      margin-left: 35%;
+    }
+  }
+}
 .upper{
   margin-top: 150px;
   text-align: center;

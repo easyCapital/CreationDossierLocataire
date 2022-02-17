@@ -92,10 +92,37 @@ export default function IndexContainer({ children }) {
                 
             </Button>
           </div>
+          
+
+          <Divider />
+          <div className="main">
+            <div className="mainText">  
+              <h2><strong>Passloc, Online Manager</strong></h2>
+              <h3>Déposez votre dossier, partagez le, trouvez votre logement</h3>
+            </div>
+            <div className="steps">
+              <div className="column">  
+                <h3>Déposez</h3>
+                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
+              </div>
+              <div className="column">
+                <h3>Partagez</h3>
+                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
+
+              </div>
+              <div className="column">
+                <h3>Trouvez</h3>
+                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
+
+              </div>
+            </div>
+          </div>
+
           <Divider />
           <div className="cert">
             <img src="../../../rgpd.png" width={250} height={150} alt="RGPD"/>
           </div>
+
         </div>
       </IndexWrapper>
     );
