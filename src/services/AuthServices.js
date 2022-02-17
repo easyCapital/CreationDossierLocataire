@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 
 export const RegisterUserService = (credentials) => {
   const http = new HttpService();
-  let signupUrl = "users/register";
+  let signupUrl = "/register";
   return http
     .postData(credentials, signupUrl)
     .then((data) => {
@@ -15,7 +15,7 @@ export const RegisterUserService = (credentials) => {
 
 export const LoginUserService = (credentials) => {
   const http = new HttpService();
-  let loginUrl = "users/login";
+  let loginUrl = "/login";
   return http
     .postData(credentials, loginUrl)
     .then((data) => {
@@ -28,10 +28,91 @@ export const LoginUserService = (credentials) => {
 
 export const LogOutUserService = () => {
   const http = new HttpService();
-  let loginUrl = "users/logout";
+  let loginUrl = "/logout";
   const tokenId = "user-token";
   return http
     .getData(loginUrl, tokenId)
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+const registerFromEmail = (credentials) =>{
+  const http = new HttpService();
+  let signupUrl = "/registerFromEmail";
+  return http
+    .postData(credentials, signupUrl)
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+
+const createFolder = (credentials) =>{
+  const http = new HttpService();
+  let signupUrl = "/folders";
+  return http
+    .postData(credentials, signupUrl)
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+
+const getProfile = (credentials) =>{
+  const http = new HttpService();
+  let signupUrl = "/profile";
+  return http
+    .getData(credentials, signupUrl)
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+const getUserFromEmail = (credentials) =>{
+  const http = new HttpService();
+  let signupUrl = "/users/getUserFromEmail";
+  return http
+    .getData(credentials, signupUrl)
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+const userHasAccount = (credentials) =>{
+  const http = new HttpService();
+  let signupUrl = "/users/userHasAccount";
+  return http
+    .getData(credentials, signupUrl)
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+
+const updateFolder = (credentials, id) =>{
+  const http = new HttpService();
+  let signupUrl = "/profile/" + id;
+  return http
+    .getData(credentials, signupUrl)
     .then((data) => {
       return data;
     })

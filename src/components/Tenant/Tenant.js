@@ -29,7 +29,7 @@ export default function Tenant(param) {
     },
     {
       name: "mail",
-      value: "",
+      value: folder == 0 ? getCookies('mail') : '',
     },
     {
       name: "mobile",
@@ -174,7 +174,6 @@ export default function Tenant(param) {
   ];
   const [formData, setFormData] = useState([initFormData]);
 
-  const [formInput, setFormInput] = useState({});
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [ammount, setAmmount] = useState(1);
@@ -207,7 +206,7 @@ export default function Tenant(param) {
   }
 
   function getData(name, index){
-    return formData[folder].find((e) => e.name == name).value
+    return formData[index].find((e) => e.name == name).value
   }
 
   function submit() {
@@ -220,7 +219,7 @@ export default function Tenant(param) {
     2. Si l'utilisateur n'est pas login ->
     3. Definir un mdp dans la page suivante
     */
-    let resp = saveFolder(JSON.stringify(formInput));
+    let resp = saveFolder(JSON.stringify(formData));
     console.log(resp);
     if (/*utilisateur existe*/ true) {
       if (/*utilisateur non connecté*/ true) {
@@ -235,18 +234,6 @@ export default function Tenant(param) {
 
   function getText() {
     if (display == 1) {
-      if (formInput[folder] == null) {
-        return (
-          <>
-            <h2>
-              Vous êtes candidat locataire ou garant et vous souhaitez gagner du
-              temps et présenter un dossier conforme aux agences et / ou
-              propriétaire ?
-            </h2>
-            <h2>Nous sommes là pour ça !</h2>
-          </>
-        );
-      }
       if (getData('statut_gl', folder) == null) {
         return (
           <>
@@ -351,9 +338,9 @@ export default function Tenant(param) {
   function getTitle(index) {
     return (
       <>
-        {!getData('first_name', index)
+        {(!getData('first_name', index)
               ? "Prenom"
-              : getData('first_name', index) +
+              : getData('first_name', index))+
             " " +
             (!getData('last_name', index) ? "Nom" :getData('last_name', index))}
         <br />

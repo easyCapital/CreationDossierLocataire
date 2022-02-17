@@ -333,11 +333,7 @@ export default function FirstForm({
         name={"statut_s_" + current}
         hasFeedback
         onChange={(e) => {
-          setFormInput((formInput) => {
-            if (!formInput[current]) formInput[current] = {};
-            formInput[current].statut_s = e.target.value;
-            return { ...formInput };
-          });
+          setCurrentData('statut_s', e.target.value)
         }}
         rules={[
           {
