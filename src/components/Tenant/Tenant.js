@@ -156,42 +156,29 @@ export default function Tenant(param) {
       value: [],
     },
     {
-      name: 'isr_1',
-      value: ''
+      name: "isr_1",
+      value: "",
     },
     {
-      name: 'isr_2',
-      value: ''
+      name: "isr_2",
+      value: "",
     },
     {
-      name: 'loyer',
-      value: ''
-    }
-
-  ]
-  const [formData, setFormData] = useState(
-    [
-   initFormData,
-  ]
-  );
+      name: "loyer",
+      value: "",
+    },
+  ];
+  const [formData, setFormData] = useState([initFormData]);
 
   const [formInput, setFormInput] = useState({});
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
-  const [fields, setFields] = useState([
-    {
-      name: ["mail_0"],
-      value:
-        String(getCookies("mail")?.mail)
-          .replace("%40", "@")
-          .replace("undefined", "") ?? "",
-    },
-  ]);
+
   useEffect(() => {
     if (getCookies("mail")) {
-      setCurrentData("mail", getCookies("mail"))
+      setCurrentData("mail", getCookies("mail"));
     }
   }, []);
 
@@ -211,13 +198,17 @@ export default function Tenant(param) {
   function setCurrentData(name, value) {
     setFormData((formData) => {
       formData[folder].find((e) => e.name == name).value = value;
-      return [ ...formData ];
+      return [...formData];
     });
+  }
+
+  function getData(name, index){
+    return formData[folder].find((e) => e.name == name).value
   }
 
   function submit() {
     console.log("---------------------------");
-    console.log(JSON.stringify(formInput));
+    console.log(JSON.stringify(formData));
     console.log("---------------------------");
 
     /*
@@ -252,7 +243,7 @@ export default function Tenant(param) {
           </>
         );
       }
-      if (formInput[folder].statut_gl == null) {
+      if (getData('statut_gl', folder) == null) {
         return (
           <>
             <h2>
@@ -264,7 +255,7 @@ export default function Tenant(param) {
           </>
         );
       }
-      if (formInput[folder].statut_gl == "Locataire") {
+      if (getData('statut_gl', folder) == "Locataire") {
         return (
           <>
             <h2>
@@ -292,7 +283,7 @@ export default function Tenant(param) {
     }
 
     if (display == 2) {
-      if (formInput[folder].statut_gl == "Locataire") {
+      if (getData('statut_gl', folder) == "Locataire") {
         return (
           <>
             <h2>
@@ -312,7 +303,7 @@ export default function Tenant(param) {
       );
     }
     if (display == 3) {
-      if (formInput[folder].statut_gl == "Locataire") {
+      if (getData('statut_gl', folder) == "Locataire") {
         return (
           <>
             <h2>
@@ -356,16 +347,14 @@ export default function Tenant(param) {
   function getTitle(index) {
     return (
       <>
-        {!formInput[index]
-          ? "Nouveau Dossier"
-          : (!formInput[index].first_name
+        {!getData('first_name', index)
               ? "Prenom"
-              : formInput[index].first_name) +
+              : getData('first_name', index) +
             " " +
-            (!formInput[index].last_name ? "Nom" : formInput[index].last_name)}
+            (!getData('last_name', index) ? "Nom" :getData('last_name', index))}
         <br />
-        {formInput[index] && formInput[index].statut_gl
-          ? formInput[index].statut_gl
+        {getData('statut_gl', index)
+          ? getData('statut_gl', index)
           : " \n "}
       </>
     );
@@ -407,15 +396,15 @@ export default function Tenant(param) {
   const { Step } = Steps;
   const { TabPane } = Tabs;
 
-  useEffect (() => {
-    console.log(formData)
-  }, [formData])
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   function add() {
-    console.log("------------------")
-    console.log(formData)
-    console.log("------------------")
-    setFormData([...formData, initFormData])
+    console.log("------------------");
+    console.log(formData);
+    console.log("------------------");
+    setFormData([...formData, initFormData]);
     seti(i + 1);
     panes.push({ key: i });
   }
@@ -476,34 +465,35 @@ export default function Tenant(param) {
         )}
         {display == 2 && (
           <RevenuesForm
-          current={foldersss}
-          data={formData[folder]}
-          setCurrentData={setCurrentData}
+            current={foldersss}
+            data={formData[folder]}
+            setCurrentData={setCurrentData}
           />
         )}
         {display == 3 &&
-         (formData[folder].find((e) => e.name == 'statut_gl').value == "Locataire" ? (
+          (formData[folder].find((e) => e.name == "statut_gl").value ==
+          "Locataire" ? (
             <SecondForm
-            current={foldersss}
-            data={formData[folder]}
-            setCurrentData={setCurrentData}
+              current={foldersss}
+              data={formData[folder]}
+              setCurrentData={setCurrentData}
             />
           ) : (
             <GarantForm
-            current={foldersss}
-            data={formData[folder]}
-            setCurrentData={setCurrentData}
-            formData={formData}
+              current={foldersss}
+              data={formData[folder]}
+              setCurrentData={setCurrentData}
+              formData={formData}
             />
           ))}
         {display == 4 && (
           <ThirdForm
-          current={foldersss}
-          data={formData[folder]}
-          setCurrentData={setCurrentData}
+            current={foldersss}
+            data={formData[folder]}
+            setCurrentData={setCurrentData}
           />
         )}
-        <button type="submit" style={{'display': 'none'}}/>
+        <button type="submit" style={{ display: "none" }} />
       </Form>
     );
   }
@@ -585,6 +575,7 @@ export default function Tenant(param) {
           </Form.Item>
         )}
       </div>
+      
     </>
   );
 }

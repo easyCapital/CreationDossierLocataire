@@ -102,16 +102,16 @@ export default function IndexContainer({ children }) {
             </div>
             <div className="steps">
               <div className="column">  
-                <h3>Déposez</h3>
+                <h3><strong>Déposez</strong></h3>
                 <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
               </div>
               <div className="column">
-                <h3>Partagez</h3>
+                <h3><strong>Partagez</strong></h3>
                 <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
 
               </div>
               <div className="column">
-                <h3>Trouvez</h3>
+                <h3><strong>Trouvez</strong></h3>
                 <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
 
               </div>
