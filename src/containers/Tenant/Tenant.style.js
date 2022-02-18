@@ -295,15 +295,6 @@ export const TenantWrapper = styled.div`
     .currentForm {
       display: flex;
       flex-direction: column;
-      //align-items: center;
-    
-      // > div {
-      //   display: flex;
-      // }
-    
-      // .ant-form-item-control .ant-form-item-control-input {
-      //   display: flex;
-      // }
     
        .ant-form-item-control {
         .ant-form-item-control-input-content {
@@ -337,7 +328,17 @@ export const TenantWrapper = styled.div`
      }
      
   }
+  @media (max-width: 899px) {
+
+    .ant-tabs-nav{
+      margin-top: 150px;
+    }
+  }
   @media (max-width: 810px) {
+
+    .ant-tabs-nav{
+      margin-top: 150px;
+    }
 
     .wrapperInputs{
       > div{

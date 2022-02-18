@@ -30,7 +30,7 @@ export default function Tenant(param) {
     },
     {
       name: "mail",
-      value: folder == 0 ? getCookies("mail") : "",
+      value: getCookies("mail"),
     },
     {
       name: "mobile",
@@ -174,11 +174,16 @@ export default function Tenant(param) {
     },
   ];
   const [formData, setFormData] = useState([initFormData]);
-
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
+
+  const mail =
+    String(getCookies("mail")?.mail)
+      .replace("%40", "@")
+      .replace("undefined", "") ?? "";
+  console.log("mail: " + mail);
 
   useEffect(() => {
     if (getCookies("mail")) {
@@ -220,7 +225,7 @@ export default function Tenant(param) {
     2. Si l'utilisateur n'est pas login ->
     3. Definir un mdp dans la page suivante
     */
-    
+
     if (/*utilisateur n'existe pas */ false) {
       return;
     }
@@ -387,6 +392,11 @@ export default function Tenant(param) {
 
   useEffect(() => {
     console.log(formData);
+    const mail =
+      String(getCookies("mail")?.mail)
+        .replace("%40", "@")
+        .replace("undefined", "") ?? "";
+    console.log("mail: " + mail);
   }, [formData]);
 
   function add() {
@@ -396,9 +406,6 @@ export default function Tenant(param) {
     setFormData([...formData, initFormData]);
     seti(i + 1);
     panes.push({ key: i });
-  }
-  function remove() {
-    setAmmount(ammount - 1);
   }
 
   function editPanes(targetKey, action) {

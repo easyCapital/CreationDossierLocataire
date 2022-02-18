@@ -2,6 +2,12 @@ import styled from "styled-components";
 
 export const IndexWrapper = styled.div`
 
+.footer{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 50px;
+}
+
 .main .steps{
 
   display: flex;
@@ -15,11 +21,16 @@ export const IndexWrapper = styled.div`
       margin: 0 auto;
       color: #005fc3;
       margin-top: 40px;
+      font-size: 30px;
     }
     h4{
       margin: 0 auto;
     }
   }
+}
+.top{
+  padding-top: 5%;
+  height: 100vh;
 }
 .upper{
   margin-top: 150px;

@@ -308,9 +308,31 @@ export default function FirstForm({
         </Form.Item>
       )}
 
+
+      {/* <Form.Item
+        label="Adresse actuelle"
+        name={"born_place_" + current}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner votre lieu de naissance.",
+          },
+        ]}
+      >
+        <Input
+          id={"born_place"}
+          type="text"
+          placeholder=""
+          onChange={(e) => {
+            setCurrentData("born_place", e.target.value);
+          }}
+        />
+      </Form.Item>               */}
       <Form.Item
         label="Adresse actuelle"
         hasFeedback
+        name={"address_" + current}
         rules={[
           {
             required: true,
@@ -320,7 +342,6 @@ export default function FirstForm({
       >
         <Input
           id={"address"}
-          name={"address_" + current}
           type="text"
           placeholder=""
           onChange={(e) => {
@@ -364,6 +385,8 @@ export default function FirstForm({
           <Option value="e_ae">Étudiant avec emploi</Option>
         </Select>
       </Form.Item>
+
+      
 
       {data.find((e) => e.name == "statut_s").value && !String(data.find((e) => e.name == "statut_s").value).startsWith("e_") &&  <Form.Item
         label="Nom de l'employeur actuel"
