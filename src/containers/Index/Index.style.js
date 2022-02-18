@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const IndexWrapper = styled.div`
 
+
 .footer{
   display: flex;
   justify-content: space-between;
@@ -173,6 +174,17 @@ export const IndexWrapper = styled.div`
     top: 800px;
     left: 167px;
     right: 160px;
+  }
+}
+
+
+.tarif{
+  h3{
+    margin: 0;
+  }
+  display: flex;
+  > div{
+    width: 50%;
   }
 }
 

@@ -158,6 +158,34 @@ export default function IndexContainer({ children }) {
           </div>
 
           <Divider />
+
+          <h2><strong>Tarifs</strong></h2>
+          <div className="tarif">
+            <br/>
+            <div className="column">
+              <h2 className="seconds" >Gratuit</h2>
+              <h3>XX.xx €</h3>
+              <p>Description...</p>
+              <p>Description</p>  
+              <p>Description</p>
+              <p>Description</p>
+              <p>Description</p>
+              <h3 style={{'marginTop': 50, 'marginLeft':10}} className="seconds">En savoir +</h3>
+            </div>
+            <div className="column">
+              <h2 className="seconds" >Entreprise</h2>
+              <h3>XX.xx €</h3>
+              <p>Description...</p>
+              <p>Description</p>
+              <p>Description</p>
+              <p>Description</p>
+              <p>Description</p>
+              <h3 style={{'marginTop': 50, 'marginLeft':10}} className="seconds">En savoir +</h3>
+
+            </div>
+          </div>
+
+          <Divider />
           {/* <div className="cert">
             <img src="../../../rgpd.png" width={250} height={150} alt="RGPD" />
           </div> */}
