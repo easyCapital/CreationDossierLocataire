@@ -31,22 +31,25 @@ export default function Header(props) {
     return () => {};
   }, [authResponse]);
   return (
-    <HeaderWrapper style={ {"backgroundColor":router.asPath == "/" && '#f5f5f9'}}>
+    <HeaderWrapper style={ {"backgroundColor":router.asPath == "/" && '#fff', "height":80}}>
       <div className="barre" >
         
         <div className="ubar">
           <div className="logoImage">
             <a href="/">
               <img
+              style={{"marginTop":0}}
                 src={"../../../passloc-logo.png"}
                 className={"logoImage_start"}
-                alt="logo EasyCapital"
+                alt="logo Passloc"
                 onClick={() => router.push("/")}
               />
             </a>
           </div>
           <div className="btn_login">
-            <Button onClick={() => router.push("/signin")}>Connexion</Button>
+            <Button 
+              style={{"marginTop":0}}
+              onClick={() => router.push("/signin")}>Connexion</Button>
           </div>
         </div>
         {router.asPath != "/signin" &&

@@ -6,12 +6,18 @@ export const IndexWrapper = styled.div`
 
   display: flex;
   justify-content: center;
+  
   .column{
     align-text: center;
     padding: 0px 100px;
     width: 500px;
     h3{
-      margin-left: 35%;
+      margin: 0 auto;
+      color: #005fc3;
+      margin-top: 40px;
+    }
+    h4{
+      margin: 0 auto;
     }
   }
 }
@@ -99,10 +105,6 @@ export const IndexWrapper = styled.div`
     flex: wrap;
     .column{
       flex: wrap;
-      h3{
-        margin-left: 30%;
-
-      }
     }
   }
 
@@ -114,7 +116,6 @@ export const IndexWrapper = styled.div`
 
   .main .steps{
     display: block;
-    margin-left: 15%;
     .column{
       h3{
         margin-top: 50px;
@@ -123,29 +124,6 @@ export const IndexWrapper = styled.div`
   }
 }
 
-
-@media screen and (max-width: 1000px){
-
-  .main .steps{
-    margin-left: 10%;
-
-  }
-}
-
-@media screen and (max-width: 800px){
-
-  .main .steps{
-    margin-left: 5%;
-
-  }
-}
-@media screen and (max-width: 680px){
-
-  .main .steps{
-    margin-left: 0;
-
-  }
-}
 @media screen and (max-width: 580px)
 {
   .upper{
@@ -172,4 +150,19 @@ export const IndexWrapper = styled.div`
   }
   
 }
+
+
+@media screen and (max-width: 480px)
+{
+  .btns{
+    display: block;
+  }
+  .home_btn{
+    position: absolute;
+    top: 800px;
+    left: 167px;
+    right: 160px;
+  }
+}
+
 `;

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { QuestionOutlined, RightOutlined } from "@ant-design/icons";
 import Tenant from "../../components/Tenant/Tenant";
-import { setCookies, getCookies } from 'cookies-next';
+import { setCookies, getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
 
 export default function IndexContainer({ children }) {
@@ -18,8 +18,8 @@ export default function IndexContainer({ children }) {
     setLoaded(true);
   }, []);
 
-  function setMail(e){
-    setCookies('mail', e)
+  function setMail(e) {
+    setCookies("mail", e);
   }
 
   const checkUser = (mail) => {
@@ -51,7 +51,7 @@ export default function IndexContainer({ children }) {
             <strong>Constituez votre dossier locataire</strong>
           </h2>
           <h2 className="seconds">
-          <strong> Partagez le en toute sécurité</strong>
+            <strong> Partagez le en toute sécurité</strong>
           </h2>
           <h3>
             Passloc vous permet de transmettre à n'importe quel propriétaire ou
@@ -65,7 +65,13 @@ export default function IndexContainer({ children }) {
               alignItems: "center",
             }}
           >
-            <Input onChange={(e) => {setMail(e.target.value)}} placeholder="Votre mail" style={{'width':400, height:60, 'marginBottom':90}}/>
+            <Input
+              onChange={(e) => {
+                setMail(e.target.value);
+              }}
+              placeholder="Votre mail"
+              style={{ width: 400, height: 60, marginBottom: 90 }}
+            />
             <Button
               className="home_btn"
               shape="round"
@@ -78,51 +84,70 @@ export default function IndexContainer({ children }) {
                 2. SI OUI -> Remplir avec les données de l'API
                 3. SINON -> Rien
                 */
-               const mail = String(getCookies("mail")?.mail)
-               .replace("%40", "@")
-               .replace("undefined", "") ?? "";
-               if (checkUser(mail)){
+                const mail =
+                  String(getCookies("mail")?.mail)
+                    .replace("%40", "@")
+                    .replace("undefined", "") ?? "";
+                if (checkUser(mail)) {
+                }
 
-               }
-
-                router.push('/tenant');
+                router.push("/tenant");
               }}
-              >
-              Commencer 
-                
+            >
+              Commencer
             </Button>
           </div>
-          
 
           <Divider />
           <div className="main">
-            <div className="mainText">  
-              <h2><strong>Passloc, Online Manager</strong></h2>
-              <h3>Déposez votre dossier, partagez le, trouvez votre logement</h3>
+            <div className="mainText">
+              <h2>
+                <strong>Passloc, Online Manager</strong>
+              </h2>
+              <h3 className="seconds">
+                <strong>
+                  Déposez votre dossier, partagez le, trouvez votre logement
+                </strong>
+              </h3>
             </div>
             <div className="steps">
-              <div className="column">  
-                <h3><strong>Déposez</strong></h3>
-                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
+              <div className="column">
+                <h3>
+                  <strong>Déposez</strong>
+                </h3>
+                <h4>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                  quis ante orci. Sed faucibus risus et mattis bibendum. In a
+                  ante blandit, faucibus elit sed, varius ipsum.{" "}
+                </h4>
               </div>
               <div className="column">
-                <h3><strong>Partagez</strong></h3>
-                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
-
+                <h3>
+                  <strong>Partagez</strong>
+                </h3>
+                <h4>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                  quis ante orci. Sed faucibus risus et mattis bibendum. In a
+                  ante blandit, faucibus elit sed, varius ipsum.{" "}
+                </h4>
               </div>
               <div className="column">
-                <h3><strong>Trouvez</strong></h3>
-                <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam quis ante orci. Sed faucibus risus et mattis bibendum. In a ante blandit, faucibus elit sed, varius ipsum. </h4>
-
+                <h3>
+                  <strong>Trouvez</strong>
+                </h3>
+                <h4>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
+                  quis ante orci. Sed faucibus risus et mattis bibendum. In a
+                  ante blandit, faucibus elit sed, varius ipsum.{" "}
+                </h4>
               </div>
             </div>
           </div>
 
           <Divider />
           <div className="cert">
-            <img src="../../../rgpd.png" width={250} height={150} alt="RGPD"/>
+            <img src="../../../rgpd.png" width={250} height={150} alt="RGPD" />
           </div>
-
         </div>
       </IndexWrapper>
     );

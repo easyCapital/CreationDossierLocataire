@@ -8,6 +8,7 @@ import { Tabs, Affix } from "antd";
 import GarantForm from "./Form/GarantForm";
 import { getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
+import AuthServices from "../../services/AuthServices";
 
 export default function Tenant(param) {
   const initFormData = [
@@ -29,7 +30,7 @@ export default function Tenant(param) {
     },
     {
       name: "mail",
-      value: folder == 0 ? getCookies('mail') : '',
+      value: folder == 0 ? getCookies("mail") : "",
     },
     {
       name: "mobile",
@@ -205,8 +206,8 @@ export default function Tenant(param) {
     });
   }
 
-  function getData(name, index){
-    return formData[index].find((e) => e.name == name).value
+  function getData(name, index) {
+    return formData[index].find((e) => e.name == name).value;
   }
 
   function submit() {
@@ -219,13 +220,12 @@ export default function Tenant(param) {
     2. Si l'utilisateur n'est pas login ->
     3. Definir un mdp dans la page suivante
     */
-    let resp = saveFolder(JSON.stringify(formData));
-    console.log(resp);
-    if (/*utilisateur existe*/ true) {
-      if (/*utilisateur non connecté*/ true) {
-        /* Rediriger vers la page de connexion */
-        return;
-      }
+    
+    if (/*utilisateur n'existe pas */ false) {
+      return;
+    }
+    if (/*utilisateur non connecté*/ false) {
+      /* Rediriger vers la page de connexion */
       return;
     }
     /* Redirection vers la page de définition de mot de passe */
@@ -234,7 +234,7 @@ export default function Tenant(param) {
 
   function getText() {
     if (display == 1) {
-      if (getData('statut_gl', folder) == null) {
+      if (getData("statut_gl", folder) == null) {
         return (
           <>
             <h2>
@@ -246,7 +246,7 @@ export default function Tenant(param) {
           </>
         );
       }
-      if (getData('statut_gl', folder) == "Locataire") {
+      if (getData("statut_gl", folder) == "Locataire") {
         return (
           <>
             <h2>
@@ -274,7 +274,7 @@ export default function Tenant(param) {
     }
 
     if (display == 2) {
-      if (getData('statut_gl', folder) == "Locataire") {
+      if (getData("statut_gl", folder) == "Locataire") {
         return (
           <>
             <h2>
@@ -294,7 +294,7 @@ export default function Tenant(param) {
       );
     }
     if (display == 3) {
-      if (getData('statut_gl', folder) == "Locataire") {
+      if (getData("statut_gl", folder) == "Locataire") {
         return (
           <>
             <h2>
@@ -338,15 +338,13 @@ export default function Tenant(param) {
   function getTitle(index) {
     return (
       <>
-        {(!getData('first_name', index)
-              ? "Prenom"
-              : getData('first_name', index))+
-            " " +
-            (!getData('last_name', index) ? "Nom" :getData('last_name', index))}
+        {(!getData("first_name", index)
+          ? "Prenom"
+          : getData("first_name", index)) +
+          " " +
+          (!getData("last_name", index) ? "Nom" : getData("last_name", index))}
         <br />
-        {getData('statut_gl', index)
-          ? getData('statut_gl', index)
-          : " \n "}
+        {getData("statut_gl", index) ? getData("statut_gl", index) : " \n "}
       </>
     );
   }
@@ -414,11 +412,11 @@ export default function Tenant(param) {
   }
 
   function showDisplay(value) {
-    if (getData('displayDone', folder )>= value - 1) setDisplay(value);
+    if (getData("displayDone", folder) >= value - 1) setDisplay(value);
   }
 
   function setDisplayDone(value) {
-    setCurrentData('displayDone', value)
+    setCurrentData("displayDone", value);
   }
 
   const handleUserRegister = () => {
@@ -561,7 +559,6 @@ export default function Tenant(param) {
           </Form.Item>
         )}
       </div>
-      
     </>
   );
 }

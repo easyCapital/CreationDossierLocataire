@@ -6,15 +6,11 @@ import styled from "styled-components";
 //bleu : #4ca6e2;
 
 export const HeaderWrapper = styled.div`
-.headerMain{
-  background-color: #f5f5f9;
-}
+
 .barre{
   width: 100%;
   
-.ant-tabs-nav-wrap{
-  background-color: #f5f5f9;
-}
+
 .ubar{
   display: flex;
   width: 100%;
