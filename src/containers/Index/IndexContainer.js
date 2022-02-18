@@ -170,7 +170,7 @@ export default function IndexContainer({ children }) {
               <p>Description</p>
               <p>Description</p>
               <p>Description</p>
-              <h3 style={{'marginTop': 50, 'marginLeft':10}} className="seconds">En savoir +</h3>
+              <h3 style={{'marginTop': 50, 'marginLeft':10, 'cursor':'pointer'}} className="seconds">En savoir +</h3>
             </div>
             <div className="column">
               <h2 className="seconds" >Entreprise</h2>
@@ -180,7 +180,7 @@ export default function IndexContainer({ children }) {
               <p>Description</p>
               <p>Description</p>
               <p>Description</p>
-              <h3 style={{'marginTop': 50, 'marginLeft':10}} className="seconds">En savoir +</h3>
+              <h3 style={{'marginTop': 50, 'marginLeft':10, 'cursor':'pointer'}} className="seconds">En savoir +</h3>
 
             </div>
           </div>
