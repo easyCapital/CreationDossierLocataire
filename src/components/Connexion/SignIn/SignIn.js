@@ -1,24 +1,46 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Modal } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { LoginAction } from "../../../redux/actions/AuthActions";
+import HttpService from "../../../services/HttpService";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const router = useRouter();
-  const dispatch = useDispatch();
+
+  const login = (credentials) => {
+    const http = new HttpService();
+    let loginUrl = "login";
+    return http
+      .postData(credentials, loginUrl)
+      .then((data) => {
+        console.log(data)
+        if (data["success"]){
+          router.push("/tenant")
+          return;
+        }
+        Modal.error({
+          title: "Erreur de connexion",
+          content: "Vérifiez le nom d'utilisateur et le mot de passe",
+        });
+        return data;
+      })
+      .catch((error) => {
+        console.log(error)
+        return error;
+      });
+  };
+  
 
   const handleUserLogin = () => {
     const fields = {
       email: email,
       password: password,
     };
-    dispatch(LoginAction(fields, router));
+    login(fields)
   };
 
   return (

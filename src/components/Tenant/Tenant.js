@@ -4,11 +4,11 @@ import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
-import { Tabs, Affix } from "antd";
+import { Tabs, Affix, Modal } from "antd";
 import GarantForm from "./Form/GarantForm";
 import { getCookies } from "cookies-next";
+import router from "next/router";
 import HttpService from "../../services/HttpService";
-import AuthServices from "../../services/AuthServices";
 
 export default function Tenant(param) {
   const initFormData = [
@@ -30,7 +30,7 @@ export default function Tenant(param) {
     },
     {
       name: "mail",
-      value: getCookies("mail"),
+      value:'',
     },
     {
       name: "mobile",
@@ -176,33 +176,49 @@ export default function Tenant(param) {
   const [formData, setFormData] = useState([initFormData]);
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
-  const [ammount, setAmmount] = useState(1);
   const [i, seti] = useState(1);
+  const [visible, setVisible] = useState(false);
+  
+  const handleOk = () => {
+    setVisible(false);
+  };
 
-  const mail =
-    String(getCookies("mail")?.mail)
-      .replace("%40", "@")
-      .replace("undefined", "") ?? "";
-  console.log("mail: " + mail);
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   useEffect(() => {
     if (getCookies("mail")) {
-      setCurrentData("mail", getCookies("mail"));
+      setCurrentData("mail", String(getCookies("mail")?.mail)
+      .replace("%40", "@")
+      .replace("undefined", ""));
+
     }
   }, []);
 
-  const saveFolder = (datas) => {
+  function checkIfUserHasAccount() {
     const http = new HttpService();
-    let signupUrl = "folder/save";
-    return http
-      .postData(datas, signupUrl)
-      .then((data) => {
-        return data;
+    const url = "users/userHasAccount";
+    const data = JSON.stringify({email: String(getCookies("mail")?.mail)
+    .replace("%40", "@")
+    .replace("undefined", "")});
+    let exist = false;
+    http.postData(data, url).then((data) => {
+        // console.log("---")
+        // console.log(data)
+        // console.log(data["data"])
+        // console.log(data["data"]["hasAccount"])
+        // console.log("---")
+        exist = Boolean(data["data"]["hasAccount"]);
       })
       .catch((error) => {
-        return error;
+        // if (error == "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
+         setVisible(true);
+        // }
+        exist = false;
       });
-  };
+      return exist;
+  }
 
   function setCurrentData(name, value) {
     setFormData((formData) => {
@@ -226,7 +242,7 @@ export default function Tenant(param) {
     3. Definir un mdp dans la page suivante
     */
 
-    if (/*utilisateur n'existe pas */ false) {
+    if (false) {
       return;
     }
     if (/*utilisateur non connecté*/ false) {
@@ -242,11 +258,9 @@ export default function Tenant(param) {
       if (getData("statut_gl", folder) == null) {
         return (
           <>
-            <h2>
-              Vous êtes candidat locataire ou garant et vous souhaitez gagner du
+            <h2>Vous êtes candidat locataire ou garant et vous souhaitez gagner du
               temps et présenter un dossier conforme aux agences et / ou
-              propriétaire ?
-            </h2>
+              propriétaire ?</h2>
             <h2>Nous sommes là pour ça !</h2>
           </>
         );
@@ -254,17 +268,11 @@ export default function Tenant(param) {
       if (getData("statut_gl", folder) == "Locataire") {
         return (
           <>
-            <h2>
-              Commencez à créer votre dossier locataire en quelques clics.{" "}
-            </h2>
+            <h2>Commencez à créer votre dossier locataire en quelques clics.{" "}</h2>
 
-            <h2>
-              Présentez votre dossier à n'importe quel particulier ou agence.{" "}
-            </h2>
+            <h2>Présentez votre dossier à n'importe quel particulier ou agence.{" "} </h2>
 
-            <h2>
-              Vos données sont stockées en France et ne sont pas revendues.{" "}
-            </h2>
+            <h2>Vos données sont stockées en France et ne sont pas revendues.{" "}</h2>
           </>
         );
       }
@@ -396,13 +404,9 @@ export default function Tenant(param) {
       String(getCookies("mail")?.mail)
         .replace("%40", "@")
         .replace("undefined", "") ?? "";
-    console.log("mail: " + mail);
   }, [formData]);
 
   function add() {
-    console.log("------------------");
-    console.log(formData);
-    console.log("------------------");
     setFormData([...formData, initFormData]);
     seti(i + 1);
     panes.push({ key: i });
@@ -435,10 +439,15 @@ export default function Tenant(param) {
     setDisplay(display - 1);
   }
   useEffect(() => {
-    console.log("folder", folder);
   }, [folder]);
 
-  function getForm(foldersss) {
+  function getForm(foldersss)  {
+
+    console.log("----")
+    const datas = checkIfUserHasAccount();
+    console.log(datas)
+    console.log("----")
+
     return (
       <Form
         labelCol={{ span: 6 }}
@@ -491,6 +500,10 @@ export default function Tenant(param) {
 
   return (
     <>
+    <Modal title="Erreur" visible={visible}  onOk={handleOk} onCancel={handleCancel}>
+        <p>Erreur d'accès à la base de données</p>
+        <p>Un message vient d'être envoyé à nos développeurs</p>
+      </Modal>
       <div className="formWrapper">
         <div className="tabWrapper">
           {display > 0 && (

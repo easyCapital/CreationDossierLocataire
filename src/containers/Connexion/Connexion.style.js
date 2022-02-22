@@ -25,7 +25,7 @@ export const ConnexionWrapper = styled.div`
 
       .title {
         font-size: 40px;
-        color: #ffa400;
+        color: #327ac7;
         font-weight: bold;
         margin-top: 150px;
         margin-bottom: 50px;
@@ -78,7 +78,7 @@ export const ConnexionWrapper = styled.div`
       border-top-right-radius: 40px;
       border-bottom-right-radius: 40px;
       flex: 1;
-      background: #4ca6e2;
+      background: #327ac7;
       padding-top: 360px;
       padding-bottom: 300px;
       text-align: center;
@@ -106,7 +106,7 @@ export const ConnexionWrapper = styled.div`
         right: 200px;
         height: 0;
         width: 0;
-        border: solid #4ca6e2;
+        border: solid #327ac7 ;
         border-width: 100px 100px 40px 100px;
         border-left-color: #7ebde8;
       }
@@ -116,7 +116,7 @@ export const ConnexionWrapper = styled.div`
         right: 380px;
         height: 0;
         width: 0;
-        border: 50px solid #4ca6e2;
+        border: 50px solid #327ac7;
         border-bottom-color: #7ebde8;
       }
       .cercle {
@@ -143,7 +143,7 @@ export const ConnexionWrapper = styled.div`
     right: 100px;
   }
   #c2 {
-    background-color: #2cc84d;
+    background-color: #327ac7;
     top: 170px;
     left: 100px;
   }
@@ -178,7 +178,7 @@ export const ConnexionWrapper = styled.div`
       .title {
         font-size: 30px;
         font-weight: bold;
-        color: #ffa400;
+        color: #327ac7;
         margin-bottom:80px;
       }
       .txt{

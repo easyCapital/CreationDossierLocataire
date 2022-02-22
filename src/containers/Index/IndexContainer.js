@@ -1,24 +1,23 @@
 import { IndexWrapper } from "./Index.style";
 import { useState, useEffect } from "react";
 import "aos/dist/aos.css";
-import { Input, Button, Spin, Space, Divider } from "antd";
+import { Input, Button, Spin, Space, Divider, Modal } from "antd";
 import { getProviders } from "next-auth/client";
 import { useRouter } from "next/router";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { RightOutlined } from "@ant-design/icons";
 import { setCookies, getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
-import { Footer } from "../../components/global/Footer/Footer";
-import { FooterWrapper } from "../../components/global/Footer/Footer.style";
-import { GoGraph } from "react-icons/go";
-import { ImBooks, ImFacebook } from "react-icons/im";
-import { AiFillLinkedin } from "react-icons/ai";  
-import { GiThink } from "react-icons/gi";
-import { IoMdContact } from "react-icons/io";
+import {
+  getUserFromMail,
+  userHasAccount,
+  registerFromEmail,
+} from "../../services/AuthServices";
 
 export default function IndexContainer({ children }) {
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
+  const [hasAccount, setHasAccount] = useState(false);
 
   useEffect(() => {
     setLoaded(true);
@@ -28,17 +27,41 @@ export default function IndexContainer({ children }) {
     setCookies("mail", e);
   }
 
-  function checkUser(mail) {
+  async function checkIfUserHasAccount() {
     const http = new HttpService();
-    let signupUrl = "user/mail";
-    return http
-      .postData(mail, signupUrl)
+    const url = "users/userHasAccount";
+    const data = {
+      email: String(getCookies("mail")?.mail)
+        .replace("%40", "@")
+        .replace("undefined", ""),
+    };
+    console.log(
+      String(getCookies("mail")?.mail)
+        .replace("%40", "@")
+        .replace("undefined", "")
+    );
+    http
+      .postData(data, url)
       .then((data) => {
-        return data;
+        console.log("---");
+        console.log(data);
+        console.log(data["data"]);
+        console.log(data["data"]["hasAccount"]);
+        console.log("---");
+        setHasAccount(data["data"]["hasAccount"])
+        if (data["data"]["hasAccount"]) {
+          router.push("/signin");
+          return;
+        }
+        router.push("/signup");
       })
       .catch((error) => {
-        return error;
+        // if (error == "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
+        //  setVisible(true);
+        // }
+        // exist = false;
       });
+      return hasAccount;
   }
 
   if (!loaded)
@@ -87,22 +110,7 @@ export default function IndexContainer({ children }) {
                 icon={<RightOutlined />}
                 size={"large"}
                 onClick={() => {
-                  /*
-                1. Vérifier si il existe dans la table user
-                2. SI OUI -> Remplir avec les données de l'API
-                3. SINON -> Rien
-                */
-                  const mail =
-                    String(getCookies("mail")?.mail)
-                      .replace("%40", "@")
-                      .replace("undefined", "") ?? "";
-                  const datas = checkUser(mail);
-                  console.log("-----");
-                  console.log(datas);
-                  console.log(mail);
-                  console.log("-----");
-
-                  router.push("/tenant");
+                  checkIfUserHasAccount();
                 }}
               >
                 Commencer
@@ -113,7 +121,6 @@ export default function IndexContainer({ children }) {
           <Divider />
           <div className="main">
             <div className="mainText">
-              
               <h2>
                 <strong>Passloc, Online Manager</strong>
               </h2>
@@ -126,7 +133,7 @@ export default function IndexContainer({ children }) {
             <div className="steps">
               <div className="column">
                 <h3>
-                  <strong>Déposez</strong>
+                  <strong>1. Déposez</strong>
                 </h3>
                 <h4>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
@@ -136,7 +143,7 @@ export default function IndexContainer({ children }) {
               </div>
               <div className="column">
                 <h3>
-                  <strong>Partagez</strong>
+                  <strong>2. Partagez</strong>
                 </h3>
                 <h4>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
@@ -146,7 +153,7 @@ export default function IndexContainer({ children }) {
               </div>
               <div className="column">
                 <h3>
-                  <strong>Trouvez</strong>
+                  <strong>3. Trouvez</strong>
                 </h3>
                 <h4>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
@@ -159,29 +166,40 @@ export default function IndexContainer({ children }) {
 
           <Divider />
 
-          <h2><strong>Tarifs</strong></h2>
+          <h2>
+            <strong>Tarifs</strong>
+          </h2>
           <div className="tarif">
-            <br/>
+            <br />
             <div className="column">
-              <h2 className="seconds" >Gratuit</h2>
+              <h2 className="seconds">Gratuit</h2>
               <h3>XX.xx €</h3>
               <p>Description...</p>
-              <p>Description</p>  
               <p>Description</p>
               <p>Description</p>
               <p>Description</p>
-              <h3 style={{'marginTop': 50, 'marginLeft':10, 'cursor':'pointer'}} className="seconds">En savoir +</h3>
+              <p>Description</p>
+              <h3
+                style={{ marginTop: 50, marginLeft: 10, cursor: "pointer" }}
+                className="seconds"
+              >
+                En savoir +
+              </h3>
             </div>
             <div className="column">
-              <h2 className="seconds" >Entreprise</h2>
+              <h2 className="seconds">Entreprise</h2>
               <h3>XX.xx €</h3>
               <p>Description...</p>
               <p>Description</p>
               <p>Description</p>
               <p>Description</p>
               <p>Description</p>
-              <h3 style={{'marginTop': 50, 'marginLeft':10, 'cursor':'pointer'}} className="seconds">En savoir +</h3>
-
+              <h3
+                style={{ marginTop: 50, marginLeft: 10, cursor: "pointer" }}
+                className="seconds"
+              >
+                En savoir +
+              </h3>
             </div>
           </div>
 
@@ -193,17 +211,14 @@ export default function IndexContainer({ children }) {
 
         <div className="footer">
           <div className="column">
-          <img src="https://picsum.photos/100/100"/>
+            <img src="https://picsum.photos/100/100" />
           </div>
           <div className="column">
-
-          <img src="https://picsum.photos/100/100"/>
+            <img src="https://picsum.photos/100/100" />
           </div>
           <div className="column">
-
-          <img src="https://picsum.photos/100/100"/>
+            <img src="https://picsum.photos/100/100" />
           </div>
-
         </div>
       </IndexWrapper>
     );

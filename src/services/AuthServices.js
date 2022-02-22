@@ -40,7 +40,7 @@ export const LogOutUserService = () => {
     });
 };
 
-const registerFromEmail = (credentials) =>{
+export const registerFromEmail = (credentials) =>{
   const http = new HttpService();
   let signupUrl = "/registerFromEmail";
   return http
@@ -81,12 +81,15 @@ const getProfile = (credentials) =>{
     });
 };
 
-const getUserFromEmail = (credentials) =>{
+export const getUserFromMail = (mail) =>{
   const http = new HttpService();
   let signupUrl = "/users/getUserFromEmail";
   return http
-    .getData(credentials, signupUrl)
+    .getData(mail, signupUrl)
     .then((data) => {
+      console.log("AS --- ")
+      console.log(data)
+      console.log("---")
       return data;
     })
     .catch((error) => {
@@ -94,15 +97,19 @@ const getUserFromEmail = (credentials) =>{
     });
 };
 
-const userHasAccount = (credentials) =>{
+export const userHasAccount = (credentials) =>{
   const http = new HttpService();
-  let signupUrl = "/users/userHasAccount";
+  let signupUrl = "users/userHasAccount";
   return http
-    .getData(credentials, signupUrl)
+    .postData(credentials, signupUrl)
     .then((data) => {
+      console.log(data)
       return data;
     })
     .catch((error) => {
+      if (error == "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
+        alert("Erreur d'accès à la base de données")
+      }
       return error;
     });
 };

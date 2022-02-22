@@ -31,7 +31,7 @@ export default function Connexion({ children }) {
           <div className="gauche">
             <h2 className="title">
               {router.pathname == "/signin" ? "Connectez" : "Inscrivez"}{" "}
-              vous à Easy Capital
+              vous sur PassLoc
             </h2>
             <div className="form">{children}</div>
           </div>

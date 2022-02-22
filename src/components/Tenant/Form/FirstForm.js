@@ -107,7 +107,7 @@ export default function FirstForm({
       <Form.Item className="wrapperInputs">
         <Form.Item
           label="Mail"
-          name={"mail_" + current}
+          name={"mail"}
           hasFeedback
           className="mailItem"
           rules={[
@@ -119,6 +119,7 @@ export default function FirstForm({
         >
           <Input
             id={"mail"}
+            name={"mail"}
             type="text"
             placeholder="exemple@exemple.com"
             className="mailInput"
