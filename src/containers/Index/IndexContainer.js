@@ -13,14 +13,21 @@ import {
   userHasAccount,
   registerFromEmail,
 } from "../../services/AuthServices";
+import { useDispatch } from "react-redux";
+import { LoadProfileAction } from "../../redux/actions/ProfileActions";
 
 export default function IndexContainer({ children }) {
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
   const [hasAccount, setHasAccount] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    dispatch(LoadProfileAction());
   }, []);
 
   function setMail(e) {

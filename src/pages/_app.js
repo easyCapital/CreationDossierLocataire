@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
         </title>
         <meta
           name="description"
-          content="Le seul outil de gestion de patrimoine accessible qui compare toutes les solutions d’investissements immobilières ou financières afin d’optimiser votre fiscalité."
+          content="Le seul outil de gestion de patrimoistate.userDetails.userProfile.data === nullne accessible qui compare toutes les solutions d’investissements immobilières ou financières afin d’optimiser votre fiscalité."
         />
         <link rel="canonical" href={canonicalURL} />
         <link
@@ -32,9 +32,9 @@ function MyApp({ Component, pageProps }) {
           href="https://res.cloudinary.com/easycapital/image/upload/v1623230243/espace_client/zifepqxqhcunrtosgv0j.ico"
         />
       </Head>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <Component {...pageProps} />
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </Provider>
   );
 }

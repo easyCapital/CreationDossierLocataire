@@ -32,7 +32,7 @@ export const LoginAction = (credentials, router) => {
     LoginUserService(credentials).then(
       (res) => {
         if (res.hasOwnProperty("success") && res.success === true) {
-          localStorage.setItem("user-token", res.token);
+          localStorage.setItem("user-token", res.data.token);
           dispatch({ type: ActionTypes.LOGIN_SUCCESS });
           router.push("/");
         } else if (res.hasOwnProperty("success") && res.success === false) {
@@ -47,6 +47,7 @@ export const LoginAction = (credentials, router) => {
 };
 
 export const LogoutAction = () => {
+  console.log("LOGOUT")
   return (dispatch) => {
     dispatch({ type: ActionTypes.RESTART_AUTH_RESPONSE });
     LogOutUserService().then(

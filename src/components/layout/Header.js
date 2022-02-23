@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LogoutAction } from "../../redux/actions/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -20,16 +20,13 @@ export default function Header(props) {
     router.push("/signin");
   };
 
-  const token = localStorage.getItem("user-token");
-  // console.log(token);
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  const state = useSelector((state) => state);
   useEffect(() => {
-    if (authResponse !== "" && authResponse.success === true) {
-      localStorage.removeItem("user-token");
-    }
-    
-    return () => {};
-  }, [authResponse]);
+    console.log(state);
+    setLoggedIn(state?.userDetails?.userProfile?.data != null); 
+  }, [state]);
+
   return (
     <HeaderWrapper style={ {"backgroundColor":router.asPath == "/" && '#fff', "height":80}}>
       <div className="barre" >
@@ -47,34 +44,15 @@ export default function Header(props) {
             </a>
           </div>
           <div className="btn_login">
-            <Button 
+            {!loggedIn && <Button 
               style={{"marginTop":0}}
-              onClick={() => router.push("/signin")}>Connexion</Button>
+              onClick={() => router.push("/signin")}>Connexion</Button>}
           </div>
         </div>
-        {router.asPath != "/signin" &&
-          router.asPath != "/signup" &&
-          token !== null &&
-          token !== "" && (
-            <Button
-              className="button"
-              type="primary"
-              type="link"
-              style={{
-                borderBottom: router.asPath == "/conformite" ? "solid" : "none",
-                borderColor:
-                  router.asPath == "/conformite" ? "#4ca6e2" : "black",
-                color: "black",
-              }}
-            >
-              <Link href="/conformite">Ma conformité</Link>
-            </Button>
-          )}
       </div>
       {router.asPath != "/signin" &&
         router.asPath != "/signup" &&
-        token !== null &&
-        token !== "" && (
+        loggedIn && (
           <div className="push">
             {/* {token !== null && token !== "" ? ( */}
             <Button className="button" id="btn1" onClick={logOut}>

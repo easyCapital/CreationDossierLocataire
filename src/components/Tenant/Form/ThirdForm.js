@@ -109,7 +109,7 @@ export default function ThirdForm({
 
 
         {data.find((e) => e.name == 'statut').value == "Logé à titre gratuit" && 
-        String(data.find((e) => e.name == 'statut_s').value).startsWith("e") && 
+        String(data.find((e) => e.name == 'activity_id').value).startsWith("e") && 
         <Form.Item
         label="Attestation logée à titre gratuit"
         name="altg"
@@ -146,7 +146,7 @@ export default function ThirdForm({
           </Upload>
       </Form.Item>
 
-      {String(data.find((e) => e.name == 'statut_s').value).startsWith("s") 
+      {String(data.find((e) => e.name == 'activity_id').value).startsWith("s") 
       &&
       <Form.Item
         
@@ -169,7 +169,7 @@ export default function ThirdForm({
         
         </Form.Item>}
 
-        {String(data.find((e) => e.name == 'statut_s').value).startsWith("tns") && <Form.Item>
+        {String(data.find((e) => e.name == 'activity_id').value).startsWith("tns") && <Form.Item>
         
       <Form.Item
       label="2 derniers bilans comptables"
@@ -191,7 +191,7 @@ export default function ThirdForm({
         
       </Form.Item>} 
 
-      {String(data.find((e) => e.name == 'statut_s').value).startsWith("e") && <Form.Item
+      {String(data.find((e) => e.name == 'activity_id').value).startsWith("e") && <Form.Item
         
       label="Carte d’étudiants"
       name="studenCard"
@@ -211,7 +211,7 @@ export default function ThirdForm({
         
         </Form.Item>}
 
-        {String(data.find((e) => e.name == 'statut_s').value) == "e_ae" && <Form.Item
+        {String(data.find((e) => e.name == 'activity_id').value) == "e_ae" && <Form.Item
         
       label="3 derniers bulletins de salaires"
       name="tdbs"

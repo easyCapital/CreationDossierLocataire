@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RegisterAction } from "../../../redux/actions/AuthActions";
 import { useRouter } from "next/router";
 import HttpService from "../../../services/HttpService";
+import { setCookies, getCookies } from "cookies-next";
+import Connexion from "../../../containers/Connexion/Connexion";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -15,13 +17,6 @@ export default function SignUp() {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
-  const handleOk = () => {
-    setVisible(false);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
 
   function error() {
     Modal.error({
@@ -60,11 +55,12 @@ export default function SignUp() {
   };
 
   return (
-    <>
+    <Connexion>
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserRegister}
+        
       >
         <Form.Item
           label="E-mail"
@@ -162,6 +158,6 @@ export default function SignUp() {
           Vous avez un compte ? <a href="/signin">Me connecter</a>
         </Form.Item>
       </Form>
-    </>
+    </Connexion>
   );
 }

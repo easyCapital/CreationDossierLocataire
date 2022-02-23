@@ -2,7 +2,7 @@ import HttpService from "./HttpService";
 
 export const LoadProfile = () => {
   const http = new HttpService();
-  let profileUrl = "users/view-profile";
+  let profileUrl = "profile";
   const tokenId = "user-token";
   return http
     .getData(profileUrl, tokenId)

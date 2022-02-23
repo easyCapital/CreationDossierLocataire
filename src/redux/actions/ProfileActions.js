@@ -6,6 +6,7 @@ export const LoadProfileAction = () => {
     dispatch({ type: ActionTypes.LOADING });
     LoadProfile().then(
       (res) => {
+        console.log(res);
         if (res.hasOwnProperty("success") && res.success === true) {
           dispatch({ type: ActionTypes.LOAD_PROFILE_SUCCESS, res });
         } else if (res.hasOwnProperty("success") && res.success === false) {

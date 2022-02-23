@@ -15,7 +15,7 @@ export const RegisterUserService = (credentials) => {
 
 export const LoginUserService = (credentials) => {
   const http = new HttpService();
-  let loginUrl = "/login";
+  let loginUrl = "login";
   return http
     .postData(credentials, loginUrl)
     .then((data) => {
@@ -28,7 +28,7 @@ export const LoginUserService = (credentials) => {
 
 export const LogOutUserService = () => {
   const http = new HttpService();
-  let loginUrl = "/logout";
+  let loginUrl = "logout";
   const tokenId = "user-token";
   return http
     .getData(loginUrl, tokenId)
@@ -70,9 +70,9 @@ const createFolder = (credentials) =>{
 
 const getProfile = (credentials) =>{
   const http = new HttpService();
-  let signupUrl = "/profile";
+  let url = "/profile";
   return http
-    .getData(credentials, signupUrl)
+    .getData(credentials, url)
     .then((data) => {
       return data;
     })

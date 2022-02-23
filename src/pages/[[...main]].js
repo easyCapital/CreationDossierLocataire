@@ -1,26 +1,25 @@
 import { useRouter } from "next/router";
 
-import SignInPage from "./signin";
-import SignUpPage from "./signup";
-import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner";  
-import IndexPage from "./indd";
-import TenantPage from "./tenant";
+import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner"; 
+import SignIn from "../components/Connexion/SignIn/SignIn";
+import IndexContainer from "../containers/Index/IndexContainer";
+import SignUp from "../components/Connexion/SignUp/SignUp";
+import Tenant from "../components/Tenant/Tenant";
 
-const Main = () => {
+const Main = (props) => {
   const router = useRouter();
 
   if (router.asPath != "/[[...main]]") {
     switch (router.asPath) {
       case "/":
-        return <IndexPage />;
       case "/index":
-        return <IndexPage />;
+        return <IndexContainer {...props}/>;
       case "/signin":
-        return <SignInPage />;
+        return <SignIn {...props}/>;
       case "/signup":
-        return <SignUpPage />;
+        return <SignUp {...props}/>;
       case  "/tenant":
-        return <TenantPage/>
+        return <Tenant {...props}/>
 
       default:
         return <DefaultErrorPage statusCode={404} />;

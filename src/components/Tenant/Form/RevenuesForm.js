@@ -14,15 +14,15 @@ export default function RevenuesForm({
 
   return (
     <div className="center">  
-      {(String(data.find((e) => e.name == "statut_s").value).startsWith("s") && <EmployeeInput 
+      {(String(data.find((e) => e.name == "activity_id").value).startsWith("s") && <EmployeeInput 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>)}
-      {(String(data.find((e) => e.name == "statut_s").value).startsWith("tns") && <TnsInput  
+      {(String(data.find((e) => e.name == "activity_id").value).startsWith("tns") && <TnsInput  
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>)}
-      {(String(data.find((e) => e.name == "statut_s").value).startsWith("e")  && <StudentInput
+      {(String(data.find((e) => e.name == "activity_id").value).startsWith("e")  && <StudentInput
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>)}

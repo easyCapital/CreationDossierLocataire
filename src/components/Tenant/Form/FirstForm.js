@@ -15,7 +15,7 @@ export default function FirstForm({
     <div className="currentForm">
       <Form.Item
         label="Statut"
-        name={"statut_gl_" + current}
+        name={"statut_gl"}
         hasFeedback
         rules={[
           {
@@ -27,7 +27,7 @@ export default function FirstForm({
         <Radio.Group
           buttonStyle="solid"
           onChange={(e) => {
-          setCurrentData('statut_gl', e.target.value)  
+            setCurrentData("statut_gl", e.target.value);
           }}
         >
           <Radio.Button value="Garant">Garant</Radio.Button>
@@ -36,7 +36,7 @@ export default function FirstForm({
       </Form.Item>
       <Form.Item
         label="Civilité"
-        name={"civil_" + current}
+        name={"civil"}
         hasFeedback
         // className="clvt"
         rules={[
@@ -49,7 +49,7 @@ export default function FirstForm({
         <Radio.Group
           buttonStyle="solid"
           onChange={(e) => {
-            setCurrentData('civil', e.target.value)  
+            setCurrentData("civil", e.target.value);
           }}
         >
           <Radio.Button value="M">M</Radio.Button>
@@ -61,7 +61,7 @@ export default function FirstForm({
       <Form.Item className="wrapperInput">
         <Form.Item
           label="Prenom"
-          name={"first_name_" + current}
+          name={"firstname"}
           className="nameItem"
           hasFeedback
           rules={[
@@ -72,17 +72,17 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"first_name"}
+            id={"firstname"}
             type="text"
             placeholder=""
             onChange={(e) => {
-              setCurrentData("first_name", e.target.value);
+              setCurrentData("firstname", e.target.value);
             }}
           />
         </Form.Item>
         <Form.Item
           label="Nom"
-          name={"last_name_" + current}
+          name={"last_name"}
           className="lastnameItem"
           hasFeedback
           rules={[
@@ -93,11 +93,11 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"last_name"}
+            id={"lastname"}
             type="text"
             placeholder=""
             onChange={(e) => {
-              setCurrentData("last_name", e.target.value);
+              setCurrentData("lastname", e.target.value);
             }}
           />
         </Form.Item>
@@ -107,7 +107,7 @@ export default function FirstForm({
       <Form.Item className="wrapperInputs">
         <Form.Item
           label="Mail"
-          name={"mail"}
+          name={"email"}
           hasFeedback
           className="mailItem"
           rules={[
@@ -118,19 +118,19 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"mail"}
-            name={"mail"}
+            id={"email"}
+            name={"email"}
             type="text"
             placeholder="exemple@exemple.com"
             className="mailInput"
             onChange={(e) => {
-              setCurrentData("mail", e.target.value);
+              setCurrentData("email", e.target.value);
             }}
           />
         </Form.Item>
         <Form.Item
           label="Mobile"
-          name={"mobile_" + current}
+          name={"mobile"}
           className="mobileItem"
           hasFeedback
           rules={[
@@ -141,12 +141,12 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"mobile"}
+            id={"phone"}
             type="text"
             placeholder="0123456789"
             className="mobileInput"
             onChange={(e) => {
-              setCurrentData("mobile", e.target.value);
+              setCurrentData("phone", e.target.value);
             }}
           />
         </Form.Item>
@@ -155,7 +155,7 @@ export default function FirstForm({
       <div className="to-the-left"> */}
       <Form.Item
         label="Date de naissance"
-        name={"born_date_" + current}
+        name={"born_date"}
         hasFeedback
         rules={[
           {
@@ -175,7 +175,7 @@ export default function FirstForm({
       </Form.Item>
       <Form.Item
         label="Lieu de naissance"
-        name={"born_place_" + current}
+        name={"born_place"}
         hasFeedback
         rules={[
           {
@@ -196,7 +196,7 @@ export default function FirstForm({
 
       <Form.Item
         label="Logement actuel"
-        name={"statut_" + current}
+        name={"housing_type"}
         hasFeedback
         rules={[
           {
@@ -208,7 +208,7 @@ export default function FirstForm({
         <Radio.Group
           buttonStyle="solid"
           onChange={(e) => {
-            setCurrentData("statut", e.target.value);
+            setCurrentData("housing_type", e.target.value);
           }}
         >
           <Radio.Button value="Propriétaire">Propriétaire</Radio.Button>
@@ -219,7 +219,7 @@ export default function FirstForm({
         </Radio.Group>
       </Form.Item>
 
-      {data.find((e) => e.name == "statut").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
         <Form.Item
           label="Nom du propriétaire actuel"
           hasFeedback
@@ -231,17 +231,17 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"npa"}
-            name={"npa_" + current}
+            id={"owner_lastname"}
+            name={"owner_lastname"}
             type="text"
             placeholder=""
             onChange={(e) => {
-              setCurrentData('npa', e.target.value)
+              setCurrentData("owner_lastname", e.target.value);
             }}
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "statut").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
         <Form.Item
           label="Prenom du propriétaire actuel"
           hasFeedback
@@ -253,17 +253,17 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"ppa"}
-            name={"ppa_" + current}
+            id={"owner_firstname"}
+            name={"owner_firstname"}
             type="text"
             placeholder=""
             onChange={(e) => {
-              setCurrentData('ppa', e.target.value)
+              setCurrentData("owner_firstname", e.target.value);
             }}
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "statut").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
         <Form.Item
           label="Mobile du propriétaire actuel"
           hasFeedback
@@ -276,17 +276,17 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"tpa"}
-            name={"tpa_" + current}
+            id={"owner_phone"}
+            name={"owner_phone"}
             type="text"
             placeholder=""
             onChange={(e) => {
-              setCurrentData('tpa', e.target.value)
+              setCurrentData("owner_phone", e.target.value);
             }}
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "statut").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
         <Form.Item
           label="Mail du propriétaire actuel"
           hasFeedback
@@ -298,42 +298,20 @@ export default function FirstForm({
           ]}
         >
           <Input
-            id={"mpa"}
-            name={"mpa_" + current}
+            id={"owner_email"}
+            name={"owner_email"}
             type="text"
             placeholder=""
             onChange={(e) => {
-              setCurrentData('mpa', e.target.value)
+              setCurrentData("owner_email", e.target.value);
             }}
           />
         </Form.Item>
       )}
-
-
-      {/* <Form.Item
-        label="Adresse actuelle"
-        name={"born_place_" + current}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner votre lieu de naissance.",
-          },
-        ]}
-      >
-        <Input
-          id={"born_place"}
-          type="text"
-          placeholder=""
-          onChange={(e) => {
-            setCurrentData("born_place", e.target.value);
-          }}
-        />
-      </Form.Item>               */}
       <Form.Item
         label="Adresse actuelle"
         hasFeedback
-        name={"address_" + current}
+        name={"address"}
         rules={[
           {
             required: true,
@@ -346,16 +324,16 @@ export default function FirstForm({
           type="text"
           placeholder=""
           onChange={(e) => {
-            setCurrentData('address', e.target.value)
+            setCurrentData("address", e.target.value);
           }}
         />
       </Form.Item>
       <Form.Item
         label="Activité principale"
-        name={"statut_s_" + current}
+        name={"activity_id"}
         hasFeedback
         onChange={(e) => {
-          setCurrentData('statut_s', e.target.value)
+          setCurrentData("activity_id", e.target.value);
         }}
         rules={[
           {
@@ -366,7 +344,7 @@ export default function FirstForm({
       >
         <Select
           onChange={(value) => {
-            setCurrentData('statut_s', value)
+            setCurrentData("activity_id", value);
           }}
         >
           <Option value="s_cdi_o">CDI hors période d'essaie</Option>
@@ -387,89 +365,109 @@ export default function FirstForm({
         </Select>
       </Form.Item>
 
-      
+      {data.find((e) => e.name == "activity_id").value &&
+        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+          "e_"
+        ) && (
+          <Form.Item
+            label="Nom de l'employeur actuel"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Veuillez renseigner le nom de l'employeur actuel",
+              },
+            ]}
+          >
+            <Input
+              id={"employer_lastname"}
+              name={"employer_lastname"}
+              type="text"
+              placeholder=""
+              onChange={(e) => {
+                setCurrentData("employer_lastname", e.target.value);
+              }}
+            />
+          </Form.Item>
+        )}
+      {data.find((e) => e.name == "activity_id").value &&
+        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+          "e_"
+        ) && (
+          <Form.Item
+            label="Prenom de l'employeur actuel"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Veuillez renseigner le nom de l'employeur actuel",
+              },
+            ]}
+          >
+            <Input
+              id={"employer_firstname"}
+              name={"employer_firstname"}
+              type="text"
+              placeholder=""
+              onChange={(e) => {
+                setCurrentData("employer_firstname", e.target.value);
+              }}
+            />
+          </Form.Item>
+        )}
+      {data.find((e) => e.name == "activity_id").value &&
+        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+          "e_"
+        ) && (
+          <Form.Item
+            label="Mobile de l'employeur actuel"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message:
+                  "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
+              },
+            ]}
+          >
+            <Input
+              id={"employer_phone"}
+              name={"employer_phone"}
+              type="text"
+              placeholder=""
+              onChange={(e) => {
+                setCurrentData("employer_phone", e.target.value);
+              }}
+            />
+          </Form.Item>
+        )}
 
-      {data.find((e) => e.name == "statut_s").value && !String(data.find((e) => e.name == "statut_s").value).startsWith("e_") &&  <Form.Item
-        label="Nom de l'employeur actuel"
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner le nom de l'employeur actuel",
-          },
-        ]}
-      >
-        <Input
-          id={"nea"}
-          name={'nea_' + current}
-          type="text"
-          placeholder=""
-          onChange={(e) => {
-            setCurrentData('nea', e.target.value)  
-          }}
-        />
-      </Form.Item>}
-      {data.find((e) => e.name == "statut_s").value && !String(data.find((e) => e.name == "statut_s").value).startsWith("e_") &&  <Form.Item
-        label="Prenom de l'employeur actuel"
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner le nom de l'employeur actuel",
-          },
-        ]}
-      >
-        <Input
-          id={"pea"}
-          name={'pea_' + current}
-          type="text"
-          placeholder=""
-          onChange={(e) => {
-            setCurrentData('pea', e.target.value)  
-          }}
-        />
-      </Form.Item>}
-      {data.find((e) => e.name == "statut_s").value && !String(data.find((e) => e.name == "statut_s").value).startsWith("e_") &&  <Form.Item
-        label="Mobile de l'employeur actuel"
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
-          },
-        ]}
-      >
-        <Input
-          id={"tea"}
-          name={'tea_' + current}
-          type="text"
-          placeholder=""
-          onChange={(e) => {
-            setCurrentData('tea', e.target.value)  
-          }}
-        />
-      </Form.Item>}
-
-      {data.find((e) => e.name == "statut_s").value && !String(data.find((e) => e.name == "statut_s").value).startsWith("e_") &&  <Form.Item
-        label="Mail de l'employeur actuel"
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
-          },
-        ]}
-      >
-        <Input
-          id={"mea"}
-          name={'mea_' + current}
-          type="text"
-          placeholder=""
-          onChange={(e) => {
-            setCurrentData('mea', e.target.value)  
-          }}
-        />
-      </Form.Item>}
+      {data.find((e) => e.name == "activity_id").value &&
+        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+          "e_"
+        ) && (
+          <Form.Item
+            label="Mail de l'employeur actuel"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message:
+                  "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
+              },
+            ]}
+          >
+            <Input
+              id={"employer_email"}
+              name={"employer_email"}
+              type="text"
+              placeholder=""
+              onChange={(e) => {
+                setCurrentData("employer_email", e.target.value);
+              }}
+            />
+          </Form.Item>
+        )}
     </div>
 
     // </div>

@@ -1,6 +1,5 @@
-import { Space, Spin } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner";
@@ -13,29 +12,44 @@ export default function AuthProvider({ children }) {
   const dispatch = useDispatch();
 
   const profileResponse = useSelector((state) => state.userDetails.userProfile);
+  const logAction = useSelector((state) => state.userAuth);
 
   useEffect(() => {
     dispatch(LoadProfileAction());
   }, []);
 
+  const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
-    if (router.asPath == "/signin" || router.asPath == "/signup") {
-      if (profileResponse?.message == "user profile") {
-        router.push("/");
-        setLoaded(true);
-      } else if (profileResponse?.message == "disconnected") {
-        setLoaded(true);
-      }
-    } else {
-      if (!localStorage.getItem("user-token")) {
-        router.push("/signin");
-        setLoaded(true);
-      }
-      if (profileResponse?.message == "user profile") {
-        setLoaded(true);
-      }
+    if (logAction?.authResponse?.message == "succefully logged out") {
+      dispatch(LoadProfileAction());
     }
+  }, [logAction]);
+
+  useEffect(() => {
+    setLoaded(true);
   }, [profileResponse]);
 
-  return loaded ? <>{children}</> : <LoadingSpinner />;
+  const state = useSelector((state) => state);
+  useEffect(() => {
+    setLoggedIn(state?.userDetails?.userProfile?.data != null);
+    console.log(state);
+    if (state.userDetails.userProfile.data === null) {
+      if (router.asPath == "/tenant") {
+        // not connected
+        router.push("/");
+      }
+    }
+
+    if (state.userDetails.userProfile.data !== undefined) {
+      if (["/signin", "/signup"].includes(router.asPath)) {
+        router.push("/");
+      }
+    }
+  }, [state]);
+
+  return loaded ? (
+    <>{React.cloneElement(children, { loggedIn: loggedIn })}</>
+  ) : (
+    <LoadingSpinner />
+  );
 }

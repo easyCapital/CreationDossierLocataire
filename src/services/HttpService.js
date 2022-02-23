@@ -22,7 +22,8 @@ export default class HttpService {
       headers: {
         Authorization: "Bearer " + token,
         "Content-type": "application/json",
-        "Cache-Control": "private"
+        "Cache-Control": "private",
+        "Accept": "application/json"
       },
     };
     return requestOptions;

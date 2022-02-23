@@ -9,6 +9,7 @@ import GarantForm from "./Form/GarantForm";
 import { getCookies } from "cookies-next";
 import router from "next/router";
 import HttpService from "../../services/HttpService";
+import TenantContainer from "../../containers/Tenant/TenantContainer";
 
 export default function Tenant(param) {
   const initFormData = [
@@ -21,19 +22,19 @@ export default function Tenant(param) {
       value: "",
     },
     {
-      name: "first_name",
+      name: "firstname",
       value: "",
     },
     {
-      name: "last_name",
+      name: "lastname",
       value: "",
     },
     {
-      name: "mail",
+      name: "email",
       value:'',
     },
     {
-      name: "mobile",
+      name: "phone",
       value: "",
     },
     {
@@ -45,7 +46,7 @@ export default function Tenant(param) {
       value: "",
     },
     {
-      name: "statut",
+      name: "housing_type",
       value: "",
     },
     {
@@ -53,39 +54,39 @@ export default function Tenant(param) {
       value: "",
     },
     {
-      name: "statut_s",
+      name: "activity_id",
       value: "",
     },
     {
-      name: "npa",
+      name: "owner_lastname",
       value: "",
     },
     {
-      name: "ppa",
+      name: "owner_firstname",
       value: "",
     },
     {
-      name: "tpa",
+      name: "owner_phone",
       value: "",
     },
     {
-      name: "mpa",
+      name: "owner_email",
       value: "",
     },
     {
-      name: "nea",
+      name: "employer_lastname",
       value: "",
     },
     {
-      name: "pea",
+      name: "employer_firstname",
       value: "",
     },
     {
-      name: "tea",
+      name: "employer_phone",
       value: "",
     },
     {
-      name: "mea",
+      name: "employer_email",
       value: "",
     },
     {
@@ -189,36 +190,13 @@ export default function Tenant(param) {
 
   useEffect(() => {
     if (getCookies("mail")) {
-      setCurrentData("mail", String(getCookies("mail")?.mail)
+      setCurrentData("email", String(getCookies("mail")?.mail)
       .replace("%40", "@")
       .replace("undefined", ""));
 
     }
   }, []);
 
-  function checkIfUserHasAccount() {
-    const http = new HttpService();
-    const url = "users/userHasAccount";
-    const data = JSON.stringify({email: String(getCookies("mail")?.mail)
-    .replace("%40", "@")
-    .replace("undefined", "")});
-    let exist = false;
-    http.postData(data, url).then((data) => {
-        // console.log("---")
-        // console.log(data)
-        // console.log(data["data"])
-        // console.log(data["data"]["hasAccount"])
-        // console.log("---")
-        exist = Boolean(data["data"]["hasAccount"]);
-      })
-      .catch((error) => {
-        // if (error == "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
-         setVisible(true);
-        // }
-        exist = false;
-      });
-      return exist;
-  }
 
   function setCurrentData(name, value) {
     setFormData((formData) => {
@@ -351,11 +329,11 @@ export default function Tenant(param) {
   function getTitle(index) {
     return (
       <>
-        {(!getData("first_name", index)
+        {(!getData("firstname", index)
           ? "Prenom"
-          : getData("first_name", index)) +
+          : getData("firstname", index)) +
           " " +
-          (!getData("last_name", index) ? "Nom" : getData("last_name", index))}
+          (!getData("lastname", index) ? "Nom" : getData("lastname", index))}
         <br />
         {getData("statut_gl", index) ? getData("statut_gl", index) : " \n "}
       </>
@@ -443,11 +421,6 @@ export default function Tenant(param) {
 
   function getForm(foldersss)  {
 
-    console.log("----")
-    const datas = checkIfUserHasAccount();
-    console.log(datas)
-    console.log("----")
-
     return (
       <Form
         labelCol={{ span: 6 }}
@@ -499,7 +472,7 @@ export default function Tenant(param) {
   }
 
   return (
-    <>
+    <TenantContainer>
     <Modal title="Erreur" visible={visible}  onOk={handleOk} onCancel={handleCancel}>
         <p>Erreur d'accès à la base de données</p>
         <p>Un message vient d'être envoyé à nos développeurs</p>
@@ -579,6 +552,6 @@ export default function Tenant(param) {
           </Form.Item>
         )}
       </div>
-    </>
+    </TenantContainer>
   );
 }
