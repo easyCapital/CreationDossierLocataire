@@ -92,17 +92,6 @@ export default function IndexContainer({ loggedIn }) {
               console.log(elm2.lastname);
               console.log(elm2.email);
               createCard(elm2.firstname, elm2.lastname, elm2.email);
-              {
-                <Card
-                  title={elm2.firstname}
-                  extra={<p onClick={() => router.push("/tenant")}>Editer</p>}
-                  style={{ width: 300 }}
-                >
-                  <p>{elm2.firstname}</p>
-                  <p>{elm2.lastname}</p>
-                  <p>{elm2.email}</p>
-                </Card>;
-              }
             }
           }
         }
@@ -176,7 +165,7 @@ export default function IndexContainer({ loggedIn }) {
                 _map(cards, (d) => (
                   <Card
                     title={d[0]}
-                    extra={<a href="">Edit</a>}
+                    extra={<Button onClick={() => router.push("/tenant")} style={{color: 'black', fontSize: 13}}>Editer</Button> }
                     style={{ width: 300 }}
                   >
                     <p>Prenom {d[0]}</p>
