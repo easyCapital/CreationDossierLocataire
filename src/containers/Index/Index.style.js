@@ -188,4 +188,9 @@ export const IndexWrapper = styled.div`
   }
 }
 
+.inlineblock{
+  display: flex;
+  justify-content: center;
+}
+
 `;

@@ -14,6 +14,7 @@ export default function Header(props) {
   const logOut = () => {
     dispatch(LogoutAction());
     router.push("/signin");
+    router.push("/");
   };
 
   const login = () => {

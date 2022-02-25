@@ -10,6 +10,7 @@ import { getCookies } from "cookies-next";
 import router from "next/router";
 import HttpService from "../../services/HttpService";
 import TenantContainer from "../../containers/Tenant/TenantContainer";
+import { useForm } from "react-hook-form";
 
 export default function Tenant(param) {
   const initFormData = [
@@ -31,7 +32,7 @@ export default function Tenant(param) {
     },
     {
       name: "email",
-      value:'',
+      value: "",
     },
     {
       name: "phone",
@@ -118,10 +119,6 @@ export default function Tenant(param) {
       value: "",
     },
     {
-      name: "caf",
-      value: "",
-    },
-    {
       name: "identity",
       value: [],
     },
@@ -179,7 +176,8 @@ export default function Tenant(param) {
   const [folder, setFolder] = useState(0);
   const [i, seti] = useState(1);
   const [visible, setVisible] = useState(false);
-  
+  const [form, setForm] = Form.useForm()
+
   const handleOk = () => {
     setVisible(false);
   };
@@ -190,13 +188,14 @@ export default function Tenant(param) {
 
   useEffect(() => {
     if (getCookies("mail")) {
-      setCurrentData("email", String(getCookies("mail")?.mail)
-      .replace("%40", "@")
-      .replace("undefined", ""));
-
+      setCurrentData(
+        "email",
+        String(getCookies("mail")?.mail)
+          .replace("%40", "@")
+          .replace("undefined", "")
+      );
     }
   }, []);
-
 
   function setCurrentData(name, value) {
     setFormData((formData) => {
@@ -236,21 +235,29 @@ export default function Tenant(param) {
       if (getData("statut_gl", folder) == null) {
         return (
           <>
-            <h2>Vous êtes candidat locataire ou garant et vous souhaitez gagner du
+            <h2>
+              Vous êtes candidat locataire ou garant et vous souhaitez gagner du
               temps et présenter un dossier conforme aux agences et / ou
-              propriétaire ?</h2>
+              propriétaire ?
+            </h2>
             <h2>Nous sommes là pour ça !</h2>
           </>
         );
       }
-      if (getData("statut_gl", folder) == "Locataire") {
+      if (getData("statut_gl", folder) == "tenant") {
         return (
           <>
-            <h2>Commencez à créer votre dossier locataire en quelques clics.{" "}</h2>
+            <h2>
+              Commencez à créer votre dossier locataire en quelques clics.{" "}
+            </h2>
 
-            <h2>Présentez votre dossier à n'importe quel particulier ou agence.{" "} </h2>
+            <h2>
+              Présentez votre dossier à n'importe quel particulier ou agence.{" "}
+            </h2>
 
-            <h2>Vos données sont stockées en France et ne sont pas revendues.{" "}</h2>
+            <h2>
+              Vos données sont stockées en France et ne sont pas revendues.{" "}
+            </h2>
           </>
         );
       }
@@ -265,7 +272,7 @@ export default function Tenant(param) {
     }
 
     if (display == 2) {
-      if (getData("statut_gl", folder) == "Locataire") {
+      if (getData("statut_gl", folder) == "tenant") {
         return (
           <>
             <h2>
@@ -285,7 +292,7 @@ export default function Tenant(param) {
       );
     }
     if (display == 3) {
-      if (getData("statut_gl", folder) == "Locataire") {
+      if (getData("statut_gl", folder) == "tenant") {
         return (
           <>
             <h2>
@@ -385,6 +392,16 @@ export default function Tenant(param) {
   }, [formData]);
 
   function add() {
+    const http = new HttpService();
+    let url = "/folders";
+    http
+      .postData(null, url)
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        return error;
+      });
     setFormData([...formData, initFormData]);
     seti(i + 1);
     panes.push({ key: i });
@@ -408,7 +425,50 @@ export default function Tenant(param) {
     setCurrentData("displayDone", value);
   }
 
+  function strCreateObject(name, value){
+    return "{\"" + name + "\" : " + value+ "}"
+  }
+
+  function dataToString(){
+
+    let finalString = "user: ";
+    for (let i = 0; i < 9; i++){
+      let lst = formData[i];
+      for (let ii = 0; ii < 39; ii++){
+        // console.log("ii " + ii)
+        let obj = lst != undefined ? lst[ii] : null;
+        // console.log(obj)
+        if (obj != undefined && obj != null){
+          let strObj = strCreateObject(obj.name, obj.value)
+          // console.log(strObj)  
+          finalString += strObj;
+        }
+      }
+    }
+  }
+
+  function save() {
+    console.log(form.getFieldsValue())
+    // console.log(formData)
+    dataToString();
+    const http = new HttpService();
+    let url = "folders/" + (folder+1);
+    const tokenId = localStorage.getItem("user-token");
+    console.log("token " + tokenId)
+    console.log("token " + localStorage.getItem("user-token"))
+    http.putData({user: form.getFieldsValue(), type: getData("statut_gl", folder)}, url, String(localStorage.getItem("user-token")))
+      .then((data) => {
+        console.log(data)
+        return data;
+      })
+      .catch((error) => {
+        return error;
+      });
+  }
+
   const handleUserRegister = () => {
+    save();
+
     setDisplayDone(display);
     setDisplay(display + 1);
   };
@@ -416,17 +476,16 @@ export default function Tenant(param) {
   function prev() {
     setDisplay(display - 1);
   }
-  useEffect(() => {
-  }, [folder]);
+  useEffect(() => {}, [folder]);
 
-  function getForm(foldersss)  {
-
+  function getForm(foldersss) {
     return (
       <Form
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserRegister}
         fields={formData[folder]}
+        form={form}
       >
         {display == 1 && (
           <FirstForm
@@ -471,9 +530,16 @@ export default function Tenant(param) {
     );
   }
 
+  
+
   return (
     <TenantContainer>
-    <Modal title="Erreur" visible={visible}  onOk={handleOk} onCancel={handleCancel}>
+      <Modal
+        title="Erreur"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
         <p>Erreur d'accès à la base de données</p>
         <p>Un message vient d'être envoyé à nos développeurs</p>
       </Modal>

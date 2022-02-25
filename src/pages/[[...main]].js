@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner"; 
+import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner";
 import SignIn from "../components/Connexion/SignIn/SignIn";
 import IndexContainer from "../containers/Index/IndexContainer";
 import SignUp from "../components/Connexion/SignUp/SignUp";
@@ -13,13 +13,13 @@ const Main = (props) => {
     switch (router.asPath) {
       case "/":
       case "/index":
-        return <IndexContainer {...props}/>;
+        return <IndexContainer loggedIn={props.loggedIn} />;
       case "/signin":
-        return <SignIn {...props}/>;
+        return <SignIn loggedIn={props.loggedIn} />;
       case "/signup":
-        return <SignUp {...props}/>;
-      case  "/tenant":
-        return <Tenant {...props}/>
+        return <SignUp loggedIn={props.loggedIn} />;
+      case "/tenant":
+        return <Tenant loggedIn={props.loggedIn} />;
 
       default:
         return <DefaultErrorPage statusCode={404} />;

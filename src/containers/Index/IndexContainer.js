@@ -1,26 +1,23 @@
 import { IndexWrapper } from "./Index.style";
 import { useState, useEffect } from "react";
 import "aos/dist/aos.css";
-import { Input, Button, Spin, Space, Divider, Modal } from "antd";
+import { Input, Button, Spin, Space, Divider, Modal, Card } from "antd";
 import { getProviders } from "next-auth/client";
 import { useRouter } from "next/router";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { RightOutlined } from "@ant-design/icons";
 import { setCookies, getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
-import {
-  getUserFromMail,
-  userHasAccount,
-  registerFromEmail,
-} from "../../services/AuthServices";
 import { useDispatch } from "react-redux";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
+import _map from "lodash/map";
 
-export default function IndexContainer({ children }) {
+export default function IndexContainer({ loggedIn }) {
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
   const [hasAccount, setHasAccount] = useState(false);
   const dispatch = useDispatch();
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     setLoaded(true);
@@ -55,7 +52,7 @@ export default function IndexContainer({ children }) {
         console.log(data["data"]);
         console.log(data["data"]["hasAccount"]);
         console.log("---");
-        setHasAccount(data["data"]["hasAccount"])
+        setHasAccount(data["data"]["hasAccount"]);
         if (data["data"]["hasAccount"]) {
           router.push("/signin");
           return;
@@ -68,7 +65,55 @@ export default function IndexContainer({ children }) {
         // }
         // exist = false;
       });
-      return hasAccount;
+    return hasAccount;
+  }
+
+  function createCard(title, lastname, email) {
+    for (let card of cards) if (card[0] == title && card[1] == lastname && card[2] == email) return;
+    setCards([...cards, [title, lastname, email]]);
+    console.log(cards);
+  }
+
+  function getForms() {
+    const http = new HttpService();
+    let url = "profile";
+    let folders = [];
+    http
+      .getData(url)
+      .then((data) => {
+        // console.log(data.data.user.folders);
+        const lst = Array(data.data.user.folders);
+        console.log(lst);
+        folders[0] = lst[0];
+        for (let element of lst) {
+          for (let elm of element) {
+            for (let elm2 of elm.users) {
+              console.log(elm2.firstname);
+              console.log(elm2.lastname);
+              console.log(elm2.email);
+              createCard(elm2.firstname, elm2.lastname, elm2.email);
+              {
+                <Card
+                  title={elm2.firstname}
+                  extra={<p onClick={() => router.push("/tenant")}>Editer</p>}
+                  style={{ width: 300 }}
+                >
+                  <p>{elm2.firstname}</p>
+                  <p>{elm2.lastname}</p>
+                  <p>{elm2.email}</p>
+                </Card>;
+              }
+            }
+          }
+        }
+        return data;
+      })
+      .catch((error) => {
+        return error;
+      });
+
+    console.log(folders);
+    return true;
   }
 
   if (!loaded)
@@ -95,33 +140,50 @@ export default function IndexContainer({ children }) {
               ou agence immobilière votre dossier de candidature propre et
               conforme.
             </h3>
-            <div
-              className="btns"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Input
-                onChange={(e) => {
-                  setMail(e.target.value);
-                }}
-                placeholder="Votre mail"
-                style={{ width: 400, height: 60, marginBottom: 90 }}
-              />
-              <Button
-                className="home_btn"
-                shape="round"
-                type="primary"
-                icon={<RightOutlined />}
-                size={"large"}
-                onClick={() => {
-                  checkIfUserHasAccount();
+            {!loggedIn && (
+              <div
+                className="btns"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                Commencer
-              </Button>
+                <Input
+                  onChange={(e) => {
+                    setMail(e.target.value);
+                  }}
+                  placeholder="Votre mail"
+                  style={{ width: 400, height: 60, marginBottom: 90 }}
+                />
+                <Button
+                  className="home_btn"
+                  shape="round"
+                  type="primary"
+                  icon={<RightOutlined />}
+                  size={"large"}
+                  onClick={() => {
+                    checkIfUserHasAccount();
+                  }}
+                >
+                  Commencer
+                </Button>
+              </div>
+            )}
+            <div className="inlineblock">
+              {loggedIn &&
+                getForms() &&
+                _map(cards, (d) => (
+                  <Card
+                    title={d[0]}
+                    extra={<a href="">Edit</a>}
+                    style={{ width: 300 }}
+                  >
+                    <p>Prenom {d[0]}</p>
+                    <p>Nom {d[1]}</p>
+                    <p>Mail {d[2]}</p>
+                  </Card>
+                ))}
             </div>
           </div>
 

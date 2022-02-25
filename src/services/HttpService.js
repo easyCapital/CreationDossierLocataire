@@ -8,9 +8,17 @@ export default class HttpService {
     );
   };
 
-  getData = async (added_url, tokenId = "") => {
-    const token = await localStorage.getItem(tokenId);
+  getData = async (added_url) => {
+    const token = await localStorage.getItem("user-token");
     const requestOptions = this.getRequestOptions(token);
+    return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
+      response.json()
+    );
+  };
+
+  putData = async (item, added_url, tokenId, pdf = false) => {
+    console.log("token | " + tokenId)
+    const requestOptions = this.putRequestOptions(tokenId, item, pdf);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
       response.json()
     );
@@ -41,6 +49,22 @@ export default class HttpService {
       body: JSON.stringify(item),
     };
 
+    return requestOptions;
+  };
+  putRequestOptions = (token, item) => {
+    console.log("token// " + token)
+    console.log("token//" + localStorage.getItem("user-token"))
+    let requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Request-Method": "GET, POST, OPTIONS",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(item),
+    };
     return requestOptions;
   };
 }

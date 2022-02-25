@@ -78,7 +78,6 @@ export default function ThirdForm({
         },
       ]}  
       >
-        <ImgCrop rotate>
           <Upload
             multiple
             listType="picture-card"
@@ -87,7 +86,6 @@ export default function ThirdForm({
           > 
             {fileList.length < 2 && '+ Téléverser'}
           </Upload>
-        </ImgCrop>
       </Form.Item> 
       <Form.Item
       label="Justificatif de domicile -3 mois"
@@ -108,7 +106,7 @@ export default function ThirdForm({
       </Form.Item> 
 
 
-        {data.find((e) => e.name == 'statut').value == "Logé à titre gratuit" && 
+        {data.find((e) => e.name == 'housing_type').value == "Logé à titre gratuit" && 
         String(data.find((e) => e.name == 'activity_id').value).startsWith("e") && 
         <Form.Item
         label="Attestation logée à titre gratuit"
@@ -231,7 +229,7 @@ export default function ThirdForm({
         
         </Form.Item>}
 
-        {data.find((e) => e.name == 'statut').value == "Locataire" && <Form.Item
+        {data.find((e) => e.name == 'housing_type').value == "Locataire" && <Form.Item
         
         label="3 dernières quittances "
         name="tdq"

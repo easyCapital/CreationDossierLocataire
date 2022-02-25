@@ -82,7 +82,7 @@ export default function FirstForm({
         </Form.Item>
         <Form.Item
           label="Nom"
-          name={"last_name"}
+          name={"lastname"}
           className="lastnameItem"
           hasFeedback
           rules={[
@@ -167,7 +167,7 @@ export default function FirstForm({
         <Input
           id={"born_date"}
           type="text"
-          placeholder="12/03/2003"
+          placeholder="2003-12-31 (année-jour-mois)"
           onChange={(e) => {
             setCurrentData("born_date", e.target.value);
           }}
@@ -211,15 +211,15 @@ export default function FirstForm({
             setCurrentData("housing_type", e.target.value);
           }}
         >
-          <Radio.Button value="Propriétaire">Propriétaire</Radio.Button>
-          <Radio.Button value="Locataire">Locataire</Radio.Button>
-          <Radio.Button value="Logé à titre gratuit">
+          <Radio.Button value="owner">Propriétaire</Radio.Button>
+          <Radio.Button value="tenant">Locataire</Radio.Button>
+          <Radio.Button value="free accommodation">
             Logé à titre gratuit
           </Radio.Button>
         </Radio.Group>
       </Form.Item>
 
-      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Nom du propriétaire actuel"
           hasFeedback
@@ -241,7 +241,7 @@ export default function FirstForm({
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Prenom du propriétaire actuel"
           hasFeedback
@@ -263,7 +263,7 @@ export default function FirstForm({
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Mobile du propriétaire actuel"
           hasFeedback
@@ -286,7 +286,7 @@ export default function FirstForm({
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "housing_type").value == "Locataire" && (
+      {data.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Mail du propriétaire actuel"
           hasFeedback

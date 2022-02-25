@@ -32,17 +32,15 @@ export default function AuthProvider({ children }) {
   const state = useSelector((state) => state);
   useEffect(() => {
     setLoggedIn(state?.userDetails?.userProfile?.data != null);
-    console.log(state);
     if (state.userDetails.userProfile.data === null) {
       if (router.asPath == "/tenant") {
-        // not connected
         router.push("/");
       }
     }
 
-    if (state.userDetails.userProfile.data !== undefined) {
+    if (state.userDetails.userProfile.data !== undefined && state.userDetails.userProfile.data !== null) {
       if (["/signin", "/signup"].includes(router.asPath)) {
-        router.push("/");
+        router.push("/tenant");
       }
     }
   }, [state]);
