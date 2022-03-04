@@ -235,8 +235,8 @@ export default function Tenant(param) {
         })
       })
       .catch((error) => {
+        console.log(error)
       });
-
   }
 
   useEffect(() => {
@@ -273,22 +273,7 @@ export default function Tenant(param) {
     console.log("---------------------------");
     console.log(JSON.stringify(formData));
     console.log("---------------------------");
-
-    /*
-    1. Enregistre le dossier
-    2. Si l'utilisateur n'est pas login ->
-    3. Definir un mdp dans la page suivante
-    */
-
-    if (false) {
-      return;
-    }
-    if (/*utilisateur non connecté*/ false) {
-      /* Rediriger vers la page de connexion */
-      return;
-    }
-    /* Redirection vers la page de définition de mot de passe */
-    return;
+    handleUserRegister();
   }
 
   function getText() {
@@ -450,7 +435,7 @@ export default function Tenant(param) {
 
   useEffect(() => {
     console.log("load", load)
-    if (load){
+    if (load && formData.length >= 1){
       editPanes(activeKey+1, "add")
     }
   }, [load]);
