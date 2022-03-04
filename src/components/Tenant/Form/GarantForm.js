@@ -22,7 +22,7 @@ export default function GarantForm({
       .fill(undefined)
       .map((e, i) => {
         return (
-          (String(formData[i].find((e) => e.name == "statut_gl").value) == "Locataire" && formData[i].find((e) => e.name == "garant").value.includes("Personne physique") ? <Col>
+          (String(formData[i].find((e) => e.name == "type").value) == "tenant" && formData[i].find((e) => e.name == "garant").value.includes("Personne physique") ? <Col>
           <Checkbox value={i}>{formData[i].find((el) => el.name == 'firstname').value + " " + formData[i].find((el) => el.name == 'lastname').value}</Checkbox>
         </Col>: '')
         );

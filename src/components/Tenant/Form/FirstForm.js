@@ -15,23 +15,23 @@ export default function FirstForm({
     <div className="currentForm">
       <Form.Item
         label="Statut"
-        name={"statut_gl"}
+        name="type"
         hasFeedback
         rules={[
           {
             required: true,
-            message: "Veuillez renseigner votre civilité.",
+            message: "Veuillez renseigner votre statut de logement.",
           },
         ]}
       >
         <Radio.Group
           buttonStyle="solid"
           onChange={(e) => {
-            setCurrentData("statut_gl", e.target.value);
+            setCurrentData("type", e.target.value);
           }}
         >
-          <Radio.Button value="Garant">Garant</Radio.Button>
-          <Radio.Button value="Locataire">Locataire</Radio.Button>
+          <Radio.Button value="guarant">Garant</Radio.Button>
+          <Radio.Button value="tenant">Locataire</Radio.Button>
         </Radio.Group>
       </Form.Item>
       <Form.Item
@@ -130,7 +130,7 @@ export default function FirstForm({
         </Form.Item>
         <Form.Item
           label="Mobile"
-          name={"mobile"}
+          name={"phone"}
           className="mobileItem"
           hasFeedback
           rules={[
@@ -219,7 +219,7 @@ export default function FirstForm({
         </Radio.Group>
       </Form.Item>
 
-      {data.find((e) => e.name == "housing_type").value == "tenant" && (
+      {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Nom du propriétaire actuel"
           hasFeedback
@@ -241,7 +241,7 @@ export default function FirstForm({
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "housing_type").value == "tenant" && (
+      {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Prenom du propriétaire actuel"
           hasFeedback
@@ -263,7 +263,7 @@ export default function FirstForm({
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "housing_type").value == "tenant" && (
+      {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Mobile du propriétaire actuel"
           hasFeedback
@@ -286,7 +286,7 @@ export default function FirstForm({
           />
         </Form.Item>
       )}
-      {data.find((e) => e.name == "housing_type").value == "tenant" && (
+      {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
           label="Mail du propriétaire actuel"
           hasFeedback
@@ -365,8 +365,8 @@ export default function FirstForm({
         </Select>
       </Form.Item>
 
-      {data.find((e) => e.name == "activity_id").value &&
-        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+      {data?.find((e) => e.name == "activity_id").value &&
+        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
           "e_"
         ) && (
           <Form.Item
@@ -390,8 +390,8 @@ export default function FirstForm({
             />
           </Form.Item>
         )}
-      {data.find((e) => e.name == "activity_id").value &&
-        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+      {data?.find((e) => e.name == "activity_id").value &&
+        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
           "e_"
         ) && (
           <Form.Item
@@ -415,8 +415,8 @@ export default function FirstForm({
             />
           </Form.Item>
         )}
-      {data.find((e) => e.name == "activity_id").value &&
-        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+      {data?.find((e) => e.name == "activity_id").value &&
+        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
           "e_"
         ) && (
           <Form.Item
@@ -442,8 +442,8 @@ export default function FirstForm({
           </Form.Item>
         )}
 
-      {data.find((e) => e.name == "activity_id").value &&
-        !String(data.find((e) => e.name == "activity_id").value).startsWith(
+      {data?.find((e) => e.name == "activity_id").value &&
+        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
           "e_"
         ) && (
           <Form.Item

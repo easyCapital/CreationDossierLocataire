@@ -8,16 +8,15 @@ import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { RightOutlined } from "@ant-design/icons";
 import { setCookies, getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
-import _map from "lodash/map";
 
 export default function IndexContainer({ loggedIn }) {
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
   const [hasAccount, setHasAccount] = useState(false);
   const dispatch = useDispatch();
-  const [cards, setCards] = useState([]);
+  const profile = useSelector((state) => state.userDetails.userProfile);
 
   useEffect(() => {
     setLoaded(true);
@@ -47,11 +46,6 @@ export default function IndexContainer({ loggedIn }) {
     http
       .postData(data, url)
       .then((data) => {
-        console.log("---");
-        console.log(data);
-        console.log(data["data"]);
-        console.log(data["data"]["hasAccount"]);
-        console.log("---");
         setHasAccount(data["data"]["hasAccount"]);
         if (data["data"]["hasAccount"]) {
           router.push("/signin");
@@ -59,50 +53,30 @@ export default function IndexContainer({ loggedIn }) {
         }
         router.push("/signup");
       })
-      .catch((error) => {
-        // if (error == "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
-        //  setVisible(true);
-        // }
-        // exist = false;
-      });
+      .catch((error) => {});
     return hasAccount;
   }
 
-  function createCard(title, lastname, email) {
-    for (let card of cards) if (card[0] == title && card[1] == lastname && card[2] == email) return;
-    setCards([...cards, [title, lastname, email]]);
-    console.log(cards);
-  }
-
-  function getForms() {
-    const http = new HttpService();
-    let url = "profile";
-    let folders = [];
-    http
-      .getData(url)
-      .then((data) => {
-        // console.log(data.data.user.folders);
-        const lst = Array(data.data.user.folders);
-        console.log(lst);
-        folders[0] = lst[0];
-        for (let element of lst) {
-          for (let elm of element) {
-            for (let elm2 of elm.users) {
-              console.log(elm2.firstname);
-              console.log(elm2.lastname);
-              console.log(elm2.email);
-              createCard(elm2.firstname, elm2.lastname, elm2.email);
-            }
-          }
+  function getUserFolder(user, slug) {
+    setCookies("slug", slug)
+    return (
+      <Card
+        title={user.firstname + " " + user.lastname}
+        extra={
+          <Button
+            onClick={() => router.push("/tenant")}
+            style={{ color: "black", fontSize: 13 }}
+          >
+            Editer
+          </Button>
         }
-        return data;
-      })
-      .catch((error) => {
-        return error;
-      });
-
-    console.log(folders);
-    return true;
+        style={{ width: 300, margin: 10}}
+      >
+        <p>Prenom {user.firstname}</p>
+        <p>Nom {user.lastname}</p>
+        <p>Mail {user.email}</p>
+      </Card>
+    );
   }
 
   if (!loaded)
@@ -161,23 +135,16 @@ export default function IndexContainer({ loggedIn }) {
             )}
             <div className="inlineblock">
               {loggedIn &&
-                getForms() &&
-                _map(cards, (d) => (
-                  <Card
-                    title={d[0]}
-                    extra={<Button onClick={() => router.push("/tenant")} style={{color: 'black', fontSize: 13}}>Editer</Button> }
-                    style={{ width: 300 }}
-                  >
-                    <p>Prenom {d[0]}</p>
-                    <p>Nom {d[1]}</p>
-                    <p>Mail {d[2]}</p>
-                  </Card>
-                ))}
+                profile.data.user.folders.map((folder) => {
+                  return folder.users.map((user) => {
+                    return getUserFolder(user, folder.slug);
+                  });
+                })}
             </div>
           </div>
 
           <Divider />
-          <div className="main">
+          <div className="main" style={{"marginTop": 200}}>
             <div className="mainText">
               <h2>
                 <strong>Passloc, Online Manager</strong>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Badge, Button, Steps } from "antd";
+import { Form, Button, Steps } from "antd";
 import FirstForm from "./Form/FirstForm";
 import SecondForm from "./Form/SecondForm";
 import ThirdForm from "./Form/ThirdForm";
@@ -7,15 +7,15 @@ import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs, Affix, Modal } from "antd";
 import GarantForm from "./Form/GarantForm";
 import { getCookies } from "cookies-next";
-import router from "next/router";
 import HttpService from "../../services/HttpService";
 import TenantContainer from "../../containers/Tenant/TenantContainer";
-import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { LoadProfileAction } from "../../redux/actions/ProfileActions";
 
 export default function Tenant(param) {
   const initFormData = [
     {
-      name: "statut_gl",
+      name: "type",
       value: "",
     },
     {
@@ -174,9 +174,17 @@ export default function Tenant(param) {
   const [formData, setFormData] = useState([initFormData]);
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
+  const [activeKey, setActiveKey] = useState(0);
+  const [load, setLoad] = useState(false)
   const [i, seti] = useState(1);
   const [visible, setVisible] = useState(false);
-  const [form, setForm] = Form.useForm()
+  const [form, setForm] = Form.useForm();
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.userDetails.userProfile);
+
+  useEffect(() => {
+    dispatch(LoadProfileAction());
+  }, []);
 
   const handleOk = () => {
     setVisible(false);
@@ -185,6 +193,51 @@ export default function Tenant(param) {
   const handleCancel = () => {
     setVisible(false);
   };
+  function autoFill() {
+
+    const http = new HttpService();
+    let url = "folders/" + getCookies("slug")?.slug;
+    http
+      .getData(url)
+      .then((data) => {
+        console.log(data.data.folder)
+        const dataData =data.data;
+        const fodlerData = dataData.folder
+        const usersFolder = fodlerData.users;
+        let counter = 0;
+        usersFolder.map((user) => {
+          setLoad(false)
+          console.log(user)
+          console.log("######################################")
+          setData(counter, "firstname", user.firstname)
+          setData(counter, "lastname", user.lastname)
+          setData(counter,"email", user.email)
+          setData(counter,"phone", user.phone)
+          setData(counter,"born_place", user.born_place)
+          setData(counter,"born_date", user.born_date)
+          setData(counter,"address", user.address)
+          setData(counter,"housing_type", user.housing_type)
+          setData(counter,"employer_email", user.employer_email)
+          setData(counter,"employer_firstname", user.employer_firstname)
+          setData(counter,"employer_lastname", user.employer_lastname)
+          setData(counter,"employer_phone", user.employer_phone)
+          setData(counter,"owner_email", user.owner_email)
+          setData(counter,"owner_firstname", user.owner_firstname)
+          setData(counter,"owner_lastname", user.owner_lastname)
+          setData(counter,"owner_phone", user.owner_phone)
+          setData(counter,"owner_email", user.owner_email)
+          setData(counter,"owner_firstname", user.owner_firstname)
+          setData(counter,"owner_lastname", user.owner_lastname)
+          setData(counter,"owner_phone", user.owner_phone)
+          setData(counter,"type", user.pivot.type)
+          setLoad(true);
+          counter = counter+1
+        })
+      })
+      .catch((error) => {
+      });
+
+  }
 
   useEffect(() => {
     if (getCookies("mail")) {
@@ -194,18 +247,26 @@ export default function Tenant(param) {
           .replace("%40", "@")
           .replace("undefined", "")
       );
+      autoFill();
     }
   }, []);
 
   function setCurrentData(name, value) {
     setFormData((formData) => {
-      formData[folder].find((e) => e.name == name).value = value;
+      formData[folder] ? formData[folder].find((e) => e.name == name).value = value : '';
+      return [...formData];
+    });
+  }
+
+  function setData(indexP, name, value){
+    setFormData((formData) => {
+      formData[indexP] ? formData[indexP].find((e) => e.name == name).value = value : '';
       return [...formData];
     });
   }
 
   function getData(name, index) {
-    return formData[index].find((e) => e.name == name).value;
+    return formData[index]?.find((e) => e.name == name).value;
   }
 
   function submit() {
@@ -232,7 +293,7 @@ export default function Tenant(param) {
 
   function getText() {
     if (display == 1) {
-      if (getData("statut_gl", folder) == null) {
+      if (getData("type", folder) == null) {
         return (
           <>
             <h2>
@@ -244,7 +305,7 @@ export default function Tenant(param) {
           </>
         );
       }
-      if (getData("statut_gl", folder) == "tenant") {
+      if (getData("type", folder) == "tenant") {
         return (
           <>
             <h2>
@@ -272,7 +333,7 @@ export default function Tenant(param) {
     }
 
     if (display == 2) {
-      if (getData("statut_gl", folder) == "tenant") {
+      if (getData("type", folder) == "tenant") {
         return (
           <>
             <h2>
@@ -292,7 +353,7 @@ export default function Tenant(param) {
       );
     }
     if (display == 3) {
-      if (getData("statut_gl", folder) == "tenant") {
+      if (getData("type", folder) == "tenant") {
         return (
           <>
             <h2>
@@ -342,7 +403,7 @@ export default function Tenant(param) {
           " " +
           (!getData("lastname", index) ? "Nom" : getData("lastname", index))}
         <br />
-        {getData("statut_gl", index) ? getData("statut_gl", index) : " \n "}
+        {getData("type", index) ? getData("type", index) : " \n "}
       </>
     );
   }
@@ -385,15 +446,18 @@ export default function Tenant(param) {
 
   useEffect(() => {
     console.log(formData);
-    const mail =
-      String(getCookies("mail")?.mail)
-        .replace("%40", "@")
-        .replace("undefined", "") ?? "";
   }, [formData]);
+
+  useEffect(() => {
+    console.log("load", load)
+    if (load){
+      editPanes(activeKey+1, "add")
+    }
+  }, [load]);
 
   function add() {
     const http = new HttpService();
-    let url = "/folders";
+    let url = "folders";
     http
       .postData(null, url)
       .then((data) => {
@@ -403,11 +467,16 @@ export default function Tenant(param) {
         return error;
       });
     setFormData([...formData, initFormData]);
+    panes.push({ key: i+1 });
     seti(i + 1);
-    panes.push({ key: i });
+    setActiveKey(formData.length-1)
   }
 
   function editPanes(targetKey, action) {
+    if(action == "addd"){
+      seti(targetKey)
+      add();
+    }
     if (action == "add") {
       seti(i + 1);
       add();
@@ -425,40 +494,20 @@ export default function Tenant(param) {
     setCurrentData("displayDone", value);
   }
 
-  function strCreateObject(name, value){
-    return "{\"" + name + "\" : " + value+ "}"
-  }
-
-  function dataToString(){
-
-    let finalString = "user: ";
-    for (let i = 0; i < 9; i++){
-      let lst = formData[i];
-      for (let ii = 0; ii < 39; ii++){
-        // console.log("ii " + ii)
-        let obj = lst != undefined ? lst[ii] : null;
-        // console.log(obj)
-        if (obj != undefined && obj != null){
-          let strObj = strCreateObject(obj.name, obj.value)
-          // console.log(strObj)  
-          finalString += strObj;
-        }
-      }
-    }
-  }
-
   function save() {
-    console.log(form.getFieldsValue())
-    // console.log(formData)
-    dataToString();
+    console.log(form.getFieldsValue());
     const http = new HttpService();
-    let url = "folders/" + (folder+1);
+    let nextF = parseInt(folder) + 1;
+    let url = "folders/" + getCookies("slug")?.slug;
     const tokenId = localStorage.getItem("user-token");
-    console.log("token " + tokenId)
-    console.log("token " + localStorage.getItem("user-token"))
-    http.putData({user: form.getFieldsValue(), type: getData("statut_gl", folder)}, url, String(localStorage.getItem("user-token")))
+    http
+      .putData(
+        {user: form.getFieldsValue(), type: getData("type", folder)},
+        url,
+        String(localStorage.getItem("user-token"))
+      )
       .then((data) => {
-        console.log(data)
+        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -503,7 +552,7 @@ export default function Tenant(param) {
           />
         )}
         {display == 3 &&
-          (formData[folder].find((e) => e.name == "statut_gl").value ==
+          (formData[folder].find((e) => e.name == "type").value ==
           "Locataire" ? (
             <SecondForm
               current={foldersss}
@@ -530,8 +579,6 @@ export default function Tenant(param) {
     );
   }
 
-  
-
   return (
     <TenantContainer>
       <Modal
@@ -549,9 +596,11 @@ export default function Tenant(param) {
             <Tabs
               className="tabs"
               type="editable-card"
+              activeKey={activeKey}
               onChange={(e) => {
                 setDisplay(1);
                 setFolder(e);
+                setActiveKey(e)
               }}
               onEdit={editPanes}
             >

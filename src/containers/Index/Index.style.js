@@ -190,6 +190,7 @@ export const IndexWrapper = styled.div`
 
 .inlineblock{
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
