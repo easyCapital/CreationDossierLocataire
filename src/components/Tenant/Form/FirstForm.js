@@ -3,6 +3,7 @@ import "aos/dist/aos.css";
 import { Form, Badge, Input, Button, Radio, Select } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import InputComponant from "../Inputs/InputComponant";
+import { setCookies } from "cookies-next";
 const { Option } = Select;
 
 export default function FirstForm({
@@ -36,7 +37,8 @@ export default function FirstForm({
       </Form.Item>
       <Form.Item
         label="Civilité"
-        name={"civil"}
+        name={"civility"}
+        id={"civility"}
         hasFeedback
         // className="clvt"
         rules={[
@@ -48,11 +50,13 @@ export default function FirstForm({
       >
         <Radio.Group
           buttonStyle="solid"
+          name={"civility"}
+          id={"civility"}
           onChange={(e) => {
-            setCurrentData("civil", e.target.value);
+            setCurrentData("civility", e.target.value);
           }}
         >
-          <Radio.Button value="M">M</Radio.Button>
+          <Radio.Button value="Mr">Mr</Radio.Button>
           <Radio.Button value="Mme">Mme</Radio.Button>
           <Radio.Button value="Mlle">Mlle</Radio.Button>
         </Radio.Group>
@@ -125,6 +129,7 @@ export default function FirstForm({
             className="mailInput"
             onChange={(e) => {
               setCurrentData("email", e.target.value);
+              setCookies("email", e.target.value)
             }}
           />
         </Form.Item>
@@ -151,8 +156,6 @@ export default function FirstForm({
           />
         </Form.Item>
       </Form.Item>
-      {/* </div>
-      <div className="to-the-left"> */}
       <Form.Item
         label="Date de naissance"
         name={"born_date"}
@@ -221,6 +224,8 @@ export default function FirstForm({
 
       {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
+          id={"owner_lastname"}
+          name={"owner_lastname"}
           label="Nom du propriétaire actuel"
           hasFeedback
           rules={[
@@ -243,6 +248,8 @@ export default function FirstForm({
       )}
       {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
+          id={"owner_firstname"}
+          name={"owner_firstname"}
           label="Prenom du propriétaire actuel"
           hasFeedback
           rules={[
@@ -265,6 +272,8 @@ export default function FirstForm({
       )}
       {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
+          id={"owner_phone"}
+          name={"owner_phone"}
           label="Mobile du propriétaire actuel"
           hasFeedback
           rules={[
@@ -288,6 +297,8 @@ export default function FirstForm({
       )}
       {data?.find((e) => e.name == "housing_type").value == "tenant" && (
         <Form.Item
+          id={"owner_email"}
+          name={"owner_email"}
           label="Mail du propriétaire actuel"
           hasFeedback
           rules={[

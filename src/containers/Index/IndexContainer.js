@@ -64,7 +64,7 @@ export default function IndexContainer({ loggedIn }) {
         title={user.firstname + " " + user.lastname}
         extra={
           <Button
-            onClick={() => router.push("/tenant")}
+            onClick={() => router.push("/folder/" + slug)}
             style={{ color: "black", fontSize: 13 }}
           >
             Editer
@@ -135,10 +135,8 @@ export default function IndexContainer({ loggedIn }) {
             )}
             <div className="inlineblock">
               {loggedIn &&
-                profile.data.user.folders.map((folder) => {
-                  return folder.users.map((user) => {
-                    return getUserFolder(user, folder.slug);
-                  });
+                profile?.data?.user?.folders?.map((folder) => {
+                  return getUserFolder(folder.users[0], folder.slug);
                 })}
             </div>
           </div>

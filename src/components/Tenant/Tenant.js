@@ -11,15 +11,16 @@ import HttpService from "../../services/HttpService";
 import TenantContainer from "../../containers/Tenant/TenantContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
+import { useRouter } from 'next/router'
 
-export default function Tenant(param) {
+export default function Tenant(slug) {
   const initFormData = [
     {
       name: "type",
       value: "",
     },
     {
-      name: "civil",
+      name: "civility",
       value: "",
     },
     {
@@ -181,6 +182,7 @@ export default function Tenant(param) {
   const [form, setForm] = Form.useForm();
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.userDetails.userProfile);
+  const router = useRouter()
 
   useEffect(() => {
     dispatch(LoadProfileAction());
@@ -193,22 +195,22 @@ export default function Tenant(param) {
   const handleCancel = () => {
     setVisible(false);
   };
+  
   function autoFill() {
-
     const http = new HttpService();
-    let url = "folders/" + getCookies("slug")?.slug;
+    let url = "folders/" + router.query.slug;
     http
       .getData(url)
       .then((data) => {
-        console.log(data.data.folder)
+        console.log(data)
         const dataData =data.data;
         const fodlerData = dataData.folder
         const usersFolder = fodlerData.users;
         let counter = 0;
         usersFolder.map((user) => {
           setLoad(false)
-          console.log(user)
-          console.log("######################################")
+          // console.log(user)
+          // console.log("######################################")
           setData(counter, "firstname", user.firstname)
           setData(counter, "lastname", user.lastname)
           setData(counter,"email", user.email)
@@ -270,9 +272,9 @@ export default function Tenant(param) {
   }
 
   function submit() {
-    console.log("---------------------------");
-    console.log(JSON.stringify(formData));
-    console.log("---------------------------");
+    // console.log("---------------------------");
+    // console.log(JSON.stringify(formData));
+    // console.log("---------------------------");
     handleUserRegister();
   }
 
@@ -430,11 +432,11 @@ export default function Tenant(param) {
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    console.log(formData);
+    // console.log(formData);
   }, [formData]);
 
   useEffect(() => {
-    console.log("load", load)
+    // console.log("load", load)
     if (load && formData.length >= 1){
       editPanes(activeKey+1, "add")
     }
@@ -480,11 +482,16 @@ export default function Tenant(param) {
   }
 
   function save() {
-    console.log(form.getFieldsValue());
+    // console.log(form.getFieldsValue());
     const http = new HttpService();
     let nextF = parseInt(folder) + 1;
-    let url = "folders/" + getCookies("slug")?.slug;
+    let url = "folders/" + router.query.slug
     const tokenId = localStorage.getItem("user-token");
+    let userData = form.getFieldsValue();
+    if (!userData.email){
+      console.log("ttTTTTTttTTttT")
+      userData["email"] = getData("email", folder)
+    }
     http
       .putData(
         {user: form.getFieldsValue(), type: getData("type", folder)},
@@ -538,7 +545,7 @@ export default function Tenant(param) {
         )}
         {display == 3 &&
           (formData[folder].find((e) => e.name == "type").value ==
-          "Locataire" ? (
+          "tenant" ? (
             <SecondForm
               current={foldersss}
               data={formData[folder]}
