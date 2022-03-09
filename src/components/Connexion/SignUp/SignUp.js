@@ -21,7 +21,7 @@ export default function SignUp() {
   function error() {
     Modal.error({
       title: "Erreur d'enregistrement",
-      content: 'Le mail est déj utilisé',
+      content: 'Le mail est déjà utilisé',
     });
   }
 

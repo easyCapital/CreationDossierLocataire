@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { HeaderWrapper } from "./Header.style";
 import { Button } from "antd";
+import HttpService from "../../services/HttpService";
 
 export default function Header(props) {
   const router = useRouter();
@@ -16,6 +17,20 @@ export default function Header(props) {
     router.push("/signin");
     router.push("/");
   };
+  const createFolder = () => {
+    const http = new HttpService();
+    let url = "folders";
+    http
+      .postData(null, url)
+      .then((data) => {
+        router.push("/folder/" + data.data.folder.slug)
+        return data;
+      })
+      .catch((error) => {
+        return error;
+      });
+      
+  }
 
   const login = () => {
     router.push("/signin");
@@ -56,7 +71,10 @@ export default function Header(props) {
         loggedIn && (
           <div className="push">
             {/* {token !== null && token !== "" ? ( */}
-            <Button className="button" id="btn1" onClick={logOut}>
+            <Button className="button" id="btn1" onClick={createFolder}>
+              Créer un dossier
+            </Button>
+            <Button style={{"marginLeft": 50}} className="button" id="btn1" onClick={logOut}>
               Me déconnecter
             </Button>
             {/* ) 

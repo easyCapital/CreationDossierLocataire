@@ -11,7 +11,7 @@ import HttpService from "../../services/HttpService";
 import TenantContainer from "../../containers/Tenant/TenantContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 export default function Tenant(slug) {
   const initFormData = [
@@ -172,17 +172,18 @@ export default function Tenant(slug) {
       value: 0,
     },
   ];
-  const [formData, setFormData] = useState([initFormData]);
+  const [formData, setFormData] = useState([]);
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
   const [activeKey, setActiveKey] = useState(0);
-  const [load, setLoad] = useState(false)
+  const [load, setLoad] = useState(false);
   const [i, seti] = useState(1);
   const [visible, setVisible] = useState(false);
   const [form, setForm] = Form.useForm();
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.userDetails.userProfile);
-  const router = useRouter()
+  const router = useRouter();
+  const [folderUsersNumber, setFolderUsersNumber] = useState(null);
 
   useEffect(() => {
     dispatch(LoadProfileAction());
@@ -195,77 +196,129 @@ export default function Tenant(slug) {
   const handleCancel = () => {
     setVisible(false);
   };
-  
+
   function autoFill() {
     const http = new HttpService();
+    console.log(router);
     let url = "folders/" + router.query.slug;
     http
       .getData(url)
       .then((data) => {
-        console.log(data)
-        const dataData =data.data;
-        const fodlerData = dataData.folder
+        console.log(data);
+        const dataData = data.data;
+        const fodlerData = dataData.folder;
         const usersFolder = fodlerData.users;
-        let counter = 0;
-        usersFolder.map((user) => {
-          setLoad(false)
-          // console.log(user)
-          // console.log("######################################")
-          setData(counter, "firstname", user.firstname)
-          setData(counter, "lastname", user.lastname)
-          setData(counter,"email", user.email)
-          setData(counter,"phone", user.phone)
-          setData(counter,"born_place", user.born_place)
-          setData(counter,"born_date", user.born_date)
-          setData(counter,"address", user.address)
-          setData(counter,"housing_type", user.housing_type)
-          setData(counter,"employer_email", user.employer_email)
-          setData(counter,"employer_firstname", user.employer_firstname)
-          setData(counter,"employer_lastname", user.employer_lastname)
-          setData(counter,"employer_phone", user.employer_phone)
-          setData(counter,"owner_email", user.owner_email)
-          setData(counter,"owner_firstname", user.owner_firstname)
-          setData(counter,"owner_lastname", user.owner_lastname)
-          setData(counter,"owner_phone", user.owner_phone)
-          setData(counter,"owner_email", user.owner_email)
-          setData(counter,"owner_firstname", user.owner_firstname)
-          setData(counter,"owner_lastname", user.owner_lastname)
-          setData(counter,"owner_phone", user.owner_phone)
-          setData(counter,"type", user.pivot.type)
-          setLoad(true);
-          counter = counter+1
-        })
+        setFolderUsersNumber(usersFolder.length);
+        let panesData = [];
+        for (let i = 0; i < usersFolder.length; i++) {
+          panesData.push({ key: i });
+          console.log(i);
+          setPanes(panesData);
+        }
+        console.log(panes);
+        if (usersFolder.length) {
+          let data = [];
+          usersFolder.map((user, i) => {
+            // setLoad(false)
+            data.push([
+              { name: "firstname", value: user.firstname },
+              { name: "lastname", value: user.lastname },
+              { name: "email", value: user.email },
+              { name: "phone", value: user.phone },
+              { name: "born_place", value: user.born_place },
+              { name: "born_date", value: user.born_date },
+              { name: "address", value: user.address },
+              { name: "housing_type", value: user.housing_type },
+              { name: "employer_email", value: user.employer_email },
+              { name: "employer_firstname", value: user.employer_firstname },
+              { name: "employer_lastname", value: user.employer_lastname },
+              { name: "employer_phone", value: user.employer_phone },
+              { name: "owner_email", value: user.owner_email },
+              { name: "owner_firstname", value: user.owner_firstname },
+              { name: "owner_lastname", value: user.owner_lastname },
+              { name: "owner_phone", value: user.owner_phone },
+              { name: "owner_email", value: user.owner_email },
+              { name: "owner_firstname", value: user.owner_firstname },
+              { name: "owner_lastname", value: user.owner_lastname },
+              { name: "owner_phone", value: user.owner_phone },
+              { name: "type", value: user.pivot.type },
+              { name: "activity_id", value: user.activity_id },
+              { name: "civility", value: user.civility },
+              { name: "displayDone", value: 0 },
+              { name: "snmap_1", value: user.snmap_1 },
+              { name: "snmap_2", value: user.snmap_2 },
+              { name: "snmap_3", value: user.snmap_3 },
+              { name: "caf", value: user.caf },
+              { name: "isr", value: user.isr },
+              { name: "otherR", value: user.otherR },
+              { name: "rnme", value: user.rnme },
+              { name: "identity", value: user.identity },
+              { name: "justify", value: user.justify },
+              { name: "altg", value: user.altg },
+              { name: "rib", value: user.rib },
+              { name: "tdbs", value: user.tdbs },
+              { name: "ddbc", value: user.ddbc },
+              { name: "studentCard", value: user.studentCard },
+              { name: "tdq", value: user.tdq },
+              { name: "garant", value: user.garant },
+              { name: "isr_1", value: user.isr_1 },
+              { name: "isr_2", value: user.isr_2 },
+              { name: "loyer", value: user.loyer },
+            ]);
+            // setLoad(true);
+            // counter = counter+1
+          });
+          setFormData(data);
+        } else {
+          setFormData([initFormData]);
+        }
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   }
 
   useEffect(() => {
-    if (getCookies("mail")) {
-      setCurrentData(
-        "email",
-        String(getCookies("mail")?.mail)
-          .replace("%40", "@")
-          .replace("undefined", "")
-      );
-      autoFill();
+    if (router.query.slug) autoFill();
+  }, [router]);
+
+  useEffect(() => {
+    console.log(folderUsersNumber, formData.length);
+    console.log(formData);
+    if (folderUsersNumber != null && folderUsersNumber == formData.length) {
+      setLoad(true);
     }
-  }, []);
+    if (folderUsersNumber == 0 && formData.length == 1) {
+      setLoad(true);
+    }
+  }, [formData]);
+
+  useEffect(() => {
+    if (load && getCookies("mail")) {
+      // setCurrentData(
+      //   "email",
+      //   String(getCookies("mail")?.mail)
+      //     .replace("%40", "@")
+      //     .replace("undefined", "")
+      // );
+    }
+  }, [load]);
 
   function setCurrentData(name, value) {
     setFormData((formData) => {
-      formData[folder] ? formData[folder].find((e) => e.name == name).value = value : '';
+      formData[folder]
+        ? (formData[folder].find((e) => e.name == name).value = value)
+        : "";
       return [...formData];
     });
   }
 
-  function setData(indexP, name, value){
-    setFormData((formData) => {
-      formData[indexP] ? formData[indexP].find((e) => e.name == name).value = value : '';
-      return [...formData];
-    });
-  }
+  // function setData(indexP, name, value){
+  //   setFormData((formData) => {
+  //     formData[indexP] ? formData[indexP].find((e) => e.name == name).value = value : '';
+  //     return [...formData];
+  //   });
+  // }
 
   function getData(name, index) {
     return formData[index]?.find((e) => e.name == name).value;
@@ -280,7 +333,7 @@ export default function Tenant(slug) {
 
   function getText() {
     if (display == 1) {
-      if (getData("type", folder) == null) {
+      if (formData[folder]?.type == null) {
         return (
           <>
             <h2>
@@ -384,13 +437,13 @@ export default function Tenant(slug) {
   function getTitle(index) {
     return (
       <>
-        {(!getData("firstname", index)
-          ? "Prenom"
-          : getData("firstname", index)) +
+        {(formData[index]?.firstname ? "Prenom" : getData("firstname", index)) +
           " " +
-          (!getData("lastname", index) ? "Nom" : getData("lastname", index))}
+          (formData[index]?.lastname ? "Nom" : getData("lastname", index))}
         <br />
-        {getData("type", index) ? getData("type", index) : " \n "}
+        {formData[index]?.type
+          ? String(formData[index].type).replace("tenant", "Locataire")
+          : " \n "}
       </>
     );
   }
@@ -432,36 +485,36 @@ export default function Tenant(slug) {
   const { TabPane } = Tabs;
 
   useEffect(() => {
-    // console.log(formData);
+    console.log(formData);
   }, [formData]);
 
-  useEffect(() => {
-    // console.log("load", load)
-    if (load && formData.length >= 1){
-      editPanes(activeKey+1, "add")
-    }
-  }, [load]);
+  // useEffect(() => {
+  //   if (load && formData.length >= 1){
+  //     editPanes(activeKey+1, "add")
+  //   }
+  // }, [load]);
 
   function add() {
-    const http = new HttpService();
-    let url = "folders";
-    http
-      .postData(null, url)
-      .then((data) => {
-        return data;
-      })
-      .catch((error) => {
-        return error;
-      });
+    // const http = new HttpService();
+    // let url = "folders";
+    // http
+    //   .postData(null, url)
+    //   .then((data) => {
+    //     return data;
+    //   })
+    //   .catch((error) => {
+    //     return error;
+    //   });
+    setPanes([...panes, { key: panes.length }]);
     setFormData([...formData, initFormData]);
-    panes.push({ key: i+1 });
+    panes.push({ key: i + 1 });
     seti(i + 1);
-    setActiveKey(formData.length-1)
+    setActiveKey(formData.length - 1);
   }
 
   function editPanes(targetKey, action) {
-    if(action == "addd"){
-      seti(targetKey)
+    if (action == "addd") {
+      seti(targetKey);
       add();
     }
     if (action == "add") {
@@ -485,16 +538,15 @@ export default function Tenant(slug) {
     // console.log(form.getFieldsValue());
     const http = new HttpService();
     let nextF = parseInt(folder) + 1;
-    let url = "folders/" + router.query.slug
+    let url = "folders/" + router.query.slug;
     const tokenId = localStorage.getItem("user-token");
     let userData = form.getFieldsValue();
-    if (!userData.email){
-      console.log("ttTTTTTttTTttT")
-      userData["email"] = getData("email", folder)
-    }
     http
       .putData(
-        {user: form.getFieldsValue(), type: getData("type", folder)},
+        {
+          user: { ...userData, email: getData("email", folder) },
+          type: getData("type", folder),
+        },
         url,
         String(localStorage.getItem("user-token"))
       )
@@ -544,8 +596,7 @@ export default function Tenant(slug) {
           />
         )}
         {display == 3 &&
-          (formData[folder].find((e) => e.name == "type").value ==
-          "tenant" ? (
+          (formData[folder].find((e) => e.name == "type").value == "tenant" ? (
             <SecondForm
               current={foldersss}
               data={formData[folder]}
@@ -571,7 +622,7 @@ export default function Tenant(slug) {
     );
   }
 
-  return (
+  return load ? (
     <TenantContainer>
       <Modal
         title="Erreur"
@@ -592,7 +643,7 @@ export default function Tenant(slug) {
               onChange={(e) => {
                 setDisplay(1);
                 setFolder(e);
-                setActiveKey(e)
+                setActiveKey(e);
               }}
               onEdit={editPanes}
             >
@@ -660,5 +711,7 @@ export default function Tenant(slug) {
         )}
       </div>
     </TenantContainer>
+  ) : (
+    <p>Loading ...</p>
   );
 }

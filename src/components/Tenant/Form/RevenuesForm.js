@@ -14,21 +14,21 @@ export default function RevenuesForm({
 
   return (
     <div className="center">  
-      {(String(data.find((e) => e.name == "activity_id").value).startsWith("s") && <EmployeeInput 
+      {(data?.find((e) => e.name == "activity_id").value <= 7 && <EmployeeInput 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>)}
-      {(String(data.find((e) => e.name == "activity_id").value).startsWith("tns") && <TnsInput  
+       {(data?.find((e) => e.name == "activity_id").value <= 13 && (data?.find((e) => e.name == "activity_id").value>7) && <TnsInput  
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>)}
-      {(String(data.find((e) => e.name == "activity_id").value).startsWith("e")  && <StudentInput
+       {(data?.find((e) => e.name == "activity_id").value <= 15 && (data?.find((e) => e.name == "activity_id").value>13)&&  <StudentInput
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>)}
-      {String(data.find((e) => e.name == "housing_type").value) == "tenant" && <InputComponant
+      {String(data?.find((e) => e.name == "housing_type").value) == "tenant" && <InputComponant
       className="loyerActuel"
-       name="loyer" 
+       name="loyer"
        label="Montant du loyer actuel" 
        text="votre montant du loyer actuel" 
        addon="€"

@@ -358,21 +358,21 @@ export default function FirstForm({
             setCurrentData("activity_id", value);
           }}
         >
-          <Option value="s_cdi_o">CDI hors période d'essaie</Option>
-          <Option value="s_cdi_i">CDI en période d'essaie</Option>
-          <Option value="s_cdd">CDD</Option>
-          <Option value="s_f">Fonctionnaire</Option>
-          <Option value="s_m">Militaire</Option>
-          <Option value="s_ids">Intermittent du spectacle</Option>
-          <Option value="s_int">Intérimaire</Option>
-          <Option value="tns_art">Artisan</Option>
-          <Option value="tns_com">Commerçant</Option>
-          <Option value="tns_chef">Chef d'entreprise</Option>
-          <Option value="tns_fl">Free-lance</Option>
-          <Option value="tns_ae">Auto-entrepreneur</Option>
-          <Option value="tns_pole">Creation via pôle emploi</Option>
-          <Option value="e_se">Étudiant sans emploi</Option>
-          <Option value="e_ae">Étudiant avec emploi</Option>
+          <Option value="1">CDI hors période d'essaie</Option>
+          <Option value="2">CDI en période d'essaie</Option>
+          <Option value="3">CDD</Option>
+          <Option value="4">Fonctionnaire</Option>
+          <Option value="5">Militaire</Option>
+          <Option value="6">Intermittent du spectacle</Option>
+          <Option value="7">Intérimaire</Option>
+          <Option value="8">Artisan</Option>
+          <Option value="9">Commerçant</Option>
+          <Option value="10">Chef d'entreprise</Option>
+          <Option value="11">Free-lance</Option>
+          <Option value="12">Auto-entrepreneur</Option>
+          <Option value="13">Creation via pôle emploi</Option>
+          <Option value="14">Étudiant sans emploi</Option>
+          <Option value="15">Étudiant avec emploi</Option>
         </Select>
       </Form.Item>
 
@@ -383,6 +383,8 @@ export default function FirstForm({
           <Form.Item
             label="Nom de l'employeur actuel"
             hasFeedback
+            id={"employer_lastname"}
+            name={"employer_lastname"}
             rules={[
               {
                 required: true,
@@ -408,6 +410,8 @@ export default function FirstForm({
           <Form.Item
             label="Prenom de l'employeur actuel"
             hasFeedback
+            id={"employer_firstname"}
+            name={"employer_firstname"}
             rules={[
               {
                 required: true,
@@ -433,6 +437,8 @@ export default function FirstForm({
           <Form.Item
             label="Mobile de l'employeur actuel"
             hasFeedback
+            id={"employer_phone"}
+            name={"employer_phone"}
             rules={[
               {
                 required: true,
@@ -460,6 +466,8 @@ export default function FirstForm({
           <Form.Item
             label="Mail de l'employeur actuel"
             hasFeedback
+            id={"employer_email"}
+            name={"employer_email"}
             rules={[
               {
                 required: true,

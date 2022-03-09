@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Upload, Form, Button } from 'antd';
-import ImgCrop from 'antd-img-crop';
 
 export default function ThirdForm({
   current,

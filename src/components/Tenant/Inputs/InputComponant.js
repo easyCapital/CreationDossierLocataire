@@ -12,6 +12,7 @@ export default function InputComponant({name, label, text, addon, data, setCurre
         label={label}
         hasFeedback
         name={name+"_" + current}
+        className={"item" + name}
         rules={[
           {
             required: true,
