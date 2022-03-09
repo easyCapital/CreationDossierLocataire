@@ -1,5 +1,5 @@
 export default class HttpService {
-  url = "http://passloc.fr/api";
+  url = "https://passloc.fr/api";
   postData = async (item, added_url, tokenId = "", pdf = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.postRequestOptions(token, item, pdf);
