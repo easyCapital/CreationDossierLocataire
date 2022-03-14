@@ -28,7 +28,7 @@ export default function GarantForm({
     <div>
       <Form.Item
         label="Les personnes que je garanti"
-        name={"garant_" + current}
+        name={"garant"}
         hasFeedback
         rules={[
           {

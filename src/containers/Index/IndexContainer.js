@@ -61,7 +61,7 @@ export default function IndexContainer({ loggedIn }) {
     setCookies("slug", slug)
     return (
       <Card
-        title={user.firstname + " " + user.lastname}
+        title={user?.firstname + " " + user?.lastname}
         extra={
           <Button
             onClick={() => router.push("/folder/" + slug)}
@@ -72,9 +72,9 @@ export default function IndexContainer({ loggedIn }) {
         }
         style={{ width: 300, margin: 10}}
       >
-        <p>Prenom - {user.firstname}</p>
-        <p>Nom - {user.lastname}</p>
-        <p>Mail - {user.email}</p>
+        <p>Prenom - {user?.firstname}</p>
+        <p>Nom - {user?.lastname}</p>
+        <p>Mail - {user?.email}</p>
       </Card>
     );
   }

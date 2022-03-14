@@ -132,12 +132,13 @@ export default function FirstForm({ data, setCurrentData }) {
               required: true,
               message: "Veuillez renseigner votre mail.",
             },
+            { type: 'email', message: 'Veuillez rentrer un mail valide' },
           ]}
         >
           <Input
             id={"email"}
             name={"email"}
-            type="text"
+            type="mail"
             placeholder="exemple@exemple.com"
             className="mailInput"
             onChange={(e) => {
@@ -319,12 +320,13 @@ export default function FirstForm({ data, setCurrentData }) {
               required: true,
               message: "Veuillez renseigner le mail du propriétaire actuel",
             },
+            { type: 'email',  message: 'Veuillez rentrer un mail valide' },
           ]}
         >
           <Input
             id={"owner_email"}
             name={"owner_email"}
-            type="text"
+            type="mail"
             placeholder=""
             onChange={(e) => {
               setCurrentData("owner_email", e.target.value);
@@ -490,12 +492,13 @@ export default function FirstForm({ data, setCurrentData }) {
                 message:
                   "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
               },
+              { type: 'email',  message: 'Veuillez rentrer un mail valide' },
             ]}
           >
             <Input
               id={"employer_email"}
               name={"employer_email"}
-              type="text"
+              type="mail"
               placeholder=""
               onChange={(e) => {
                 setCurrentData("employer_email", e.target.value);

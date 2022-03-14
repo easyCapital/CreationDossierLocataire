@@ -327,7 +327,7 @@ export default function Tenant(slug) {
 
   function getText() {
     if (display == 1) {
-      if (formData[folder]?.type == null) {
+      if (getData("type", folder) == null) {
         return (
           <>
             <h2>
