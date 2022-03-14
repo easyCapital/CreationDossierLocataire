@@ -63,30 +63,30 @@ export default function EmployeeInput({data, setFormData, setCurrentData}) {
     <div className="inputs">
        <InputComponant 
        name="snmap_1" 
-       label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
-       text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
+       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
+       text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_2" 
-       label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
-       text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_3" 
-       label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
-       text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(3).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
        <InputComponant 
-       name="caf" 
+       name="CAF_aid" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
@@ -95,22 +95,22 @@ export default function EmployeeInput({data, setFormData, setCurrentData}) {
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="isr_1" 
-       label="Impôts sur le revenu annuel de référence 2021" 
-       text="vos impôts sur le revenu annuel de référence 2021" 
+       label="Impôts sur le revenu annuel de ref. 2021" 
+       text="vos impôts sur le revenu annuel de ref. 2021" 
        addon="€"  
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="isr_2" 
-       label="Impôts sur le revenu annuel de référence 2020" 
-       text="vos impôts sur le revenu annuel de référence 2020" 
+       label="Impôts sur le revenu annuel de ref. 2020" 
+       text="vos impôts sur le revenu annuel de ref. 2020" 
        addon="€" 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
         <InputComponant 
-       name="otherR" 
+       name="other_income" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 

@@ -62,7 +62,7 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
   return (
     <div className="inputs">
       <InputComponant 
-       name="rnme" 
+       name="estimated_income" 
        label="Revenu net mensuel estimé " 
        text="votre revenu net mensuel estimé" 
        addon="€" 
@@ -70,7 +70,7 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
       <InputComponant 
-       name="caf" 
+       name="CAF_aid" 
        label="Aide CAF mensuel (APL, ALS)" 
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
@@ -79,22 +79,22 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_1" 
-       label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
-       text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
+       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
+       text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_2" 
-       label={ "Salaire net mensuel avant prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
-       text={"votre salaire net mensuel avant prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
        data={data}
        setFormData={setFormData}
        setCurrentData={setCurrentData}/>
       <InputComponant 
-       name="otherR" 
+       name="other_income" 
        label="Autre(s) revenu(s) net(s) mensuel(s)" 
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 

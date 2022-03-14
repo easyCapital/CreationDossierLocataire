@@ -14,6 +14,13 @@ import { LoadProfileAction } from "../../redux/actions/ProfileActions";
 import { useRouter } from "next/router";
 
 export default function Tenant(slug) {
+  function getPrevDate(val) {
+    var x = new Date();
+    x.setDate(1);
+    x.setMonth(x.getMonth() - val);
+    return x;
+  }
+
   const initFormData = [
     {
       name: "type",
@@ -104,7 +111,7 @@ export default function Tenant(slug) {
       value: "",
     },
     {
-      name: "caf",
+      name: "CAF_aid",
       value: "",
     },
     {
@@ -112,11 +119,11 @@ export default function Tenant(slug) {
       value: "",
     },
     {
-      name: "otherR",
+      name: "other_income",
       value: "",
     },
     {
-      name: "rnme",
+      name: "estimated_income",
       value: "",
     },
     {
@@ -219,6 +226,11 @@ export default function Tenant(slug) {
         if (usersFolder.length) {
           let data = [];
           usersFolder.map((user, i) => {
+            console.log("user")
+            console.log(user)
+            console.log(user.salaries)
+            console.log(user.salaries[0])
+            console.log(user.salaries[0]?.amount)
             // setLoad(false)
             data.push([
               { name: "firstname", value: user.firstname },
@@ -245,13 +257,13 @@ export default function Tenant(slug) {
               { name: "activity_id", value: user.activity_id },
               { name: "civility", value: user.civility },
               { name: "displayDone", value: 0 },
-              { name: "snmap_1", value: user.snmap_1 },
-              { name: "snmap_2", value: user.snmap_2 },
-              { name: "snmap_3", value: user.snmap_3 },
-              { name: "caf", value: user.caf },
+              { name: "snmap_1", value: user.salaries[0]?.amount ? parseFloat(user.salaries[0]?.amount) : 0.00 },
+              { name: "snmap_2", value: user.salaries[1]?.amount ? parseFloat(user.salaries[1]?.amount) : 0.00 },
+              { name: "snmap_3", value: user.salaries[2]?.amount ? parseFloat(user.salaries[2]?.amount) : 0.00 },
+              { name: "CAF_aid", value: user.CAF_aid },
               { name: "isr", value: user.isr },
-              { name: "otherR", value: user.otherR },
-              { name: "rnme", value: user.rnme },
+              { name: "other_income", value: user.other_income },
+              { name: "estimated_income", value: user.estimated_income },
               { name: "identity", value: user.identity },
               { name: "justify", value: user.justify },
               { name: "altg", value: user.altg },
@@ -261,12 +273,10 @@ export default function Tenant(slug) {
               { name: "studentCard", value: user.studentCard },
               { name: "tdq", value: user.tdq },
               { name: "garant", value: user.garant },
-              { name: "isr_1", value: user.isr_1 },
-              { name: "isr_2", value: user.isr_2 },
-              { name: "loyer", value: user.loyer },
+              { name: "isr_1", value: user.taxes[0]?.amount ? parseFloat(user.taxes[0]?.amount) : 0.00 },
+              { name: "isr_2", value: user.taxes[1]?.amount ? parseFloat(user.taxes[1]?.amount) : 0.00 },
+              { name: "current_rent", value: user.current_rent },
             ]);
-            // setLoad(true);
-            // counter = counter+1
           });
           setFormData(data);
         } else {
@@ -294,13 +304,7 @@ export default function Tenant(slug) {
   }, [formData]);
 
   useEffect(() => {
-    if (load && getCookies("mail")) {
-      // setCurrentData(
-      //   "email",
-      //   String(getCookies("mail")?.mail)
-      //     .replace("%40", "@")
-      //     .replace("undefined", "")
-      // );
+    if (load) {
     }
   }, [load]);
 
@@ -313,21 +317,11 @@ export default function Tenant(slug) {
     });
   }
 
-  // function setData(indexP, name, value){
-  //   setFormData((formData) => {
-  //     formData[indexP] ? formData[indexP].find((e) => e.name == name).value = value : '';
-  //     return [...formData];
-  //   });
-  // }
-
   function getData(name, index) {
     return formData[index]?.find((e) => e.name == name).value;
   }
 
   function submit() {
-    // console.log("---------------------------");
-    // console.log(JSON.stringify(formData));
-    // console.log("---------------------------");
     handleUserRegister();
   }
 
@@ -345,7 +339,7 @@ export default function Tenant(slug) {
           </>
         );
       }
-      if (getData("type", folder) == "tenant") {
+      if (getData("type", folder) != "guarant") {
         return (
           <>
             <h2>
@@ -373,7 +367,7 @@ export default function Tenant(slug) {
     }
 
     if (display == 2) {
-      if (getData("type", folder) == "tenant") {
+      if (getData("type", folder) != "guarant") {
         return (
           <>
             <h2>
@@ -393,7 +387,7 @@ export default function Tenant(slug) {
       );
     }
     if (display == 3) {
-      if (getData("type", folder) == "tenant") {
+      if (getData("type", folder) != "guarant") {
         return (
           <>
             <h2>
@@ -437,12 +431,11 @@ export default function Tenant(slug) {
   function getTitle(index) {
     return (
       <>
-        {(formData[index]?.firstname ? "Prenom" : getData("firstname", index)) +
-          " " +
-          (formData[index]?.lastname ? "Nom" : getData("lastname", index))}
+        {getData("firstname", index) ? getData("firstname", index) : "Prenom"}{" "}
+        {getData("lastname", index) ? getData("lastname", index) : "Nom"}
         <br />
-        {formData[index]?.type
-          ? String(formData[index].type).replace("tenant", "Locataire")
+        {getData("type", index)
+          ? String(getData("type", index)).replace("tenant", "Locataire").replace("guarant", "Garant")
           : " \n "}
       </>
     );
@@ -488,28 +481,11 @@ export default function Tenant(slug) {
     console.log(formData);
   }, [formData]);
 
-  // useEffect(() => {
-  //   if (load && formData.length >= 1){
-  //     editPanes(activeKey+1, "add")
-  //   }
-  // }, [load]);
-
   function add() {
-    // const http = new HttpService();
-    // let url = "folders";
-    // http
-    //   .postData(null, url)
-    //   .then((data) => {
-    //     return data;
-    //   })
-    //   .catch((error) => {
-    //     return error;
-    //   });
     setPanes([...panes, { key: panes.length }]);
     setFormData([...formData, initFormData]);
     panes.push({ key: i + 1 });
     seti(i + 1);
-    setActiveKey(formData.length - 1);
   }
 
   function editPanes(targetKey, action) {
@@ -520,6 +496,7 @@ export default function Tenant(slug) {
     if (action == "add") {
       seti(i + 1);
       add();
+      setActiveKey(panes.length - 2);
     }
     if (action == "remove") {
       setPanes(panes.slice);
@@ -535,28 +512,79 @@ export default function Tenant(slug) {
   }
 
   function save() {
-    // console.log(form.getFieldsValue());
     const http = new HttpService();
-    let nextF = parseInt(folder) + 1;
     let url = "folders/" + router.query.slug;
     const tokenId = localStorage.getItem("user-token");
     let userData = form.getFieldsValue();
-    http
-      .putData(
-        {
-          user: { ...userData, email: getData("email", folder) },
-          type: getData("type", folder),
-        },
-        url,
-        String(localStorage.getItem("user-token"))
-      )
-      .then((data) => {
-        console.log(data);
-        return data;
-      })
-      .catch((error) => {
-        return error;
-      });
+    if (display == 1) {
+      http
+        .putData(
+          {
+            user: { ...userData, email: getData("email", folder) },
+            type: getData("type", folder),
+          },
+          url,
+          String(localStorage.getItem("user-token"))
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
+    if (display == 2) {
+      http
+        .putData(
+          {
+            user: { ...userData, email: getData("email", folder) },
+            type: getData("type", folder),
+            salaries: [
+              {
+                date:
+                  getPrevDate(1).getFullYear() +
+                  "-" +
+                  getPrevDate(1).getMonth(),
+                amount: getData("snmap_1", folder),
+              },
+              {
+                date:
+                  getPrevDate(2).getFullYear() +
+                  "-" +
+                  getPrevDate(2).getMonth(),
+                amount: getData("snmap_2", folder),
+              },
+              {
+                date:
+                  getPrevDate(3).getFullYear() +
+                  "-" +
+                  getPrevDate(3).getMonth(),
+                amount: getData("snmap_3", folder) ?  getData("snmap_3", folder) : 0,
+              },
+            ],
+            taxes: [
+              {
+                  year: getPrevDate(12).getFullYear(),
+                  amount: getData("isr_1", folder)
+              }, 
+              {
+                year: getPrevDate(24).getFullYear(),
+                amount: getData("isr_2", folder)
+            }
+          ],
+          },
+          url,
+          String(localStorage.getItem("user-token"))
+        )
+        .then((data) => {
+          console.log(data);
+          return data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
   }
 
   const handleUserRegister = () => {
@@ -643,6 +671,7 @@ export default function Tenant(slug) {
               onChange={(e) => {
                 setDisplay(1);
                 setFolder(e);
+                const nextKey = 1 + parseInt(e);
                 setActiveKey(e);
               }}
               onEdit={editPanes}

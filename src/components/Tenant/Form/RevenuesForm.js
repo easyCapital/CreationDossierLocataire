@@ -28,7 +28,7 @@ export default function RevenuesForm({
        setCurrentData={setCurrentData}/>)}
       {String(data?.find((e) => e.name == "housing_type").value) == "tenant" && <InputComponant
       className="loyerActuel"
-       name="loyer"
+       name="current_rent"
        label="Montant du loyer actuel" 
        text="votre montant du loyer actuel" 
        addon="€"

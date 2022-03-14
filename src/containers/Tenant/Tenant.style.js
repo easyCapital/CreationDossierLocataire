@@ -456,7 +456,7 @@ export const TenantWrapper = styled.div`
     }
   }
 
-  .itemloyer{
+  .itemcurrent_rent{
     margin-left: 130px;
     .ant-col-13 div div span span input{
       width: 700px;

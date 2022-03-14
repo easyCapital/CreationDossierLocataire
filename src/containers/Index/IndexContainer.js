@@ -72,9 +72,9 @@ export default function IndexContainer({ loggedIn }) {
         }
         style={{ width: 300, margin: 10}}
       >
-        <p>Prenom {user.firstname}</p>
-        <p>Nom {user.lastname}</p>
-        <p>Mail {user.email}</p>
+        <p>Prenom - {user.firstname}</p>
+        <p>Nom - {user.lastname}</p>
+        <p>Mail - {user.email}</p>
       </Card>
     );
   }
@@ -136,7 +136,7 @@ export default function IndexContainer({ loggedIn }) {
             <div className="inlineblock">
               {loggedIn &&
                 profile?.data?.user?.folders?.map((folder) => {
-                  return getUserFolder(folder.users[0], folder.slug);
+                  return getUserFolder(folder.users[1], folder.slug);
                 })}
             </div>
           </div>

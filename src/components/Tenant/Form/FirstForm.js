@@ -1,23 +1,36 @@
-import { zzect, useState } from "react";
+import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import { Form, Badge, Input, Button, Radio, Select } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import InputComponant from "../Inputs/InputComponant";
 import { setCookies } from "cookies-next";
+import HttpService from "../../../services/HttpService";
 const { Option } = Select;
 
-export default function FirstForm({
-  current,
-  data,
-  setFormData,
-  setCurrentData,
-}) {
+export default function FirstForm({ data, setCurrentData }) {
+  const [activities, setActivities] = useState([]);
+  const [activitiesData, setActivitiesData] = useState([]);
+
+  useEffect(() => {
+    const http = new HttpService();
+    let url = "activities";
+    try {
+      const data = http.getData(url);
+      setActivitiesData(data);
+      console.log(activitiesData);
+      console.log(data);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  }, []);
+
   return (
     <div className="currentForm">
       <Form.Item
         label="Statut"
         name="type"
-        hasFeedback
+        hasFeedback 
         rules={[
           {
             required: true,
@@ -129,7 +142,7 @@ export default function FirstForm({
             className="mailInput"
             onChange={(e) => {
               setCurrentData("email", e.target.value);
-              setCookies("email", e.target.value)
+              setCookies("email", e.target.value);
             }}
           />
         </Form.Item>
@@ -169,7 +182,7 @@ export default function FirstForm({
       >
         <Input
           id={"born_date"}
-          type="text"
+          type="date"
           placeholder="2003-12-31 (année-jour-mois)"
           onChange={(e) => {
             setCurrentData("born_date", e.target.value);
@@ -358,6 +371,9 @@ export default function FirstForm({
             setCurrentData("activity_id", value);
           }}
         >
+          {/* {activities.map((activity) => (
+            <Option value={activity.key}>{activity.value}</Option>
+          ))} */}
           <Option value="1">CDI hors période d'essaie</Option>
           <Option value="2">CDI en période d'essaie</Option>
           <Option value="3">CDD</Option>

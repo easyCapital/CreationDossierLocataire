@@ -11,7 +11,7 @@ export default function InputComponant({name, label, text, addon, data, setCurre
       <Form.Item
         label={label}
         hasFeedback
-        name={name+"_" + current}
+        name={name}
         className={"item" + name}
         rules={[
           {
@@ -24,7 +24,8 @@ export default function InputComponant({name, label, text, addon, data, setCurre
          addonAfter={addon}
           id={name}
           name={name}
-          type="text"
+          type="number"
+          step={"0.01"}
           placeholder=""
           className={"input"+name} 
           onChange={(e) => {
