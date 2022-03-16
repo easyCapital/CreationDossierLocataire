@@ -1,28 +1,58 @@
 import "aos/dist/aos.css";
 import { Form, Checkbox, Steps, C, Col } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
-export default function GarantForm({
-  current,
-  formData,
-  setCurrentData,
-}) {
+import { useEffect, useState } from "react";
+export default function GarantForm({ current, formData, setCurrentData }) {
 
-  function onChange(values) {
-    setCurrentData('garant', values);
+  const defaultCheckedList = formData[current].find((e) => e.name == "tenants").value;
+  const ID_PERSONNE_PHYSIQUE = 2
+  const [options, setOptions] = useState([])
+  const [load, setLoad] = useState(false);
+
+  function onChange(e) {
+    console.log(e.target.value)
+    let checkedList = formData[current].find((e) => e.name == "tenants").value
+    let newArray = []
+    for (let element of checkedList){
+      if (element == e.target.value){
+        continue
+      }
+      newArray.push(element)
+    }
+    if (!checkedList.includes(e.target.value)){
+      newArray.push(e.target.value)
+    }
+    console.log(newArray)
+    setCurrentData("tenants", newArray);
   }
 
-  function getCols() {
-    return Array(Object.values(formData).length)
-      .fill(undefined)
-      .map((ez, i) => {
-        return (
-          formData[i] && 
-          (String(formData[i].find((e) => e.name == "type").value) == "tenant" && formData[i]?.find((e) => e.name == "garant")?.value?.includes("Personne physique") ? <Col>
-          <Checkbox value={i}>{formData[i]?.find((el) => el.name == 'firstname').value + " " + formData[i]?.find((el) => el.name == 'lastname').value}</Checkbox>
-        </Col>: '')
-        );
-      });
-  }
+  useEffect(() => {
+    let tmpArray = []
+    formData.map((user) => {
+      // --- user properties
+      const type = user.find((property) => property.name == "type")
+      const guarant_possibilities = user.find((property) => property.name == "guarant_possibilities")
+      const firstname = user.find((property) => property.name == "firstname").value
+      const lastname = user.find((property) => property.name == "lastname").value
+      const id = user.find((property) => property.name == "id").value
+
+      // --- logs to check
+      // console.log(user)
+      // console.log(type)
+      // console.log(guarant_possibilities)
+
+      // --- Check and add
+      if (String(type.value) == "tenant" && guarant_possibilities.value.includes(ID_PERSONNE_PHYSIQUE)){
+        console.log(firstname + " " + lastname)
+        console.log(defaultCheckedList.includes(id))
+        console.log(id)
+        console.log(defaultCheckedList)
+        tmpArray.push({label: firstname + " " + lastname, value: id})
+      }
+    })
+    setOptions(tmpArray)
+    setLoad(true)
+  }, [])
 
   return (
     <div>
@@ -33,12 +63,14 @@ export default function GarantForm({
         rules={[
           {
             required: true,
-            message: "Veuillez renseigner vos possibilité de garant.",
+            message: "Veuillez renseigner la liste de vs locataires.",
           },
         ]}
       >
-        <Checkbox.Group onChange={onChange}>{getCols()}</Checkbox.Group>
-      </Form.Item>
+      {load && options.map((option) => (
+        <Checkbox onChange={onChange} value={option.value} defaultChecked={defaultCheckedList.includes(option.value)} checked={defaultCheckedList.includes(option.value)}>{option.label}</Checkbox>
+      ))}
+    </Form.Item>
     </div>
   );
 }

@@ -9,20 +9,16 @@ const { Option } = Select;
 
 export default function FirstForm({ data, setCurrentData }) {
   const [activities, setActivities] = useState([]);
-  const [activitiesData, setActivitiesData] = useState([]);
 
   useEffect(() => {
     const http = new HttpService();
     let url = "activities";
     try {
       const data = http.getData(url);
-      setActivitiesData(data);
-      console.log(activitiesData);
-      console.log(data);
-      return data;
-    } catch (error) {
-      return error;
-    }
+      data.then((value) => {
+        setActivities(value.data);
+      });
+    } catch (error) {}
   }, []);
 
   return (
@@ -30,7 +26,7 @@ export default function FirstForm({ data, setCurrentData }) {
       <Form.Item
         label="Statut"
         name="type"
-        hasFeedback 
+        hasFeedback
         rules={[
           {
             required: true,
@@ -132,7 +128,7 @@ export default function FirstForm({ data, setCurrentData }) {
               required: true,
               message: "Veuillez renseigner votre mail.",
             },
-            { type: 'email', message: 'Veuillez rentrer un mail valide' },
+            { type: "email", message: "Veuillez rentrer un mail valide" },
           ]}
         >
           <Input
@@ -320,7 +316,7 @@ export default function FirstForm({ data, setCurrentData }) {
               required: true,
               message: "Veuillez renseigner le mail du propriétaire actuel",
             },
-            { type: 'email',  message: 'Veuillez rentrer un mail valide' },
+            { type: "email", message: "Veuillez rentrer un mail valide" },
           ]}
         >
           <Input
@@ -373,24 +369,9 @@ export default function FirstForm({ data, setCurrentData }) {
             setCurrentData("activity_id", value);
           }}
         >
-          {/* {activities.map((activity) => (
-            <Option value={activity.key}>{activity.value}</Option>
-          ))} */}
-          <Option value="1">CDI hors période d'essaie</Option>
-          <Option value="2">CDI en période d'essaie</Option>
-          <Option value="3">CDD</Option>
-          <Option value="4">Fonctionnaire</Option>
-          <Option value="5">Militaire</Option>
-          <Option value="6">Intermittent du spectacle</Option>
-          <Option value="7">Intérimaire</Option>
-          <Option value="8">Artisan</Option>
-          <Option value="9">Commerçant</Option>
-          <Option value="10">Chef d'entreprise</Option>
-          <Option value="11">Free-lance</Option>
-          <Option value="12">Auto-entrepreneur</Option>
-          <Option value="13">Creation via pôle emploi</Option>
-          <Option value="14">Étudiant sans emploi</Option>
-          <Option value="15">Étudiant avec emploi</Option>
+          {activities.map((activity) => (
+            <Option value={activity.id}>{activity.name}</Option>
+          ))}
         </Select>
       </Form.Item>
 
@@ -492,7 +473,7 @@ export default function FirstForm({ data, setCurrentData }) {
                 message:
                   "Veuillez renseigner le numéro de téléphone de l'employeur actuel",
               },
-              { type: 'email',  message: 'Veuillez rentrer un mail valide' },
+              { type: "email", message: "Veuillez rentrer un mail valide" },
             ]}
           >
             <Input

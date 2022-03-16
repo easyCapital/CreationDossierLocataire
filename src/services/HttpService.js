@@ -17,7 +17,6 @@ export default class HttpService {
   };
 
   putData = async (item, added_url, tokenId, pdf = false) => {
-    console.log("token | " + tokenId)
     const requestOptions = this.putRequestOptions(tokenId, item, pdf);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
       response.json()
@@ -52,8 +51,6 @@ export default class HttpService {
     return requestOptions;
   };
   putRequestOptions = (token, item) => {
-    console.log("token// " + token)
-    console.log("token//" + localStorage.getItem("user-token"))
     let requestOptions = {
       method: "PUT",
       headers: {

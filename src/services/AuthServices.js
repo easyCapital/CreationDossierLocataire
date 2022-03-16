@@ -70,7 +70,7 @@ const createFolder = (credentials) =>{
 
 const getProfile = (credentials) =>{
   const http = new HttpService();
-  let url = "/profile";
+  let url = "profile";
   return http
     .getData(credentials, url)
     .then((data) => {

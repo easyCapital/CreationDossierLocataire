@@ -10,7 +10,6 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
     var x = new Date();
     x.setDate(1);
     x.setMonth(x.getMonth()-val);
-    console.log(x.getMonth())
     return x
   }
 

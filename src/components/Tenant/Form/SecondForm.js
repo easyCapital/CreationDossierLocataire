@@ -1,48 +1,49 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Checkbox, Steps} from 'antd';
+import { Form, Checkbox, Steps } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
-import FirstForm from "./FirstForm";
-import ThirdForm from "./ThirdForm";
-import RevenuesForm from "./RevenuesForm";
-import GarantForm from "./GarantForm";
+import HttpService from "../../../services/HttpService";
 
-export default function SecondForm({
-  current,
-  data,
-  setFormData,
-  setCurrentData,
-}) {
-
-  function onChange(values){
-    setCurrentData('garant', values)
+export default function SecondForm({ current, setCurrentData }) {
+  function onChange(values) {
+    setCurrentData("guarant_possibilities", values);
   }
+  const [guarantPossibilities, setGuarantPossibilities] = useState([]);
 
-  const options = [
-    { label: 'Caution Bancaire', value: 'Caution Bancaire' },
-    { label: 'Personne physique', value: 'Personne physique' },
-    { label: 'VISALE', value: 'VISALE' },
-    { label: 'Locapass', value: 'Locapass' },
-    { label: 'Garant payant', value: 'Garant Payant' },
-  ];
-  
+  useEffect(() => {
+    const http = new HttpService();
+    let url = "guarant-possibilities";
+    try {
+      const data = http.getData(url);
+      data.then((value) => {
+        setGuarantPossibilities(value.data);
+      });
+    } catch (error) {}
+  }, []);
+
+  useEffect(() => {
+  }, [guarantPossibilities]);
+
   return (
     <div>
       <Form.Item
-      label="Possibilités de garants"
-      name={'garant_' + current}
-      hasFeedback
-      className="garant_select"
-      rules={[
-        {
-          required: true,
-          message: "Veuillez renseigner vos possibilité de garant.",
-        },
-      ]}
+        label="Possibilités de garants"
+        name={"guarant_possibilities"}
+        hasFeedback
+        className="garant_select"
+        rules={[
+          {
+            required: true,
+            message: "Veuillez renseigner vos possibilité de garant.",
+          },
+        ]}
       >
-      <Checkbox.Group options={options} onChange={onChange} />
+        <Checkbox.Group onChange={onChange}>
+          {guarantPossibilities.map((possibility) => (
+            <Checkbox value={possibility.id}>{possibility.name}</Checkbox>
+          ))}
+        </Checkbox.Group>
       </Form.Item>
     </div>
-      
   );
 }

@@ -23,6 +23,10 @@ export default function Tenant(slug) {
 
   const initFormData = [
     {
+      name: "id",
+      value: 0,
+    },
+    {
       name: "type",
       value: "",
     },
@@ -131,6 +135,10 @@ export default function Tenant(slug) {
       value: [],
     },
     {
+      name: "tenants",
+      value: [],
+    },
+    {
       name: "justify",
       value: [],
     },
@@ -159,7 +167,7 @@ export default function Tenant(slug) {
       value: [],
     },
     {
-      name: "garant",
+      name: "guarant_possibilities",
       value: [],
     },
     {
@@ -182,7 +190,6 @@ export default function Tenant(slug) {
   const [formData, setFormData] = useState([]);
   const [display, setDisplay] = useState(1);
   const [folder, setFolder] = useState(0);
-  const [activeKey, setActiveKey] = useState(0);
   const [load, setLoad] = useState(false);
   const [i, seti] = useState(1);
   const [visible, setVisible] = useState(false);
@@ -206,33 +213,45 @@ export default function Tenant(slug) {
 
   function autoFill() {
     const http = new HttpService();
-    console.log(router);
     let url = "folders/" + router.query.slug;
     http
       .getData(url)
       .then((data) => {
-        console.log(data);
+        console.log(data)
         const dataData = data.data;
         const fodlerData = dataData.folder;
         const usersFolder = fodlerData.users;
+        const relationships = fodlerData.relationships;
+
         setFolderUsersNumber(usersFolder.length);
         let panesData = [];
         for (let i = 0; i < usersFolder.length; i++) {
           panesData.push({ key: i });
-          console.log(i);
           setPanes(panesData);
         }
-        console.log(panes);
         if (usersFolder.length) {
           let data = [];
           usersFolder.map((user, i) => {
-            console.log("user")
-            console.log(user)
-            console.log(user.salaries)
-            console.log(user.salaries[0])
-            console.log(user.salaries[0]?.amount)
             // setLoad(false)
+            const possibilities = user.guarant_possibilities
+              ? user.guarant_possibilities
+              : [];
+            let finalPossibilities = [];
+            possibilities.map((possibility) => {
+              if (user.pivot.type == "tenant") {
+                finalPossibilities.push(possibility.id);
+              }
+            });
+            let finalTenants = [];
+            relationships.map((relation) => {
+              if (relation.guarant_id == user.id){
+                finalTenants.push(parseInt(relation.tenant_id))
+              }
+            })
+
+            console.log(user)
             data.push([
+              { name: "id", value: user.id },
               { name: "firstname", value: user.firstname },
               { name: "lastname", value: user.lastname },
               { name: "email", value: user.email },
@@ -257,9 +276,24 @@ export default function Tenant(slug) {
               { name: "activity_id", value: user.activity_id },
               { name: "civility", value: user.civility },
               { name: "displayDone", value: 0 },
-              { name: "snmap_1", value: user.salaries[0]?.amount ? parseFloat(user.salaries[0]?.amount) : 0.00 },
-              { name: "snmap_2", value: user.salaries[1]?.amount ? parseFloat(user.salaries[1]?.amount) : 0.00 },
-              { name: "snmap_3", value: user.salaries[2]?.amount ? parseFloat(user.salaries[2]?.amount) : 0.00 },
+              {
+                name: "snmap_1",
+                value: user.salaries[0]?.amount
+                  ? parseFloat(user.salaries[0]?.amount)
+                  : 0.0,
+              },
+              {
+                name: "snmap_2",
+                value: user.salaries[1]?.amount
+                  ? parseFloat(user.salaries[1]?.amount)
+                  : 0.0,
+              },
+              {
+                name: "snmap_3",
+                value: user.salaries[2]?.amount
+                  ? parseFloat(user.salaries[2]?.amount)
+                  : 0.0,
+              },
               { name: "CAF_aid", value: user.CAF_aid },
               { name: "isr", value: user.isr },
               { name: "other_income", value: user.other_income },
@@ -272,9 +306,20 @@ export default function Tenant(slug) {
               { name: "ddbc", value: user.ddbc },
               { name: "studentCard", value: user.studentCard },
               { name: "tdq", value: user.tdq },
-              { name: "garant", value: user.garant },
-              { name: "isr_1", value: user.taxes[0]?.amount ? parseFloat(user.taxes[0]?.amount) : 0.00 },
-              { name: "isr_2", value: user.taxes[1]?.amount ? parseFloat(user.taxes[1]?.amount) : 0.00 },
+              { name: "guarant_possibilities", value: finalPossibilities },
+              { name: "tenants", value: finalTenants },
+              {
+                name: "isr_1",
+                value: user.taxes[0]?.amount
+                  ? parseFloat(user.taxes[0]?.amount)
+                  : 0.0,
+              },
+              {
+                name: "isr_2",
+                value: user.taxes[1]?.amount
+                  ? parseFloat(user.taxes[1]?.amount)
+                  : 0.0,
+              },
               { name: "current_rent", value: user.current_rent },
             ]);
           });
@@ -293,8 +338,6 @@ export default function Tenant(slug) {
   }, [router]);
 
   useEffect(() => {
-    console.log(folderUsersNumber, formData.length);
-    console.log(formData);
     if (folderUsersNumber != null && folderUsersNumber == formData.length) {
       setLoad(true);
     }
@@ -302,11 +345,6 @@ export default function Tenant(slug) {
       setLoad(true);
     }
   }, [formData]);
-
-  useEffect(() => {
-    if (load) {
-    }
-  }, [load]);
 
   function setCurrentData(name, value) {
     setFormData((formData) => {
@@ -435,7 +473,9 @@ export default function Tenant(slug) {
         {getData("lastname", index) ? getData("lastname", index) : "Nom"}
         <br />
         {getData("type", index)
-          ? String(getData("type", index)).replace("tenant", "Locataire").replace("guarant", "Garant")
+          ? String(getData("type", index))
+              .replace("tenant", "Locataire")
+              .replace("guarant", "Garant")
           : " \n "}
       </>
     );
@@ -496,7 +536,6 @@ export default function Tenant(slug) {
     if (action == "add") {
       seti(i + 1);
       add();
-      setActiveKey(panes.length - 2);
     }
     if (action == "remove") {
       setPanes(panes.slice);
@@ -514,7 +553,6 @@ export default function Tenant(slug) {
   function save() {
     const http = new HttpService();
     let url = "folders/" + router.query.slug;
-    const tokenId = localStorage.getItem("user-token");
     let userData = form.getFieldsValue();
     if (display == 1) {
       http
@@ -527,7 +565,6 @@ export default function Tenant(slug) {
           String(localStorage.getItem("user-token"))
         )
         .then((data) => {
-          console.log(data);
           return data;
         })
         .catch((error) => {
@@ -560,25 +597,44 @@ export default function Tenant(slug) {
                   getPrevDate(3).getFullYear() +
                   "-" +
                   getPrevDate(3).getMonth(),
-                amount: getData("snmap_3", folder) ?  getData("snmap_3", folder) : 0,
+                amount: getData("snmap_3", folder)
+                  ? getData("snmap_3", folder)
+                  : 0,
               },
             ],
             taxes: [
               {
-                  year: getPrevDate(12).getFullYear(),
-                  amount: getData("isr_1", folder)
-              }, 
+                year: getPrevDate(12).getFullYear(),
+                amount: getData("isr_1", folder),
+              },
               {
                 year: getPrevDate(24).getFullYear(),
-                amount: getData("isr_2", folder)
-            }
-          ],
+                amount: getData("isr_2", folder),
+              },
+            ],
           },
           url,
           String(localStorage.getItem("user-token"))
         )
         .then((data) => {
-          console.log(data);
+          return data;
+        })
+        .catch((error) => {
+          return error;
+        });
+    }
+    if (display == 3) {
+      http
+        .putData(
+          {
+            user: { email: getData("email", folder) },
+            guarant_possibilities: getData("guarant_possibilities", folder),
+            tenants: getData("tenants", folder),
+          },
+          url,
+          String(localStorage.getItem("user-token"))
+        )
+        .then((data) => {
           return data;
         })
         .catch((error) => {
@@ -667,12 +723,10 @@ export default function Tenant(slug) {
             <Tabs
               className="tabs"
               type="editable-card"
-              activeKey={activeKey}
               onChange={(e) => {
                 setDisplay(1);
                 setFolder(e);
                 const nextKey = 1 + parseInt(e);
-                setActiveKey(e);
               }}
               onEdit={editPanes}
             >
