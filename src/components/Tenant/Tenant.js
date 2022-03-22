@@ -320,7 +320,7 @@ export default function Tenant(slug) {
               { name: "owner_lastname", value: user.owner_lastname },
               { name: "owner_phone", value: user.owner_phone },
               { name: "type", value: user.pivot.type },
-              { name: "activity_id", value: user.activity_id },
+              { name: "activity_id", value: parseInt(user.activity_id) },
               { name: "civility", value: user.civility },
               {
                 name: "displayDone",
@@ -359,7 +359,6 @@ export default function Tenant(slug) {
               { name: "identity_card", value: []},
               { name: "justify", value: user.justify },
               { name: "altg", value: user.altg },
-              { name: "rib", value: user.rib },
               { name: "tdbs", value: user.tdbs },
               { name: "ddbc", value: user.ddbc },
               { name: "studentCard", value: user.studentCard },
@@ -380,6 +379,14 @@ export default function Tenant(slug) {
               },
               { name: "current_rent", value: user.current_rent },
               { name: "files", value: user.files },
+              { name: "proof_of_address", value: [] },
+              { name: "free_accomodation_certificate", value: [] },
+              { name: "RIB", value: [] },
+              { name: "net_monthly_salary", value: [] },
+              { name: "balance_sheet", value: [] },
+              { name: "student_card", value: [] },
+              { name: "rent_receipt", value: [] },
+              
               // user.files.map((file) => {
               //   console.log(file);
               //   console.log(file.slug);
@@ -717,6 +724,7 @@ export default function Tenant(slug) {
             user: { email: getData("email", folder) },
             guarant_possibilities: getData("guarant_possibilities", folder),
             tenants: getData("tenants", folder),
+            type: getData("type", folder),
           },
           url,
           String(localStorage.getItem("user-token"))
