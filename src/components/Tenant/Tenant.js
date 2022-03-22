@@ -6,7 +6,6 @@ import ThirdForm from "./Form/ThirdForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs, Affix, Modal } from "antd";
 import GarantForm from "./Form/GarantForm";
-import { getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
 import TenantContainer from "../../containers/Tenant/TenantContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -107,6 +106,10 @@ export default function Tenant(slug) {
       value: "",
     },
     {
+      name: "files",
+      value: [],
+    },
+    {
       name: "snmap_2",
       value: "",
     },
@@ -131,7 +134,7 @@ export default function Tenant(slug) {
       value: "",
     },
     {
-      name: "identity",
+      name: "identity_card",
       value: [],
     },
     {
@@ -198,6 +201,7 @@ export default function Tenant(slug) {
   const profile = useSelector((state) => state.userDetails.userProfile);
   const router = useRouter();
   const [folderUsersNumber, setFolderUsersNumber] = useState(null);
+  const [imgs, setImgs] = useState([])
 
   useEffect(() => {
     dispatch(LoadProfileAction());
@@ -211,13 +215,55 @@ export default function Tenant(slug) {
     setVisible(false);
   };
 
+  function baseToImg(base, type, index){
+    var image = new Image();
+    image.src = 'data:image/png;base64,' + base;
+    document.body.appendChild(image);
+    setImgs([... imgs, image])
+    console.log(imgs)
+    return image
+  }
+  
+  const base64toBlob = (data) => {
+    // Cut the prefix `data:application/pdf;base64` from the raw base 64
+    const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
+
+    const bytes = atob(base64WithoutPrefix);
+    let length = bytes.length;
+    let out = new Uint8Array(length);
+
+    while (length--) {
+        out[length] = bytes.charCodeAt(length);
+    }
+
+    return new Blob([out], { type: 'application/pdf' });
+};
+  function slugTo64(slug, type, extention, index){
+    
+    const http = new HttpService();
+    let url = "files/" + slug;
+    http.getData(url).then((data) =>{
+
+      console.log(data.data.file)
+      // console.log(base64toBlob(data.data.file))
+      if (extention!= "pdf"){
+        console.log(baseToImg(data.data.file, type, index))
+      }
+      return baseToImg(data.data.file, type, index);
+
+    }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  // Remplir les champs au chargement de la page
   function autoFill() {
     const http = new HttpService();
     let url = "folders/" + router.query.slug;
     http
       .getData(url)
       .then((data) => {
-        console.log(data)
+        console.log(data);
         const dataData = data.data;
         const fodlerData = dataData.folder;
         const usersFolder = fodlerData.users;
@@ -244,12 +290,13 @@ export default function Tenant(slug) {
             });
             let finalTenants = [];
             relationships.map((relation) => {
-              if (relation.guarant_id == user.id){
-                finalTenants.push(parseInt(relation.tenant_id))
+              if (relation.guarant_id == user.id) {
+                finalTenants.push(parseInt(relation.tenant_id));
               }
-            })
+            });
 
-            console.log(user)
+            console.log(user);
+            let files = {}
             data.push([
               { name: "id", value: user.id },
               { name: "firstname", value: user.firstname },
@@ -275,7 +322,18 @@ export default function Tenant(slug) {
               { name: "type", value: user.pivot.type },
               { name: "activity_id", value: user.activity_id },
               { name: "civility", value: user.civility },
-              { name: "displayDone", value: 0 },
+              {
+                name: "displayDone",
+                value: user.activity_id
+                  ? user.salaries
+                    ? user.tenants
+                      ? 3
+                      : user.guarant_possibilities
+                      ? 3
+                      : 2
+                    : 1
+                  : 0,
+              },
               {
                 name: "snmap_1",
                 value: user.salaries[0]?.amount
@@ -298,7 +356,7 @@ export default function Tenant(slug) {
               { name: "isr", value: user.isr },
               { name: "other_income", value: user.other_income },
               { name: "estimated_income", value: user.estimated_income },
-              { name: "identity", value: user.identity },
+              { name: "identity_card", value: []},
               { name: "justify", value: user.justify },
               { name: "altg", value: user.altg },
               { name: "rib", value: user.rib },
@@ -321,8 +379,16 @@ export default function Tenant(slug) {
                   : 0.0,
               },
               { name: "current_rent", value: user.current_rent },
+              { name: "files", value: user.files },
+              // user.files.map((file) => {
+              //   console.log(file);
+              //   console.log(file.slug);
+              //   data.push(slugTo64(file.slug, file.type, file.filetype, i));
+              // })
+
             ]);
           });
+          
           setFormData(data);
         } else {
           setFormData([initFormData]);
@@ -346,6 +412,7 @@ export default function Tenant(slug) {
     }
   }, [formData]);
 
+  // Définir une data en fonction de l'index actuelle
   function setCurrentData(name, value) {
     setFormData((formData) => {
       formData[folder]
@@ -355,14 +422,27 @@ export default function Tenant(slug) {
     });
   }
 
+  // Définir une data en fonction d'une index
+  function setData(name, value, index) {
+    setFormData((formData) => {
+      formData[index]
+        ? (formData[index].find((e) => e.name == name).value = value)
+        : "";
+      return [...formData];
+    });
+  }
+
+  // Récupérer une data en fonction de l'index et de son nom
   function getData(name, index) {
     return formData[index]?.find((e) => e.name == name).value;
   }
 
+  // Quand on envoie le formulaire
   function submit() {
     handleUserRegister();
   }
 
+  // ça c'est les messages sur la droite
   function getText() {
     if (display == 1) {
       if (getData("type", folder) == null) {
@@ -466,6 +546,7 @@ export default function Tenant(slug) {
     }
   }
 
+  // Titre reactif
   function getTitle(index) {
     return (
       <>
@@ -481,6 +562,7 @@ export default function Tenant(slug) {
     );
   }
 
+  // Liste des Steps en fonction de l'index
   function getContent(index) {
     return (
       <>
@@ -521,6 +603,7 @@ export default function Tenant(slug) {
     console.log(formData);
   }, [formData]);
 
+  // Quand on ajoute un dossier utilisateur
   function add() {
     setPanes([...panes, { key: panes.length }]);
     setFormData([...formData, initFormData]);
@@ -528,6 +611,7 @@ export default function Tenant(slug) {
     seti(i + 1);
   }
 
+  // Quand on clique sur le bouton '+' sur le menu cliquable 
   function editPanes(targetKey, action) {
     if (action == "addd") {
       seti(targetKey);
@@ -542,14 +626,17 @@ export default function Tenant(slug) {
     }
   }
 
+  // Naviguer avec le menu cliquable 
   function showDisplay(value) {
     if (getData("displayDone", folder) >= value - 1) setDisplay(value);
   }
 
+  // Pour définir un display déjà fait pour naviguer avec le menu cliquable
   function setDisplayDone(value) {
     setCurrentData("displayDone", value);
   }
 
+  // Quand on clique sur suivant ou enregistrer
   function save() {
     const http = new HttpService();
     let url = "folders/" + router.query.slug;
@@ -643,6 +730,7 @@ export default function Tenant(slug) {
     }
   }
 
+  // On Form Send
   const handleUserRegister = () => {
     save();
 
@@ -650,11 +738,13 @@ export default function Tenant(slug) {
     setDisplay(display + 1);
   };
 
+  // Retourner en arrière d'un display
   function prev() {
     setDisplay(display - 1);
   }
   useEffect(() => {}, [folder]);
 
+  // Retourne le formulaire ( Object Form )
   function getForm(foldersss) {
     return (
       <Form
@@ -699,6 +789,7 @@ export default function Tenant(slug) {
             current={foldersss}
             data={formData[folder]}
             setCurrentData={setCurrentData}
+            imgs={imgs}
           />
         )}
         <button type="submit" style={{ display: "none" }} />

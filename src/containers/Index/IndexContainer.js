@@ -8,19 +8,21 @@ import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { RightOutlined } from "@ant-design/icons";
 import { setCookies, getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
 
 export default function IndexContainer({ loggedIn }) {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const router = useRouter();
   const [hasAccount, setHasAccount] = useState(false);
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.userDetails.userProfile);
 
   useEffect(() => {
-    setLoaded(true);
-  }, []);
+      setLoaded(loggedIn ? true : false);
+      console.log(loggedIn)
+      console.log(loaded)
+  }, [loggedIn]);
 
   useEffect(() => {
     dispatch(LoadProfileAction());
@@ -58,7 +60,7 @@ export default function IndexContainer({ loggedIn }) {
   }
 
   function getUserFolder(user, slug) {
-    setCookies("slug", slug)
+    setCookies("slug", slug);
     return (
       <Card
         title={user?.firstname + " " + user?.lastname}
@@ -70,7 +72,7 @@ export default function IndexContainer({ loggedIn }) {
             Editer
           </Button>
         }
-        style={{ width: 300, margin: 10}}
+        style={{ width: 300, margin: 10 }}
       >
         <p>Prenom - {user?.firstname}</p>
         <p>Nom - {user?.lastname}</p>
@@ -79,15 +81,6 @@ export default function IndexContainer({ loggedIn }) {
     );
   }
 
-  if (!loaded)
-    return (
-      <div className="loading_spinner">
-        <Space size="middle">
-          <Spin size="large" className="loading_spinner" />
-        </Space>
-      </div>
-    );
-  else
     return (
       <IndexWrapper>
         <div className="upper">
@@ -134,7 +127,7 @@ export default function IndexContainer({ loggedIn }) {
               </div>
             )}
             <div className="inlineblock">
-              {loggedIn &&
+              {loaded && loggedIn && 
                 profile?.data?.user?.folders?.map((folder) => {
                   return getUserFolder(folder.users[1], folder.slug);
                 })}
@@ -142,7 +135,7 @@ export default function IndexContainer({ loggedIn }) {
           </div>
 
           <Divider />
-          <div className="main" style={{"marginTop": 200}}>
+          <div className="main" style={{ marginTop: 200 }}>
             <div className="mainText">
               <h2>
                 <strong>Passloc, Online Manager</strong>

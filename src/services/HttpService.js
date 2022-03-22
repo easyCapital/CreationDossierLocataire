@@ -64,4 +64,26 @@ export default class HttpService {
     };
     return requestOptions;
   };
+  postFileData = async (item, added_url, tokenId = "") => {
+    const token = await localStorage.getItem(tokenId);
+    const requestOptions = this.postFileRequestOptions(token, item);
+    return fetch("https://passloc.fr/api" + "/" + added_url, requestOptions).then((response) =>
+      response.json()
+    );
+  };
+
+  postFileRequestOptions = (token, item) => {
+    let requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Request-Method": "GET, POST, OPTIONS",
+      },
+      body: item,
+    };
+
+    return requestOptions;
+  };
+  
 }

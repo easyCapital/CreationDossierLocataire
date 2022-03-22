@@ -376,9 +376,7 @@ export default function FirstForm({ data, setCurrentData }) {
       </Form.Item>
 
       {data?.find((e) => e.name == "activity_id").value &&
-        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
-          "e_"
-        ) && (
+        data?.find((e) => e.name == "activity_id").value < 14 && (
           <Form.Item
             label="Nom de l'employeur actuel"
             hasFeedback
@@ -403,9 +401,7 @@ export default function FirstForm({ data, setCurrentData }) {
           </Form.Item>
         )}
       {data?.find((e) => e.name == "activity_id").value &&
-        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
-          "e_"
-        ) && (
+        data?.find((e) => e.name == "activity_id").value < 14 && (
           <Form.Item
             label="Prenom de l'employeur actuel"
             hasFeedback
@@ -430,9 +426,7 @@ export default function FirstForm({ data, setCurrentData }) {
           </Form.Item>
         )}
       {data?.find((e) => e.name == "activity_id").value &&
-        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
-          "e_"
-        ) && (
+        data?.find((e) => e.name == "activity_id").value < 14 && (
           <Form.Item
             label="Mobile de l'employeur actuel"
             hasFeedback
@@ -459,9 +453,7 @@ export default function FirstForm({ data, setCurrentData }) {
         )}
 
       {data?.find((e) => e.name == "activity_id").value &&
-        !String(data?.find((e) => e.name == "activity_id").value).startsWith(
-          "e_"
-        ) && (
+        data?.find((e) => e.name == "activity_id").value < 14 && (
           <Form.Item
             label="Mail de l'employeur actuel"
             hasFeedback
@@ -488,7 +480,5 @@ export default function FirstForm({ data, setCurrentData }) {
           </Form.Item>
         )}
     </div>
-
-    // </div>
   );
 }
