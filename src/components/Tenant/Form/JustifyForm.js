@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Upload, Form, Button, message } from "antd";
 import HttpService from "../../../services/HttpService";
 
-export default function ThirdForm({
+export default function JustifyForm({
   current,
   data,
   setFormData,
@@ -45,51 +45,13 @@ export default function ThirdForm({
     }
   }
 
-  const onChange_ = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    setCurrentData("identity_card", newFileList);
-  };
-
-  const onChange1 = ({ fileList: newFileList }) => {
-    setFileList1(newFileList);
-    setCurrentData("justify", newFileList);
-  };
-  const onChange2 = ({ fileList: newFileList }) => {
-    setFileList2(newFileList);
-    setCurrentData("rib", newFileList);
-  };
-  const onChange3 = ({ fileList: newFileList }) => {
-    setFileList3(newFileList);
-    setCurrentData("tdbs", newFileList);
-  };
-  const onChange4 = ({ fileList: newFileList }) => {
-    setFileList4(newFileList);
-    setCurrentData("ddbc", newFileList);
-  };
-  const onChange5 = ({ fileList: newFileList }) => {
-    setFileList5(newFileList);
-    setCurrentData("studentCard", newFileList);
-  };
-  const onChange6 = ({ fileList: newFileList }) => {
-    setFileList6(newFileList);
-    setCurrentData("tdbs", newFileList);
-  };
-  const onChange7 = ({ fileList: newFileList }) => {
-    setFileList7(newFileList);
-    setCurrentData("altg", newFileList);
-  };
-  const onChange8 = ({ fileList: newFileList }) => {
-    setFileList8(newFileList);
-    setCurrentData("tdq", newFileList);
-  };
-
   const props = {
     listType: "picture-card",
   };
 
   function onChange(file, fileList, data, fileListIndex) {
-    setCurrentData(data, fileList)
-    getSetList(fileListIndex)(fileList)
+    setCurrentData(data, fileList);
+    getSetList(fileListIndex)(fileList);
     if (file.status !== "uploading") {
       // console.log(info.file, info.fileList);
     }
@@ -139,6 +101,7 @@ export default function ThirdForm({
   } else
     return (
       <div className="upload">
+
         <Form.Item
           label="Carte d’identité ou passeport"
           name={"identity"}
@@ -156,11 +119,9 @@ export default function ThirdForm({
             customRequest={(option) => {
               customRequest(option, "identity_card");
             }}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "identity_card",  1)
-              }
-            }
+            onChange={({ file: file, fileList: newFileList }) => {
+              onChange(file, newFileList, "identity_card", 1);
+            }}
             listType="picture-card"
             fileList={data.find((e) => e.name == "identity_card").value}
           >
@@ -185,11 +146,9 @@ export default function ThirdForm({
             }}
             {...props}
             fileList={data.find((e) => e.name == "proof_of_address").value}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "proof_of_address",  1)
-              }
-            }
+            onChange={({ file: file, fileList: newFileList }) => {
+              onChange(file, newFileList, "proof_of_address", 1);
+            }}
           >
             {fileList1.length < 1 && "+ Téléverser"}
           </Upload>
@@ -219,11 +178,9 @@ export default function ThirdForm({
                 }}
                 {...props}
                 fileList={data.find((e) => e.name == "proof_of_address").value}
-                onChange={
-                  ({file: file, fileList: newFileList}) => {
-                    onChange(file, newFileList, "proof_of_address",  1)
-                  }
-                }
+                onChange={({ file: file, fileList: newFileList }) => {
+                  onChange(file, newFileList, "proof_of_address", 1);
+                }}
               >
                 {fileList7.length < 1 && "+ Téléverser"}
               </Upload>
@@ -247,11 +204,9 @@ export default function ThirdForm({
             }}
             {...props}
             fileList={data.find((e) => e.name == "RIB").value}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "RIB",  1)
-              }
-            }
+            onChange={({ file: file, fileList: newFileList }) => {
+              onChange(file, newFileList, "RIB", 1);
+            }}
           >
             {fileList2.length < 1 && "+ Téléverser"}
           </Upload>
@@ -279,11 +234,9 @@ export default function ThirdForm({
               }}
               {...props}
               fileList={data.find((e) => e.name == "net_monthly_salary").value}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "net_monthly_salary",  1)
-              }
-            }
+              onChange={({ file: file, fileList: newFileList }) => {
+                onChange(file, newFileList, "net_monthly_salary", 1);
+              }}
             >
               {fileList3.length < 3 && "+ Téléverser"}
             </Upload>
@@ -313,11 +266,9 @@ export default function ThirdForm({
                 }}
                 {...props}
                 fileList={data.find((e) => e.name == "balance_sheet").value}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "balance_sheet",  1)
-              }
-            }
+                onChange={({ file: file, fileList: newFileList }) => {
+                  onChange(file, newFileList, "balance_sheet", 1);
+                }}
               >
                 {fileList4.length < 2 && "+ Téléverser"}
               </Upload>
@@ -346,11 +297,9 @@ export default function ThirdForm({
               }}
               {...props}
               fileList={data.find((e) => e.name == "student_card").value}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "student_card",  1)
-              }
-            }
+              onChange={({ file: file, fileList: newFileList }) => {
+                onChange(file, newFileList, "student_card", 1);
+              }}
             >
               {fileList5.length < 1 && "+ Téléverser"}
             </Upload>
@@ -377,11 +326,9 @@ export default function ThirdForm({
               }}
               {...props}
               fileList={data.find((e) => e.name == "net_monthly_salary").value}
-            onChange={
-              ({file: file, fileList: newFileList}) => {
-                onChange(file, newFileList, "net_monthly_salary",  1)
-              }
-            }
+              onChange={({ file: file, fileList: newFileList }) => {
+                onChange(file, newFileList, "net_monthly_salary", 1);
+              }}
             >
               {fileList6.length < 3 && "+ Téléverser"}
             </Upload>
@@ -407,11 +354,9 @@ export default function ThirdForm({
               }}
               {...props}
               fileList={data.find((e) => e.name == "rent_receipt").value}
-              onChange={
-                ({file: file, fileList: newFileList}) => {
-                  onChange(file, newFileList, "rent_receipt",  1)
-                }
-              }
+              onChange={({ file: file, fileList: newFileList }) => {
+                onChange(file, newFileList, "rent_receipt", 1);
+              }}
             >
               {fileList8.length < 3 && "+ Téléverser"}
             </Upload>

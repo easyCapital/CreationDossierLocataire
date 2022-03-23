@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Form, Button, Steps } from "antd";
 import FirstForm from "./Form/FirstForm";
-import SecondForm from "./Form/SecondForm";
-import ThirdForm from "./Form/ThirdForm";
+import TenantForm from "./Form/TenantForm";
+import JustifyForm from "./Form/JustifyForm";
 import RevenuesForm from "./Form/RevenuesForm";
 import { Tabs, Affix, Modal } from "antd";
 import GarantForm from "./Form/GarantForm";
@@ -18,6 +18,18 @@ export default function Tenant(slug) {
     x.setDate(1);
     x.setMonth(x.getMonth() - val);
     return x;
+  }
+
+
+  function slugToFile(slug, type, index){
+    
+    const http = new HttpService();
+    let url = "files/" + slug;
+    http.getData(url, true).then((data) =>{
+      setData(type, data, index)
+    }).catch((error) => {
+        console.log(error);
+      });
   }
 
   const initFormData = [
@@ -387,11 +399,12 @@ export default function Tenant(slug) {
               { name: "student_card", value: [] },
               { name: "rent_receipt", value: [] },
               
-              // user.files.map((file) => {
-              //   console.log(file);
-              //   console.log(file.slug);
-              //   data.push(slugTo64(file.slug, file.type, file.filetype, i));
-              // })
+              user.files.map((file) => {
+                console.log(file.type);
+                console.log(file.slug);
+                console.log(i)
+                // data.push(slugToFile(file.slug, file.type, i));
+              })
 
             ]);
           });
@@ -779,7 +792,7 @@ export default function Tenant(slug) {
         )}
         {display == 3 &&
           (formData[folder].find((e) => e.name == "type").value == "tenant" ? (
-            <SecondForm
+            <TenantForm
               current={foldersss}
               data={formData[folder]}
               setCurrentData={setCurrentData}
@@ -793,7 +806,7 @@ export default function Tenant(slug) {
             />
           ))}
         {display == 4 && (
-          <ThirdForm
+          <JustifyForm
             current={foldersss}
             data={formData[folder]}
             setCurrentData={setCurrentData}
