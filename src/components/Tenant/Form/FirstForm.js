@@ -378,7 +378,7 @@ export default function FirstForm({ data, setCurrentData }) {
       {data?.find((e) => e.name == "activity_id").value &&
         data?.find((e) => e.name == "activity_id").value < 14 && (
           <Form.Item
-            label="Nom de l'employeur actuel"
+            label="Nom de l'entreprise"
             hasFeedback
             id={"employer_lastname"}
             name={"employer_lastname"}
@@ -403,7 +403,7 @@ export default function FirstForm({ data, setCurrentData }) {
       {data?.find((e) => e.name == "activity_id").value &&
         data?.find((e) => e.name == "activity_id").value < 14 && (
           <Form.Item
-            label="Prenom de l'employeur actuel"
+            label="Prenom/Nom de votre responsable"
             hasFeedback
             id={"employer_firstname"}
             name={"employer_firstname"}

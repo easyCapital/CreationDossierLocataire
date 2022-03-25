@@ -214,8 +214,6 @@ export default function Tenant(slug) {
   const handleCancel = () => {
     setVisible(false);
   };
-
-  function slugToFile(slug, type, index) {}
   // Remplir les champs au chargement de la page
   function autoFill() {
     const http = new HttpService();
@@ -377,7 +375,7 @@ export default function Tenant(slug) {
                  
                 ).then((blob) => {
                   console.log(blob)
-                  data[index].find((e) => e.name == file.type).value.push({uid:Math.floor(Math.random() * 21470000), name:"file." + blob.type.split("/")[1], status:"done", url:URL.createObjectURL(blob)}) 
+                  data[index].find((e) => e.name == file.type).value.push({slug:file.slug, uid:Math.floor(Math.random() * 21470000), name:"file." + blob.type.split("/")[1], status:"done", url:URL.createObjectURL(blob)}) 
                 })
                 .catch((error) => {
                   console.log(error);
@@ -772,6 +770,7 @@ export default function Tenant(slug) {
               current={foldersss}
               data={formData[folder]}
               setCurrentData={setCurrentData}
+              add={add}
             />
           ) : (
             <GarantForm

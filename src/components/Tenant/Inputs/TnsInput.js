@@ -70,7 +70,7 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
        setCurrentData={setCurrentData}/>
       <InputComponant 
        name="CAF_aid" 
-       label="Aide CAF mensuel (APL, ALS)" 
+       label={<span>Aide CAF <b>mensuel</b> (APL, ALS)</span>}
        text="vos aide CAF mensuel (APL, ALS)" 
        addon="€" 
        data={data}
@@ -78,7 +78,7 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_1" 
-       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
+       label={<span> Salaire net <b>mensuel</b> av. prél  {convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}</span>}
        text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(1).getMonth()) + " " + getPrevDate(1).getFullYear()}
        addon="€" 
        data={data}
@@ -86,7 +86,7 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
        setCurrentData={setCurrentData}/>
        <InputComponant 
        name="snmap_2" 
-       label={ "Salaire net mensuel av. prél " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
+       label={<span> Salaire net <b>mensuel</b> av. prél  {convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}</span>}
        text={"votre salaire net mensuel av. prélèvemment " + convertMonth(getPrevDate(2).getMonth()) + " " + getPrevDate(2).getFullYear()}
        addon="€" 
        data={data}
@@ -94,7 +94,7 @@ export default function TnsInput({data, setFormData, setCurrentData}) {
        setCurrentData={setCurrentData}/>
       <InputComponant 
        name="other_income" 
-       label="Autre(s) revenu(s) net(s) mensuel(s)" 
+       label={<span>Autre(s) revenu(s) net(s) <b>mensuel(s)</b></span>}
        text="vos autre(s) revenu(s) net(s) mensuel(s)" 
        addon="€" 
        data={data}

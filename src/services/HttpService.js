@@ -24,6 +24,15 @@ export default class HttpService {
     );
   };
 
+  deleteData = async (added_url, file=false) => {
+    const token = await localStorage.getItem("user-token");
+    const requestOptions = this.deleteRequestOptions(token);
+    return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
+      file ? response : response.json()
+    );
+  };
+  
+
   getRequestOptions = (token) => {
     let requestOptions = {
       method: "GET",
@@ -54,6 +63,20 @@ export default class HttpService {
   putRequestOptions = (token, item) => {
     let requestOptions = {
       method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Request-Method": "GET, POST, OPTIONS",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(item),
+    };
+    return requestOptions;
+  };
+  deleteRequestOptions = (token, item) => {
+    let requestOptions = {
+      method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,
         "Content-type": "application/json",

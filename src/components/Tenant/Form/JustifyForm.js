@@ -49,6 +49,21 @@ export default function JustifyForm({
     listType: "picture-card",
   };
 
+
+  function onRemove(file)  {
+    const http = new HttpService();
+    let url = "files/" + file.slug;
+    console.log(file.slug);
+    http
+      .deleteData(url)
+      .then((data) => { 
+        console.log(data)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   function onChange(file, fileList, data, fileListIndex) {
     setCurrentData(data, fileList);
     getSetList(fileListIndex)(fileList);
@@ -121,6 +136,7 @@ export default function JustifyForm({
             onChange={({ file: file, fileList: newFileList }) => {
               onChange(file, newFileList, "identity_card", 1);
             }}
+            onRemove={onRemove}
             listType="picture-card"
             fileList={data.find((e) => e.name == "identity_card").value}
           >

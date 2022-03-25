@@ -4,10 +4,14 @@ import { Form, Checkbox, Steps } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import HttpService from "../../../services/HttpService";
 
-export default function SecondForm({ current, setCurrentData }) {
+export default function SecondForm({ current, setCurrentData, add }) {
   function onChange(values) {
     setCurrentData("guarant_possibilities", values);
+    if (values.includes(2)){
+      add()
+    }
   }
+
   const [guarantPossibilities, setGuarantPossibilities] = useState([]);
 
   useEffect(() => {
