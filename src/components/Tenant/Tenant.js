@@ -20,18 +20,6 @@ export default function Tenant(slug) {
     return x;
   }
 
-
-  function slugToFile(slug, type, index){
-    
-    const http = new HttpService();
-    let url = "files/" + slug;
-    http.getData(url, true).then((data) =>{
-      setData(type, data, index)
-    }).catch((error) => {
-        console.log(error);
-      });
-  }
-
   const initFormData = [
     {
       name: "id",
@@ -213,7 +201,7 @@ export default function Tenant(slug) {
   const profile = useSelector((state) => state.userDetails.userProfile);
   const router = useRouter();
   const [folderUsersNumber, setFolderUsersNumber] = useState(null);
-  const [imgs, setImgs] = useState([])
+  const [imgs, setImgs] = useState([]);
 
   useEffect(() => {
     dispatch(LoadProfileAction());
@@ -227,47 +215,7 @@ export default function Tenant(slug) {
     setVisible(false);
   };
 
-  function baseToImg(base, type, index){
-    var image = new Image();
-    image.src = 'data:image/png;base64,' + base;
-    document.body.appendChild(image);
-    setImgs([... imgs, image])
-    console.log(imgs)
-    return image
-  }
-  
-  const base64toBlob = (data) => {
-    // Cut the prefix `data:application/pdf;base64` from the raw base 64
-    const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
-
-    const bytes = atob(base64WithoutPrefix);
-    let length = bytes.length;
-    let out = new Uint8Array(length);
-
-    while (length--) {
-        out[length] = bytes.charCodeAt(length);
-    }
-
-    return new Blob([out], { type: 'application/pdf' });
-};
-  function slugTo64(slug, type, extention, index){
-    
-    const http = new HttpService();
-    let url = "files/" + slug;
-    http.getData(url).then((data) =>{
-
-      console.log(data.data.file)
-      // console.log(base64toBlob(data.data.file))
-      if (extention!= "pdf"){
-        console.log(baseToImg(data.data.file, type, index))
-      }
-      return baseToImg(data.data.file, type, index);
-
-    }).catch((error) => {
-        console.log(error);
-      });
-  }
-
+  function slugToFile(slug, type, index) {}
   // Remplir les champs au chargement de la page
   function autoFill() {
     const http = new HttpService();
@@ -289,8 +237,9 @@ export default function Tenant(slug) {
         }
         if (usersFolder.length) {
           let data = [];
-          usersFolder.map((user, i) => {
-            // setLoad(false)
+          let filesInDB = [];
+          usersFolder.map((user, index) => {
+            // -- Posibilities and Tenants
             const possibilities = user.guarant_possibilities
               ? user.guarant_possibilities
               : [];
@@ -308,7 +257,7 @@ export default function Tenant(slug) {
             });
 
             console.log(user);
-            let files = {}
+            // -- Push the data
             data.push([
               { name: "id", value: user.id },
               { name: "firstname", value: user.firstname },
@@ -368,7 +317,7 @@ export default function Tenant(slug) {
               { name: "isr", value: user.isr },
               { name: "other_income", value: user.other_income },
               { name: "estimated_income", value: user.estimated_income },
-              { name: "identity_card", value: []},
+              { name: "identity_card", value: [] },
               { name: "justify", value: user.justify },
               { name: "altg", value: user.altg },
               { name: "tdbs", value: user.tdbs },
@@ -398,17 +347,44 @@ export default function Tenant(slug) {
               { name: "balance_sheet", value: [] },
               { name: "student_card", value: [] },
               { name: "rent_receipt", value: [] },
-              
-              user.files.map((file) => {
-                console.log(file.type);
-                console.log(file.slug);
-                console.log(i)
-                // data.push(slugToFile(file.slug, file.type, i));
-              })
-
             ]);
+            // -- Files
+            let userFiles = [];
+            user.files.map((file) => {
+              userFiles.push(file);
+            });
+            user.salaries.map((salary) => {
+              salary.files.forEach((file) => {
+                userFiles.push(file);
+              });
+            });
+            user.taxes.map((taxe) => {
+              taxe.files.forEach((file) => {
+                userFiles.push(file);
+              });
+            });
+            filesInDB.push(userFiles);
           });
-          
+
+          filesInDB.map((userFiles, index) => {
+            userFiles.forEach((file) => {
+              const http = new HttpService();
+              let url = "files/" + file.slug;
+              console.log(file);
+              http
+                .getData(url, true)
+                .then((response) => response.blob()
+                 
+                ).then((blob) => {
+                  console.log(blob)
+                  data[index].find((e) => e.name == file.type).value.push({uid:Math.floor(Math.random() * 21470000), name:"file." + blob.type.split("/")[1], status:"done", url:URL.createObjectURL(blob)}) 
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            });
+          });
+          console.log(data)
           setFormData(data);
         } else {
           setFormData([initFormData]);
@@ -631,7 +607,7 @@ export default function Tenant(slug) {
     seti(i + 1);
   }
 
-  // Quand on clique sur le bouton '+' sur le menu cliquable 
+  // Quand on clique sur le bouton '+' sur le menu cliquable
   function editPanes(targetKey, action) {
     if (action == "addd") {
       seti(targetKey);
@@ -646,7 +622,7 @@ export default function Tenant(slug) {
     }
   }
 
-  // Naviguer avec le menu cliquable 
+  // Naviguer avec le menu cliquable
   function showDisplay(value) {
     if (getData("displayDone", folder) >= value - 1) setDisplay(value);
   }

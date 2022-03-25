@@ -27,6 +27,7 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     setLoaded(true);
+    console.log(profileResponse)
   }, [profileResponse]);
 
   const state = useSelector((state) => state);

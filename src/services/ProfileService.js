@@ -5,7 +5,7 @@ export const LoadProfile = () => {
   let profileUrl = "profile";
   const tokenId = "user-token";
   return http
-    .getData(profileUrl, tokenId)
+    .getData(profileUrl)
     .then((data) => {
       // console.log(data);
       return data;

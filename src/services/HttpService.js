@@ -8,13 +8,14 @@ export default class HttpService {
     );
   };
 
-  getData = async (added_url, file = false) => {
+  getData = async (added_url, file=false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.getRequestOptions(token);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
       file ? response : response.json()
     );
   };
+  
 
   putData = async (item, added_url, tokenId, pdf = false) => {
     const requestOptions = this.putRequestOptions(tokenId, item, pdf);
