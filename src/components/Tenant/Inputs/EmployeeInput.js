@@ -113,7 +113,11 @@ export default function EmployeeInput({ data, setFormData, setCurrentData }) {
       />
       <InputComponant
         name="CAF_aid"
-        label="Aide CAF mensuel (APL, ALS)"
+        label={
+          <span>
+            Aide CAF<b>mensuel</b> (APL, ALS)
+          </span>
+        }
         text="vos aide CAF mensuel (APL, ALS)"
         addon="€"
         data={data}

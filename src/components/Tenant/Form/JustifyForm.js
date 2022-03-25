@@ -23,7 +23,6 @@ export default function JustifyForm({
     switch (index) {
       case 1:
         return setFileList;
-        break;
       case 2:
         return setFileList1;
       case 3:
@@ -71,9 +70,9 @@ export default function JustifyForm({
       // console.log(info.file, info.fileList);
     }
     if (file.status === "done") {
-      message.success(`${file.name} file uploaded successfully`);
+      message.success(`${file.name} fichier sauvegardé`);
     } else if (file.status === "error") {
-      message.error(`${file.name} file upload failed.`);
+      message.error(`${file.name} erreur lors de l'envoie.`);
     }
   }
 
@@ -227,9 +226,8 @@ export default function JustifyForm({
           </Upload>
         </Form.Item>
 
-        {String(data.find((e) => e.name == "activity_id").value).startsWith(
-          "s"
-        ) && (
+        {
+        data.find((e) => e.name == "activity_id").value < 7 && (
           <Form.Item
             label="3 derniers bulletins de salaires"
             name="tdbs"
@@ -258,9 +256,7 @@ export default function JustifyForm({
           </Form.Item>
         )}
 
-        {String(data.find((e) => e.name == "activity_id").value).startsWith(
-          "tns"
-        ) && (
+        {data?.find((e) => e.name == "activity_id").value <= 13 && (data?.find((e) => e.name == "activity_id").value>7) && (
           <Form.Item>
             <Form.Item
               label="2 derniers bilans comptables"
@@ -291,9 +287,7 @@ export default function JustifyForm({
           </Form.Item>
         )}
 
-        {String(data.find((e) => e.name == "activity_id").value).startsWith(
-          "e"
-        ) && (
+        {data?.find((e) => e.name == "activity_id").value <= 15 && (data?.find((e) => e.name == "activity_id").value>13)&& (
           <Form.Item
             label="Carte d’étudiants"
             name="studenCard"

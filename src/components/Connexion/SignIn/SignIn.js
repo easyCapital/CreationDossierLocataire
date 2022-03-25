@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
-import { Form, Input, Button, Modal } from "antd";
+import { Form, Input, Button, Modal, Alert } from "antd";
 import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { useRouter } from "next/router";
 import Connexion from "../../../containers/Connexion/Connexion";
 import { LoginAction } from "../../../redux/actions/AuthActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const selector = useSelector((state) => state.userAuth);
   const router = useRouter();
   const dispatch = useDispatch();
-
+const [error, setError] = useState("");
+useEffect(() => {
+    if (selector?.authResponse?.message == "Unauthorized.") {
+      setError(
+        "L'e-mail et le mot de passe que vous avez entré ne correspondent pas."
+      );
+    }
+  }, [selector]);
   const handleUserLogin = () => {
     const fields = {
       email: email,
@@ -84,6 +92,9 @@ export default function SignIn() {
             <a href="/signup">Pas encore de compte</a>
           </Button>
         </Form.Item>
+        {error && (
+        <Alert description={error} type="error" />
+      )}
       </Form>
     </Connexion>
   );

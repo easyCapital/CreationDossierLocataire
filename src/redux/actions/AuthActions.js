@@ -1,4 +1,5 @@
 import * as ActionTypes from "../ActionTypes";
+import { message } from "antd";
 import {
   RegisterUserService,
   LoginUserService,
@@ -47,7 +48,6 @@ export const LoginAction = (credentials, router) => {
 };
 
 export const LogoutAction = () => {
-  console.log("LOGOUT")
   return (dispatch) => {
     dispatch({ type: ActionTypes.RESTART_AUTH_RESPONSE });
     LogOutUserService().then(
