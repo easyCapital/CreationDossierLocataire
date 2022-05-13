@@ -1,5 +1,5 @@
 export default class HttpService {
-  url = "https://passloc.fr/api";
+  url = "https://app.passloc.fr/api";
   postData = async (item, added_url, tokenId = "", pdf = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.postRequestOptions(token, item, pdf);
@@ -91,7 +91,7 @@ export default class HttpService {
   postFileData = async (item, added_url, tokenId = "") => {
     const token = await localStorage.getItem(tokenId);
     const requestOptions = this.postFileRequestOptions(token, item);
-    return fetch("https://passloc.fr/api" + "/" + added_url, requestOptions).then((response) =>
+    return fetch(url + "/" + added_url, requestOptions).then((response) =>
       response.json()
     );
   };
