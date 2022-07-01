@@ -19,7 +19,7 @@ export default function Tenant(slug) {
     x.setMonth(x.getMonth() - val);
     return x;
   }
-
+ 
   const initFormData = [
     {
       name: "id",
@@ -339,7 +339,7 @@ export default function Tenant(slug) {
               { name: "current_rent", value: user.current_rent },
               { name: "files", value: user.files },
               { name: "proof_of_address", value: [] },
-              { name: "free_accomodation_certificate", value: [] },
+              { name: "free_accommodation_certificate", value: [] },
               { name: "RIB", value: [] },
               { name: "net_monthly_salary", value: [] },
               { name: "balance_sheet", value: [] },
@@ -371,18 +371,25 @@ export default function Tenant(slug) {
               console.log(file);
               http
                 .getData(url, true)
-                .then((response) => response.blob()
-                 
-                ).then((blob) => {
-                  console.log(blob)
-                  data[index].find((e) => e.name == file.type).value.push({slug:file.slug, uid:Math.floor(Math.random() * 21470000), name:"file." + blob.type.split("/")[1], status:"done", url:URL.createObjectURL(blob)}) 
+                .then((response) => response.blob())
+                .then((blob) => {
+                  console.log(blob);
+                  data[index]
+                    .find((e) => e.name == file.type)
+                    .value.push({
+                      slug: file.slug,
+                      uid: Math.floor(Math.random() * 21470000),
+                      name: "file." + blob.type.split("/")[1],
+                      status: "done",
+                      url: URL.createObjectURL(blob),
+                    });
                 })
                 .catch((error) => {
                   console.log(error);
                 });
             });
           });
-          console.log(data)
+          console.log(data);
           setFormData(data);
         } else {
           setFormData([initFormData]);

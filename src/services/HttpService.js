@@ -8,30 +8,29 @@ export default class HttpService {
     );
   };
 
-  getData = async (added_url, file=false) => {
+  getData = async (added_url, file = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.getRequestOptions(token);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
       file ? response : response.json()
     );
   };
-  
 
   putData = async (item, added_url, tokenId, pdf = false) => {
-    const requestOptions = this.putRequestOptions(tokenId, item, pdf);
+    const token = await localStorage.getItem("user-token");
+    const requestOptions = this.putRequestOptions(token, item, pdf);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
       response.json()
     );
   };
 
-  deleteData = async (added_url, file=false) => {
+  deleteData = async (added_url, file = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.deleteRequestOptions(token);
     return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
       file ? response : response.json()
     );
   };
-  
 
   getRequestOptions = (token) => {
     let requestOptions = {
@@ -40,7 +39,7 @@ export default class HttpService {
         Authorization: "Bearer " + token,
         "Content-type": "application/json",
         "Cache-Control": "private",
-        "Accept": "application/json"
+        Accept: "application/json",
       },
     };
     return requestOptions;
@@ -68,7 +67,7 @@ export default class HttpService {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Request-Method": "GET, POST, OPTIONS",
-        "Accept": "application/json"
+        Accept: "application/json",
       },
       body: JSON.stringify(item),
     };
@@ -82,17 +81,17 @@ export default class HttpService {
         "Content-type": "application/json",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Request-Method": "GET, POST, OPTIONS",
-        "Accept": "application/json"
+        Accept: "application/json",
       },
       body: JSON.stringify(item),
     };
     return requestOptions;
   };
-  postFileData = async (item, added_url, tokenId = "") => {
-    const token = await localStorage.getItem(tokenId);
+  postFileData = async (item, added_url) => {
+    const token = await localStorage.getItem("user-token");
     const requestOptions = this.postFileRequestOptions(token, item);
-    return fetch(url + "/" + added_url, requestOptions).then((response) =>
-      response.json()
+    return fetch(this.url + "/" + added_url, requestOptions).then(
+      (response) => response
     );
   };
 
@@ -109,5 +108,4 @@ export default class HttpService {
 
     return requestOptions;
   };
-  
 }

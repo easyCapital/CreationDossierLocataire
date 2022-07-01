@@ -8,20 +8,25 @@ import React from "react";
 import { Provider } from "react-redux";
 import { useStore } from "../redux/CreateStore";
 import AuthProvider from "../providers/AuthProvider";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import moment from "moment";
+import "moment/locale/fr";
+config.autoAddCss = false;
+require("../styles/variables.less");
 
 function MyApp({ Component, pageProps }) {
   const site = "https://espace-client-easycapital.vercel.app";
   const router = useRouter();
   const canonicalURL = site + router.asPath;
   const store = useStore(pageProps.initialReduxState);
+  moment.locale("fr");
 
   return (
     <Provider store={store}>
       <Navbar />
       <Head>
-        <title>
-          Passloc 
-        </title>
+        <title>Passloc</title>
         <meta
           name="description"
           content="Le seul outil de gestion de patrimoistate.userDetails.userProfile.data === nullne accessible qui compare toutes les solutions d’investissements immobilières ou financières afin d’optimiser votre fiscalité."

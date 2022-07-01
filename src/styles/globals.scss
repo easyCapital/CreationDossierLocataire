@@ -23,53 +23,11 @@ a {
   font-display: swap;
 }
 
-.ant-btn {
-  font-size: 20px;
-  padding: 20px;
-  color: white;
-  border-radius: 5px;
-  border: none;
+.ant-popover-message {
   display: flex;
   align-items: center;
-  justify-content:center;
-  text-overflow: fade;
-  transition: none !important;
-  color: white;
-  &:hover {
-    font-weight: bold;
+  svg {
+    color: #005fc3;
+    font-size: 20px;
   }
-}
-
-.ant-btn-primary {
-  background-color: $blue;
-  border-color: $blue;
-  &:hover {
-    font-weight: bold;
-    background-color: $lightblue;
-    border-color: $lightblue;
-  }
-}
-
-.ant-btn-success {
-  background-color: $green !important;
-  border-color: $green !important;
-  &:hover {
-    font-weight: bold;
-    background-color: $lightgreen !important;
-    border-color: $lightgreen !important;
-  }
-}
-
-/*code CSS du loader*/
-.ant-spin-dot-item:nth-child(1) {
-  background: $grey;
-}
-.ant-spin-dot-item:nth-child(2) {
-  background: $orange;
-}
-.ant-spin-dot-item:nth-child(3) {
-  background: $green;
-}
-.ant-spin-dot-item:nth-child(4) {
-  background: $blue;
 }

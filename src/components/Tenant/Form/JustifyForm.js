@@ -188,7 +188,7 @@ export default function JustifyForm({
               <Upload
                 {...uploadprops}
                 customRequest={(option) => {
-                  customRequest(option, "free_accomodation_certificate");
+                  customRequest(option, "free_accommodation_certificate");
                 }}
                 {...props}
                 fileList={data.find((e) => e.name == "proof_of_address").value}

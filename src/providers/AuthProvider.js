@@ -27,21 +27,20 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     setLoaded(true);
-    console.log(profileResponse)
   }, [profileResponse]);
 
   const state = useSelector((state) => state);
   useEffect(() => {
     setLoggedIn(state?.userDetails?.userProfile?.data != null);
     if (state.userDetails.userProfile.data === null) {
-      if (router.asPath == "/tenant") {
+      if (router.asPath == "/folder") {
         router.push("/");
       }
     }
 
     if (state.userDetails.userProfile.data !== undefined && state.userDetails.userProfile.data !== null) {
       if (["/signin", "/signup"].includes(router.asPath)) {
-        router.push("/tenant");
+        router.push("/folder");
       }
     }
   }, [state]);

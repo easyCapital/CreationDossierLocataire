@@ -1,22 +1,9 @@
-const withImages = require("next-images");
-module.exports = withImages({});
+const withAntdLess = require('next-plugin-antd-less');
 
-module.exports = {
-  i18n: {
-    locales: ["fr"],
-    defaultLocale: "fr",
-  },
-  env: {
-    API_URL: process.env.API_URL,
-  },
-};
+module.exports = withAntdLess({
+  lessVarsFilePath: './src/styles/variables.less',
 
-module.exports = (phase, { defaultConfig }) => {
-  if ("sassOptions" in defaultConfig) {
-    defaultConfig["sassOptions"] = {
-      includePaths: ["./src"],
-      prependData: `@import "/src/styles/variables.scss";`,
-    };
-  }
-  return defaultConfig;
-};
+  webpack(config) {
+    return config;
+  },
+});

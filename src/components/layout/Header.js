@@ -10,11 +10,9 @@ import HttpService from "../../services/HttpService";
 export default function Header(props) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const authResponse = useSelector((state) => state.userAuth.authResponse);
 
   const logOut = () => {
     dispatch(LogoutAction());
-    router.push("/signin");
     router.push("/");
   };
   const createFolder = () => {
@@ -23,68 +21,71 @@ export default function Header(props) {
     http
       .postData(null, url)
       .then((data) => {
-        router.push("/folder/" + data.data.folder.slug)
+        router.push("/folder/" + data.data.folder.slug);
         return data;
       })
       .catch((error) => {
         return error;
       });
-      
-  }
-
-  const login = () => {
-    router.push("/signin");
   };
 
   const [loggedIn, setLoggedIn] = useState(false);
   const state = useSelector((state) => state);
   useEffect(() => {
-    console.log(state);
-    setLoggedIn(state?.userDetails?.userProfile?.data != null); 
+    setLoggedIn(state?.userDetails?.userProfile?.data != null);
   }, [state]);
 
   return (
-    <HeaderWrapper style={ {"backgroundColor":router.asPath == "/" && '#fff', "height":80}}>
-      <div className="barre" >
-        
+    <HeaderWrapper
+      style={{ backgroundColor: router.asPath == "/" && "#fff", height: 80 }}
+    >
+      <div className="barre">
         <div className="ubar">
           <div className="logoImage">
-            <a href="/">
+            <Link href="/">
               <img
-              style={{"marginTop":0}}
+                style={{ marginTop: 0 }}
                 src={"../../../passloc-logo.png"}
                 className={"logoImage_start"}
                 alt="logo Passloc"
                 onClick={() => router.push("/")}
               />
-            </a>
+            </Link>
           </div>
           <div className="btn_login">
-            {!loggedIn && <Button 
-              style={{"marginTop":0}}
-              onClick={() => router.push("/signin")}>Connexion</Button>}
+            {!loggedIn && (
+              <Button
+                style={{ marginTop: 0 }}
+                onClick={() => router.push("/signin")}
+              >
+                Connexion
+              </Button>
+            )}
           </div>
         </div>
       </div>
-      {router.asPath != "/signin" &&
-        router.asPath != "/signup" &&
-        loggedIn && (
-          <div className="push">
-            {/* {token !== null && token !== "" ? ( */}
-            <Button className="button" id="btn1" onClick={createFolder}>
-              Créer un dossier
-            </Button>
-            <Button style={{"marginLeft": 50}} className="button" id="btn1" onClick={logOut}>
-              Me déconnecter
-            </Button>
-            {/* ) 
+      {router.asPath != "/signin" && router.asPath != "/signup" && loggedIn && (
+        <div className="push">
+          {/* {token !== null && token !== "" ? ( */}
+          <Button className="button" id="btn1" onClick={createFolder}>
+            Créer un dossier
+          </Button>
+          <Button
+            style={{ marginLeft: 50 }}
+            className="button"
+            id="btn1"
+            onClick={logOut}
+          >
+            Me déconnecter
+          </Button>
+          {/* ) 
           : (
             <Button className="button" id="btn1" onClick={login}>
               Me connecter
             </Button>
           )} */}
-          </div>
-        )}
+        </div>
+      )}
     </HeaderWrapper>
   );
 }
