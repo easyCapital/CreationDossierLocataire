@@ -169,7 +169,7 @@ export default function JustifyForm({
         </Form.Item>
 
         {data.find((e) => e.name == "housing_type").value ==
-          "free accommodation" &&
+          "free_accommodation" &&
           String(data.find((e) => e.name == "activity_id").value).startsWith(
             "e"
           ) && (

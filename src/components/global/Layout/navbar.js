@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { debounce } from "./helpers";
 import Header from "../../layout/Header";
 import { useRouter } from "next/router";
 
@@ -7,18 +6,6 @@ const Navbar = () => {
   const router = useRouter();
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-
-  const handleScroll = debounce(() => {
-    const currentScrollPos = window.pageYOffset;
-
-    setVisible(
-      (prevScrollPos > currentScrollPos &&
-        prevScrollPos - currentScrollPos > 70) ||
-        currentScrollPos < 10
-    );
-
-    setPrevScrollPos(currentScrollPos);
-  }, 100);
 
   const navbarStyles = {
     position: "fixed",

@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-// black : #101820;
-//jaune : #FFA400;
-//vert : #2CC84D;
-//bleu : #4ca6e2;
-
 export const ConnexionWrapper = styled.div`
   .noAccountWrapper {
     text-align: center;
@@ -35,21 +30,16 @@ export const ConnexionWrapper = styled.div`
         margin-bottom: 30px;
       }
       .form {
-        text-align: left;
+        .buttons {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
         .ant-btn {
-          font-size: 30px;
-          height: 50px;
-          margin-top: 50px;
-          margin-left: auto;
-          margin-right: auto;
-          padding-left: 100px;
-          padding-right: 100px;
-          padding-top: 35px;
-          padding-bottom: 35px;
-          font-size: 35px;
-          color: white;
+          height: 60px;
+          font-size: 22px;
           &.ant-btn-primary {
-            margin-top: 0px;
+            margin-bottom: 20px;
             font-size: 24px;
             border-radius: 15px;
             width: 400px;
@@ -57,21 +47,8 @@ export const ConnexionWrapper = styled.div`
           }
         }
       }
-      .passwordless {
-        display: flex;
-        margin-top: 80px;
-        margin-bottom: 80px;
-        margin-left: 220px;
-
-        max-width: 600px;
-        svg {
-          flex: 1;
-          height: 50px;
-          width: 50px;
-        }
-        p {
-          flex: 5;
-        }
+      .ant-alert {
+        margin: 20px 10px;
       }
     }
     .droite {
@@ -87,6 +64,13 @@ export const ConnexionWrapper = styled.div`
       .hello {
         font-size: 45px;
         font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+          font-size: 60px;
+          margin-right: 20px;
+        }
       }
       .txt {
         font-size: 20px;
@@ -106,7 +90,7 @@ export const ConnexionWrapper = styled.div`
         right: 200px;
         height: 0;
         width: 0;
-        border: solid #327ac7 ;
+        border: solid #327ac7;
         border-width: 100px 100px 40px 100px;
         border-left-color: #7ebde8;
       }
@@ -156,20 +140,19 @@ export const ConnexionWrapper = styled.div`
     width: 300px;
     z-index: -1;
   }
-  .alreadyConnected{
-    text-align:center;
-    margin-top:400px;
-    font-size:40px;
+  .alreadyConnected {
+    text-align: center;
+    margin-top: 400px;
+    font-size: 40px;
   }
-  .mailSent{
-    font-size:30px;
-    font-weight:bold;
-    margin-top:30%;
-    :first-line{
-      font-size:40px;
+  .mailSent {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 30%;
+    :first-line {
+      font-size: 40px;
     }
   }
-  
 
   @media (max-width: 800px) {
     .gauche {
@@ -179,11 +162,11 @@ export const ConnexionWrapper = styled.div`
         font-size: 30px;
         font-weight: bold;
         color: #327ac7;
-        margin-bottom:80px;
+        margin-bottom: 80px;
       }
-      .txt{
-        margin-top:20px;
-        margin-bottom:20px;
+      .txt {
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
       .ant-form-item-control-input-content {
         .ant-btn {
@@ -192,10 +175,10 @@ export const ConnexionWrapper = styled.div`
           margin-top: 0px;
         }
       }
-      .passwordless{
-        svg{
-          height:40px;
-          width:40px;
+      .passwordless {
+        svg {
+          height: 40px;
+          width: 40px;
         }
       }
     }

@@ -14,7 +14,7 @@ import Image from "next/image";
 export default function ResourceForm({
   arePreviousItemsFilled,
   validateMessages,
-  user,
+  folder,
   handleCurrentStepChanged,
   activities,
 }) {
@@ -24,23 +24,23 @@ export default function ResourceForm({
   };
   const initFormValues = {
     net_monthly_salary_before_deduction_1:
-      user.net_monthly_salary_before_deduction_1,
+      folder.net_monthly_salary_before_deduction_1,
     net_monthly_salary_before_deduction_2:
-      user.net_monthly_salary_before_deduction_2,
+      folder.net_monthly_salary_before_deduction_2,
     net_monthly_salary_before_deduction_3:
-      user.net_monthly_salary_before_deduction_3,
+      folder.net_monthly_salary_before_deduction_3,
     is_fiscally_attached:
-      user.is_fiscally_attached == null
+      folder.is_fiscally_attached == null
         ? isStudent()
           ? true
           : false
-        : user.is_fiscally_attached == "1"
+        : folder.is_fiscally_attached == "1"
         ? true
         : false,
-    annual_income_tax_1: user.annual_income_tax_1,
-    annual_income_tax_2: user.annual_income_tax_2,
-    other_monthly_incomes: user.other_monthly_incomes,
-    current_rent_amount: user.current_rent_amount,
+    annual_income_tax_1: folder.annual_income_tax_1,
+    annual_income_tax_2: folder.annual_income_tax_2,
+    other_monthly_incomes: folder.other_monthly_incomes,
+    current_rent_amount: folder.current_rent_amount,
   };
   const [isFormFinished, setIsFormFinished] = useState();
   const [fieldsToFill, setFieldsToFill] = useState(
@@ -69,7 +69,7 @@ export default function ResourceForm({
         ? ["annual_income_tax_1", "annual_income_tax_2"]
         : []),
       "other_monthly_incomes",
-      ...(user.housing_situation == "tenant" ? ["current_rent_amount"] : []),
+      ...(folder.housing_situation == "tenant" ? ["current_rent_amount"] : []),
     ]);
 
     const fieldName = Object.keys(changedValues)[0];
@@ -78,7 +78,7 @@ export default function ResourceForm({
       [fieldName]: changedValues[fieldName],
     };
 
-    let url = "users/" + user.id;
+    let url = "folders/" + folder.slug;
     new HttpService().putData(data, url).then((res) => {
       if (res.success) {
       } else {
@@ -110,9 +110,10 @@ export default function ResourceForm({
                   <p className="stepTitle">
                     03 <span>Vos ressources</span>
                   </p>
+                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
                   <Form.Item
                     label={
-                      user.activity_id == 18
+                      folder.activity_id == 18
                         ? "Pension de retraite"
                         : "Salaire net mensuel avant prélèvement"
                     }
@@ -192,7 +193,7 @@ export default function ResourceForm({
                     "current_rent_amount",
                     values,
                     fieldsToFill
-                  ) && user.housing_situation == "tenant" ? (
+                  ) && folder.housing_situation == "tenant" ? (
                     <Form.Item
                       label={"Montant du loyer actuel"}
                       name="current_rent_amount"

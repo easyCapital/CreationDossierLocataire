@@ -15,7 +15,7 @@ export default function SituationForm({
   arePreviousItemsFilled,
   validateMessages,
   activities,
-  user,
+  folder,
   handleCurrentStepChanged,
 }) {
   const getActivityType = (activity) => {
@@ -24,16 +24,17 @@ export default function SituationForm({
 
   const [form] = Form.useForm();
   const initFormValues = {
-    activity_id: user.activity_id,
-    company_name: user.company_name,
-    employer_firstname: user.employer_firstname,
-    employer_lastname: user.employer_lastname,
-    employer_phone: user.employer_phone,
-    employer_email: user.employer_email,
-    housing_situation: user.housing_situation,
-    owner_name: user.owner_name,
-    owner_phone: user.owner_phone,
-    owner_email: user.owner_email,
+    activity_id: folder.activity_id,
+    ...(getActivityType(form.getFieldValue("activity_id")) == "employee"
+      ? {
+          company_name: folder.company_name,
+          employer_firstname: folder.employer_firstname,
+          employer_lastname: folder.employer_lastname,
+          employer_phone: folder.employer_phone,
+          employer_email: folder.employer_email,
+        }
+      : {}),
+    housing_situation: folder.housing_situation,
   };
 
   const [isFormFinished, setIsFormFinished] = useState();
@@ -73,7 +74,7 @@ export default function SituationForm({
       [fieldName]: changedValues[fieldName],
     };
 
-    let url = "users/" + user.id;
+    let url = "folders/" + folder.slug;
 
     new HttpService().putData(data, url).then((res) => {
       if (res.success) {
@@ -115,11 +116,13 @@ export default function SituationForm({
             onValuesChange={onValuesChange}
           >
             {(values, formInstance) => {
+              console.log(values);
               return (
                 <>
                   <p className="stepTitle">
                     02 <span>Votre situation actuelle</span>
                   </p>
+                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
                   <Form.Item label={"Activité principale"} name="activity_id">
                     <Select>
                       {activities.map((activity) => {

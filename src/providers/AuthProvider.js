@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Footer from "../components/global/Footer/Footer";
 import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner";
 import { LoadProfileAction } from "../redux/actions/ProfileActions";
 
@@ -20,7 +21,7 @@ export default function AuthProvider({ children }) {
 
   const [loggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
-    if (logAction?.authResponse?.message == "succefully logged out") {
+    if (logAction?.authResponse?.message == "User succesfully logged out") {
       dispatch(LoadProfileAction());
     }
   }, [logAction]);
@@ -38,7 +39,10 @@ export default function AuthProvider({ children }) {
       }
     }
 
-    if (state.userDetails.userProfile.data !== undefined && state.userDetails.userProfile.data !== null) {
+    if (
+      state.userDetails.userProfile.data !== undefined &&
+      state.userDetails.userProfile.data !== null
+    ) {
       if (["/signin", "/signup"].includes(router.asPath)) {
         router.push("/folder");
       }
@@ -46,7 +50,10 @@ export default function AuthProvider({ children }) {
   }, [state]);
 
   return loaded ? (
-    <>{React.cloneElement(children, { loggedIn: loggedIn })}</>
+    <>
+      {React.cloneElement(children, { loggedIn, profileResponse })}
+      {["/mes-dossiers", "/"].includes(router.asPath) ? <Footer /> : null}
+    </>
   ) : (
     <LoadingSpinner />
   );

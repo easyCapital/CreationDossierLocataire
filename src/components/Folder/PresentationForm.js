@@ -12,12 +12,14 @@ import HttpService from "../../services/HttpService";
 import presentez_vous from "../../../public/forms/presentez-vous.jpg";
 import Image from "next/image";
 import SearchLocationInput from "../google/SearchLocationInput";
+import { getCookie } from "cookies-next";
 
 export default function PresentationForm({
   arePreviousItemsFilled,
   validateMessages,
-  user,
   handleCurrentStepChanged,
+  folder,
+  user,
 }) {
   const [isFormFinished, setIsFormFinished] = useState();
 
@@ -25,20 +27,20 @@ export default function PresentationForm({
 
   const [form] = Form.useForm();
   const initFormValues = {
-    civility: user.civility,
-    marital_status: user.marital_status,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    date_of_birth: user.date_of_birth,
-    tenant_email: user.tenant_email,
-    mobile: user.mobile,
-    address: user.address,
+    civility: folder.civility,
+    marital_status: folder.marital_status,
+    firstname: folder.firstname,
+    lastname: folder.lastname,
+    date_of_birth: folder.date_of_birth,
+    email: folder.email ?? getCookie("email") ?? user.email,
+    mobile: folder.mobile,
+    address: folder.address,
   };
 
   const checkIfFormIsFinished = () => {
     setIsFormFinished(
-      form.getFieldValue("mobile") &&
-        arePreviousItemsFilled("mobile", form.getFieldsValue())
+      form.getFieldValue("address") &&
+        arePreviousItemsFilled("address", form.getFieldsValue())
     );
   };
 
@@ -51,7 +53,7 @@ export default function PresentationForm({
       [fieldName]: changedValues[fieldName],
     };
 
-    let url = "users/" + user.id;
+    let url = "folders/" + folder.slug;
 
     new HttpService().putData(data, url).then((res) => {
       if (res.success) {
@@ -64,6 +66,8 @@ export default function PresentationForm({
   useEffect(() => {
     checkIfFormIsFinished();
   }, []);
+
+  console.log(getCookie("email"));
 
   return (
     <FormWrapper>
@@ -82,6 +86,9 @@ export default function PresentationForm({
                 <>
                   <p className="stepTitle">
                     01 <span>Présentez-vous !</span>
+                  </p>
+                  <p className="liveSave">
+                    Toutes vos données sont sauvegardées à chaque modification !
                   </p>
                   <Form.Item label="Civilité" name="civility">
                     <Radio.Group buttonStyle="solid">
@@ -148,17 +155,17 @@ export default function PresentationForm({
                       <Input type={"date"} />
                     </Form.Item>
                   ) : null}
-                  {arePreviousItemsFilled("tenant_email", values) ? (
+                  {arePreviousItemsFilled("email", values) ? (
                     <Form.Item
                       label={"Adresse e-mail"}
-                      name="tenant_email"
+                      name="email"
                       rules={[{ type: "email" }]}
                     >
                       <Input />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled("mobile", values) &&
-                  validator.isEmail(values.tenant_email) ? (
+                  validator.isEmail(values.email) ? (
                     <Form.Item label={"Mobile"} name="mobile">
                       <Input />
                     </Form.Item>

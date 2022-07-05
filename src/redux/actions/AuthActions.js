@@ -35,7 +35,7 @@ export const LoginAction = (credentials, router) => {
         if (res.hasOwnProperty("success") && res.success === true) {
           localStorage.setItem("user-token", res.data.token);
           dispatch({ type: ActionTypes.LOGIN_SUCCESS });
-          router.push("/");
+          router.push("/mes-dossiers");
         } else if (res.hasOwnProperty("success") && res.success === false) {
           dispatch({ type: ActionTypes.LOGIN_ERROR, res });
         }

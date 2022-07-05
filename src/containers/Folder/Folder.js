@@ -34,16 +34,12 @@ export default function Folder({ activities, guarantees }) {
   const router = useRouter();
   const folder = user?.folders.find((e) => e.slug === router.query.slug);
 
-  const [currentStep, setCurrentStep] = useState();
+  const [currentStep, setCurrentStep] = useState(null);
   useEffect(() => {
-    if (folder) {
+    if (folder && !currentStep) {
       setCurrentStep(parseInt(folder.current_step));
     }
   }, [user]);
-
-  useEffect(() => {
-    mutate();
-  }, [currentStep]);
 
   const handleCurrentStepChanged = (isNext) => {
     const newStep = currentStep + (isNext ? 1 : -1);
@@ -53,6 +49,7 @@ export default function Folder({ activities, guarantees }) {
     };
     let url = "folders/" + folder.slug;
     new HttpService().putData(data, url);
+    mutate();
   };
 
   const arePreviousItemsFilled = (name, values, fieldsToFill) => {
@@ -81,20 +78,27 @@ export default function Folder({ activities, guarantees }) {
   const formsProps = {
     arePreviousItemsFilled,
     validateMessages,
-    user,
     folder,
     activities,
     guarantees,
     handleCurrentStepChanged,
   };
 
-  return (
+  const [mapLoaded, setMapLoaded] = useState(false);
+
+  useEffect(() => {
+    if (window.google) {
+      setMapLoaded(true);
+    }
+  }, [window]);
+
+  return mapLoaded ? (
     <FolderWrapper>
-      {currentStep == 1 && <PresentationForm {...formsProps} />}
+      {currentStep == 1 && <PresentationForm {...formsProps} user={user}/>}
       {currentStep == 2 && <SituationForm {...formsProps} />}
       {currentStep == 3 && <ResourceForm {...formsProps} />}
       {currentStep == 4 && <GarantForm {...formsProps} />}
       {currentStep == 5 && <PiecesForm {...formsProps} />}
     </FolderWrapper>
-  );
+  ) : null;
 }

@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import "aos/dist/aos.css";
 import { Form, Badge, Input, Button, Radio, Select } from "antd";
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
-import InputComponant from "../Inputs/InputComponant";
 import { setCookies } from "cookies-next";
 import HttpService from "../../../services/HttpService";
 const { Option } = Select;
@@ -226,7 +223,7 @@ export default function FirstForm({ data, setCurrentData }) {
         >
           <Radio.Button value="owner">Propriétaire</Radio.Button>
           <Radio.Button value="tenant">Locataire</Radio.Button>
-          <Radio.Button value="free accommodation">
+          <Radio.Button value="free_accommodation">
             Logé à titre gratuit
           </Radio.Button>
         </Radio.Group>

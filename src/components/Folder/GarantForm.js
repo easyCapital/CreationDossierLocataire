@@ -29,14 +29,14 @@ import SearchLocationInput from "../google/SearchLocationInput";
 export default function GarantForm({
   handleCurrentStepChanged,
   validateMessages,
-  user,
+  folder,
   guarantees,
   activities
 }) {
   const [form] = Form.useForm();
   const initFormValues = {
-    guarantees: [...(user.guarantees ?? [])].map((e) => e.id),
-    guarants: [...(user.guarants ?? [{}])],
+    guarantees: [...(folder.guarantees ?? [])].map((e) => e.id),
+    guarants: [...(folder.guarants.length ? folder.guarants : [{}])],
   };
   useEffect(() => {
     form.setFieldsValue(initFormValues);
@@ -51,7 +51,7 @@ export default function GarantForm({
   };
 
   const isEligibleForVisale = () => {
-    const diff = moment().diff(moment(user.date_of_birth), "years");
+    const diff = moment().diff(moment(folder.date_of_birth), "years");
     return diff >= 18 && diff <= 30;
   };
 
@@ -69,7 +69,7 @@ export default function GarantForm({
       };
     }
 
-    let url = "users/" + user.id;
+    let url = "folders/" + folder.slug;
     new HttpService().putData(data, url).then((res) => {
       if (res.success) {
       } else {
@@ -77,8 +77,6 @@ export default function GarantForm({
       }
     });
   };
-
-  console.log(form.getFieldValue());
 
   return (
     <FormWrapper>
@@ -113,6 +111,7 @@ export default function GarantForm({
                   <p className="stepTitle">
                     04 <span>Garant(s) </span>
                   </p>
+                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
                   <div className="info">
                     <FontAwesomeIcon icon={faCloudSun} />
                     <div>
@@ -123,7 +122,7 @@ export default function GarantForm({
                         Selon l’agence immobilière, on peut vous demander une ou
                         plusieurs garanties. Afin de maximiser vos chances
                         d’être selectionné
-                        {user.civility == "Mme" ? "e" : ""}, nous vous
+                        {folder.civility == "Mme" ? "e" : ""}, nous vous
                         conseillons de remplir le maximum d’informations.
                       </p>
                     </div>

@@ -2,7 +2,6 @@ import { HomeWrapper } from "./Home.style";
 import { useState, useEffect } from "react";
 import { Input, Button, Spin, Space, Divider, Modal, Card } from "antd";
 import { useRouter } from "next/router";
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { RightOutlined } from "@ant-design/icons";
 import { setCookies, getCookies } from "cookies-next";
 import HttpService from "../../services/HttpService";
@@ -10,70 +9,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
-export default function Home({ loggedIn }) {
-  const [loaded, setLoaded] = useState(true);
+export default function Home({ profileResponse }) {
   const router = useRouter();
   const [hasAccount, setHasAccount] = useState(false);
+  const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.userDetails.userProfile);
-
-  useEffect(() => {
-    setLoaded(loggedIn ? true : false);
-    console.log(loggedIn);
-    console.log(loaded);
-  }, [loggedIn]);
 
   useEffect(() => {
     dispatch(LoadProfileAction());
   }, []);
 
-  function setMail(e) {
-    setCookies("mail", e);
-  }
-
   async function checkIfUserHasAccount() {
-    const http = new HttpService();
-    const url = "users/userHasAccount";
-    const data = {
-      email: String(getCookies("mail")?.mail)
-        .replace("%40", "@")
-        .replace("undefined", ""),
-    };
-    http
-      .postData(data, url)
-      .then((data) => {
-        setHasAccount(data["data"]["hasAccount"]);
-        if (data["data"]["hasAccount"]) {
-          router.push("/signin");
-          return;
-        }
-        router.push("/signup");
-      })
-      .catch((error) => {});
-    return hasAccount;
-  }
+    // const http = new HttpService();
+    // const url = "users/userHasAccount";
+    // const data = {
+    //   email: String(getCookies("mail")?.mail)
+    //     .replace("%40", "@")
+    //     .replace("undefined", ""),
+    // };
+    // http
+    //   .postData(data, url)
+    //   .then((data) => {
+    //     setHasAccount(data["data"]["hasAccount"]);
+    //     if (data["data"]["hasAccount"]) {
+    //       router.push("/signin");
+    //       return;
+    //     }
+    //     router.push("/signup");
+    //   })
+    //   .catch((error) => {});
+    // return hasAccount;
 
-  function getUserFolder(user, slug) {
-    setCookies("slug", slug);
-    return (
-      <Card
-        title={user?.firstname + " " + user?.lastname}
-        extra={
-          <Button
-            onClick={() => router.push("/folder/" + slug)}
-            style={{ color: "black", fontSize: 13 }}
-          >
-            Editer
-          </Button>
-        }
-        style={{ width: 300, margin: 10 }}
-      >
-        <p>Prenom - {user?.firstname}</p>
-        <p>Nom - {user?.lastname}</p>
-        <p>Mail - {user?.email}</p>
-      </Card>
-    );
+    const http = new HttpService();
+    setCookies("email", email);
+    http.postData(null, "folders").then((response) => {
+      router.push("/folder/" + response.data.folder.slug);
+    });
   }
 
   return (
@@ -85,40 +58,34 @@ export default function Home({ loggedIn }) {
           <span className="blue">Partagez le en toute sécurité</span>
         </h1>
         <strong>
-          Passloc vous permet de transmettre à n'importe quel propriétaire ou
-          <br />
-          agence immobilière votre dossier de candidature propre et conforme.
+          Passloc vous permet de transmettre rapidement à n'importe quel
+          propriétaire ou <br /> agence immobilière votre dossier de candidature
+          propre et conforme.
         </strong>
-        {!loggedIn && (
+        {profileResponse?.data?.user.folders.length == 3 ? (
+          <div>
+            <Button type="primary" shape={"round"}>
+              <Link href="/mes-dossiers">Accéder à mes dossiers</Link>
+            </Button>
+          </div>
+        ) : (
           <div>
             <Input
               onChange={(e) => {
-                setMail(e.target.value);
+                setEmail(e.target.value);
               }}
-              placeholder="Votre mail"
+              placeholder="Votre adresse e-mail"
+              value={email}
             />
             <Button
               shape="round"
               type="primary"
-              icon={<RightOutlined />}
-              size={"large"}
-              onClick={() => {
-                checkIfUserHasAccount();
-              }}
+              onClick={checkIfUserHasAccount}
             >
               Commencer
             </Button>
           </div>
         )}
-        {loaded &&
-          loggedIn &&
-          profile?.data?.user?.folders?.map((folder) => {
-            return (
-              <div className="inlineblock">
-                {getUserFolder(folder.users[1], folder.slug)}
-              </div>
-            );
-          })}
         <FontAwesomeIcon icon={faAngleDown} className="arrow" />
       </div>
 
@@ -170,20 +137,13 @@ export default function Home({ loggedIn }) {
       <Divider />
       <div className="partenaires">
         <h2>Nos partenaires</h2>
-        <img src={"/logo_wilok.png"} alt="logo wilok" width="500" />
-      </div>
-
-      <Divider />
-
-      <div className="footer">
-        <div className="column">
-          <img src="https://picsum.photos/100/100" />
-        </div>
-        <div className="column">
-          <img src="https://picsum.photos/100/100" />
-        </div>
-        <div className="column">
-          <img src="https://picsum.photos/100/100" />
+        <div>
+          <img src={"/logo_wilok.png"} alt="logo wilok" width="400" />
+          <img
+            src={"/easycapital_logo.svg"}
+            alt="logo easycapital"
+            width="600"
+          />
         </div>
       </div>
     </HomeWrapper>

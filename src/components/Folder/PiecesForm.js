@@ -24,14 +24,13 @@ import pieces_justificatives from "../../../public/forms/pieces_justificatives.j
 import Image from "next/image";
 import Confetti from "react-confetti";
 
-export default function PiecesForm({ user, handleCurrentStepChanged, folder }) {
+export default function PiecesForm({ folder, handleCurrentStepChanged }) {
   const [form] = Form.useForm();
   const ref = useRef(null);
   const { TabPane } = Tabs;
-  console.log(user);
 
   const fieldsToFill = [];
-  [user, ...user.guarants].map((person, index) => {
+  [folder, ...folder.guarants].map((person, index) => {
     fieldsToFill.push([
       "valid_identity_piece",
       ...(index || person.is_fiscally_attached == 0 ? ["tax_notice"] : []),
@@ -74,7 +73,7 @@ export default function PiecesForm({ user, handleCurrentStepChanged, folder }) {
     initFormValues.persons[index] = {};
     person.forEach((e) => {
       initFormValues.persons[index][e] = {
-        fileList: (index ? user.guarants[index - 1] : user).files
+        fileList: (index ? folder.guarants[index - 1] : folder).files
           .filter((file) => file.type == e)
           .map((file) => {
             return {
@@ -194,13 +193,13 @@ export default function PiecesForm({ user, handleCurrentStepChanged, folder }) {
 
   function customRequest(options, type, index) {
     const { onSuccess, onError, file } = options;
-    const person = index ? user.guarants[index - 1] : user;
+    const person = index ? folder.guarants[index - 1] : folder;
     let data = new FormData();
     data.append("file", options.file);
     data.append("fileable_id", person.id);
     data.append(
       "fileable_type",
-      "App\\Models\\" + (index ? "Guarant" : "User")
+      "App\\Models\\" + (index ? "Guarant" : "Folder")
     );
     data.append("type", type);
 
@@ -245,8 +244,6 @@ export default function PiecesForm({ user, handleCurrentStepChanged, folder }) {
         }
       });
   }
-  console.log(form.getFieldsValue());
-
   const handleGeneratePdf = () => {
     window.open(
       "https://app.passloc.fr/api/generatePdf/" + folder.slug,
@@ -330,6 +327,7 @@ export default function PiecesForm({ user, handleCurrentStepChanged, folder }) {
                   <p className="stepTitle">
                     05 <span>Pièces justificatives</span>
                   </p>
+                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
                   <Form.List name="persons">
                     {(fields) => (
                       <Tabs>
@@ -346,7 +344,7 @@ export default function PiecesForm({ user, handleCurrentStepChanged, folder }) {
                                   ).label
                                 }
                                 name={e}
-                                key={"form_item_" + index}
+                                key={"form_item_" + index + "_" + i}
                               >
                                 <Upload
                                   {...uploadprops}

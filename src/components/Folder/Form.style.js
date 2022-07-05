@@ -55,6 +55,9 @@ export const FormWrapper = styled.div`
             color: ${blue};
           }
         }
+        .liveSave {
+          font-style: italic;
+        }
         .ant-radio-group {
           display: flex;
           .ant-radio-button-wrapper {

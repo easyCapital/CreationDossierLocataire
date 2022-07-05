@@ -32,8 +32,8 @@ export const HomeWrapper = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 
     h1 {
       margin: 0px;
@@ -41,7 +41,7 @@ export const HomeWrapper = styled.div`
 
     strong {
       margin: 50px 0px;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     > div {
@@ -49,13 +49,13 @@ export const HomeWrapper = styled.div`
       align-items: center;
       .ant-input {
         width: 400px;
-        height: 60px;
+        height: 50px;
       }
       .ant-btn {
         font-size: 18px;
-        padding: 30px 22px;
-        background: ${blue};
+        height: 50px;
         margin-left: 20px;
+        font-weight: bold;
       }
     }
 
@@ -78,10 +78,15 @@ export const HomeWrapper = styled.div`
         align-text: center;
         padding: 0px 100px;
         width: 500px;
+
         h3 {
           margin-top: 40px;
           color: ${blue};
-          font-size: 30px;
+          font-size: 32px;
+        }
+
+        p {
+          font-size: 18px;
         }
       }
     }
@@ -92,12 +97,11 @@ export const HomeWrapper = styled.div`
     h2 {
       margin-bottom: 50px;
     }
-  }
-
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 50px;
+    > div {
+      img {
+        margin: 0px 100px;
+      }
+    }
   }
 
   @media screen and (max-width: 1500px) {
@@ -190,12 +194,6 @@ export const HomeWrapper = styled.div`
     > div {
       width: 50%;
     }
-  }
-
-  .inlineblock {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 
   @-webkit-keyframes move_eye {

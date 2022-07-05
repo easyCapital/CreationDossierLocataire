@@ -14,28 +14,25 @@ import moment from "moment";
 import "moment/locale/fr";
 config.autoAddCss = false;
 require("../styles/variables.less");
+moment.locale("fr");
 
 function MyApp({ Component, pageProps }) {
-  const site = "https://espace-client-easycapital.vercel.app";
-  const router = useRouter();
-  const canonicalURL = site + router.asPath;
   const store = useStore(pageProps.initialReduxState);
-  moment.locale("fr");
 
   return (
     <Provider store={store}>
       <Navbar />
       <Head>
-        <title>Passloc</title>
+        {/* <title>Passloc</title>
         <meta
           name="description"
-          content="Le seul outil de gestion de patrimoistate.userDetails.userProfile.data === nullne accessible qui compare toutes les solutions d’investissements immobilières ou financières afin d’optimiser votre fiscalité."
+          content="Le seul outil de gestion de patrimoine accessible qui compare toutes les solutions d’investissements immobilières ou financières afin d’optimiser votre fiscalité."
         />
         <link rel="canonical" href={canonicalURL} />
         <link
           rel="icon"
           href="https://res.cloudinary.com/easycapital/image/upload/v1623230243/espace_client/zifepqxqhcunrtosgv0j.ico"
-        />
+        /> */}
       </Head>
       <AuthProvider>
         <Component {...pageProps} />

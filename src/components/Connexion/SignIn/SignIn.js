@@ -1,41 +1,40 @@
 import { useEffect, useState } from "react";
-import "aos/dist/aos.css";
 import { Form, Input, Button, Modal, Alert } from "antd";
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
 import { useRouter } from "next/router";
 import Connexion from "../../../containers/Connexion/Connexion";
 import { LoginAction } from "../../../redux/actions/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [form] = Form.useForm();
   const selector = useSelector((state) => state.userAuth);
   const router = useRouter();
   const dispatch = useDispatch();
-const [error, setError] = useState("");
-useEffect(() => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
     if (selector?.authResponse?.message == "Unauthorized.") {
       setError(
-        "L'e-mail et le mot de passe que vous avez entré ne correspondent pas."
+        "L'e-mail et le mot de passe que vous avez renseignés ne correspondent pas."
       );
+      setIsSubmitting(false);
     }
   }, [selector]);
+
   const handleUserLogin = () => {
-    const fields = {
-      email: email,
-      password: password,
-    };
-    dispatch(LoginAction(fields, router))
+    setIsSubmitting(true);
+    dispatch(LoginAction(form.getFieldsValue(), router));
   };
 
   return (
     <Connexion>
       <Form
+        form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserLogin}
+        initialValues={{ email: "", password: "" }}
       >
         <Form.Item
           label="E-mail"
@@ -51,16 +50,7 @@ useEffect(() => {
             },
           ]}
         >
-          <Input
-            id={"email"}
-            name="email"
-            type="text"
-            value={email}
-            placeholder="exemple@exemple.com"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
+          <Input name="email" type="text" placeholder="exemple@exemple.com" />
         </Form.Item>
         <Form.Item
           label="Mot de passe"
@@ -72,29 +62,17 @@ useEffect(() => {
             },
           ]}
         >
-          <Input
-            id={"password"}
-            name="password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
+          <Input name="password" type="password" />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="success" htmlType="submit">
+        <div className="buttons">
+          <Button type="primary" htmlType="submit" loading={isSubmitting}>
             Me connecter
           </Button>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="primary">
+          <Button>
             <a href="/signup">Pas encore de compte</a>
           </Button>
-        </Form.Item>
-        {error && (
-        <Alert description={error} type="error" />
-      )}
+        </div>
+        {error && <Alert description={error} type="error" />}
       </Form>
     </Connexion>
   );

@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
-import "aos/dist/aos.css";
+import { useState } from "react";
 import { Form, Input, Button, Modal, message } from "antd";
-import "react-inputs-validation/lib/react-inputs-validation.min.css";
-import { useDispatch, useSelector } from "react-redux";
-import { RegisterAction } from "../../../redux/actions/AuthActions";
 import { useRouter } from "next/router";
 import HttpService from "../../../services/HttpService";
-import { setCookies, getCookies } from "cookies-next";
 import Connexion from "../../../containers/Connexion/Connexion";
 
 export default function SignUp() {
@@ -15,15 +10,6 @@ export default function SignUp() {
   const [password_confirmation, setConfirmPassword] = useState("");
 
   const router = useRouter();
-  const [visible, setVisible] = useState(false);
-
-
-  function error() {
-    Modal.error({
-      title: "Erreur d'enregistrement",
-      content: 'Le mail est déjà utilisé',
-    });
-  }
 
   const registerFromEmail = (credentials) => {
     const http = new HttpService();
@@ -36,7 +22,7 @@ export default function SignUp() {
           router.push("/signin");
           return;
         }
-        message.error("Mail ou mot de passe incorrect !")
+        message.error("Mail ou mot de passe incorrect !");
 
         return data;
       })
@@ -60,7 +46,6 @@ export default function SignUp() {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserRegister}
-        
       >
         <Form.Item
           label="E-mail"
@@ -147,8 +132,8 @@ export default function SignUp() {
           />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="success" htmlType="submit">
-            M'enregistrer
+          <Button type="primary" htmlType="submit">
+            Créer mon compte
           </Button>
         </Form.Item>
         <Form.Item

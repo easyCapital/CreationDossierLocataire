@@ -1,143 +1,36 @@
 import styled from "styled-components";
 
-// black : #101820;
-//jaune : #FFA400;
-//vert : #2CC84D;
-//bleu : #4ca6e2;
-
 export const HeaderWrapper = styled.div`
-
-.barre{
-  width: 100%;
-  
-
-.ubar{
   display: flex;
-  width: 100%;
-  height: 80px;
   justify-content: space-between;
-  .logoImage{
-    margin-top: 10px;
-  }
-  .btn_login button{
-    background-color: #005fc3;
-  }
-}
-}
-
-
-  display: flex;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 10%;
   position: sticky;
-  padding-left: 10%;
-  padding-right: 5%;
-  position: sticky;
+  height: 80px;
 
-
-  .barre {
+  .left {
     display: flex;
-    .ant-btn {
-      margin-left: 30px;
-      font-size: 17px;
-      font-weight: bold;
+    align-items: center;
 
-      &:hover {
-        font-style: italic;
-      }
-      a {
-        display: flex;
-      }
-      .numberCircle {
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        color: #ffa400;
-        border-color: #ffa400;
-        background: #fff;
-        border: 2px solid;
-        margin-left: 10px;
-        text-align: center;
-        font: 20px Arial, sans-serif;
-      }
-
-      svg {
-        vertical-align: top;
-        margin-left: 10px;
-        padding-top: 2px;
-        height: 25px;
-        width: 25px;
-        color: #ffa400;
-      }
+    .logoImage:hover {
+      cursor: pointer;
+    }
+    .btn_login button {
+      background-color: #005fc3;
     }
   }
-
-  .push {
-    display: flex;
-    margin-right: 10%;
-    justify-content: flex-end;
-    .Button {
-      border: none;
-      border-radius: 7px;
-      font-size: 17px;
-    }
-    .profilPic {
-      margin-left: 20px;
-      height: 50%;
-      border-radius: 30px;
-    }
-    .profil {
-      margin-right: 20px;
-      border-radius: 30px;
-    }
-  }
-
-  .button {
-    padding: 0;
+  .simple {
+    padding: 0px;
+    font-weight: bold;
+    margin-left: 20px;
     border: none;
     background: none;
     color: black;
-    ${"" /* box-shadow: 0px 2px 2px #f5f5f5; */}
-
     &:hover {
-      border-radius: 0px;
+      font-style: italic;
       border-bottom: solid;
     }
   }
 
-  .logoImage {
-    position: relative;
-    bottom: 15px;
-    width: 220px;
-    padding-right: 20px;
-    margin-bottom: 50px;
-    margin-left: 50px;
-  }
-  .logoImage:hover {
-    cursor: pointer;
-  }
-
-  .bleu {
-    color: white;
-    background-color: #4ca6e2;
-    width: 250px;
-    margin-left: 10%;
-    border-radius: 20px;
-    border-width: 0px;
-  }
-
-  #btn1 {
-    font-weight: bold;
-  }
-
-  #logoImage {
-    margin-right: 50px;
-    width: 150px;
-  }
-  .test {
-    vertical-align: bottom;
-  }
-  //step
   .logoImage_start {
     width: 220px;
     margin-left: -16%;
@@ -146,64 +39,16 @@ export const HeaderWrapper = styled.div`
       cursor: pointer;
     }
   }
-  .revenir {
-    margin-left: 55%;
-    border: 0px;
-
-    svg {
-      width: 50px;
-      height: 20px;
-      flex: 1;
-    }
-    .ligne {
-      display: flex;
-    }
-    span {
-      flex: 3;
-    }
-    &:hover {
-      font-weight: normal;
-    }
-  }
-  .besoin {
-    margin-left: 5%;
-    border: 0px;
-    svg {
-      width: 50px;
-      height: 20px;
-      flex: 1;
-    }
-    .ligne {
-      display: flex;
-    }
-    span {
-      flex: 3;
-    }
-    &:hover {
-      font-weight: normal;
-    }
-  }
-  //login
-  .modal-body {
-    display: flex;
-    .gauche {
-      flex: 2;
-    }
-    .droite {
-      flex: 1;
-    }
-  }
-
-  //version mobile
+  
   @media (max-width: 800px) {
     padding-left: 0px;
     padding-right: 0px;
     padding-top: 0px;
     padding-bottom: 0px;
-    .am-navbar{
-      background-color:unset;
-      svg{
-        color:black;
+    .am-navbar {
+      background-color: unset;
+      svg {
+        color: black;
       }
     }
 
@@ -295,5 +140,4 @@ export const HeaderWrapper = styled.div`
       }
     }
   }
-
 `;

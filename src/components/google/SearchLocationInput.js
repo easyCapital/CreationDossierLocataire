@@ -3,25 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 let autoComplete;
 
-const loadScript = (url, callback) => {
-  let script = document.createElement("script");
-  script.type = "text/javascript";
-
-  if (script.readyState) {
-    script.onreadystatechange = function () {
-      if (script.readyState === "loaded" || script.readyState === "complete") {
-        script.onreadystatechange = null;
-        callback();
-      }
-    };
-  } else {
-    script.onload = () => callback();
-  }
-
-  script.src = url;
-  document.getElementsByTagName("head")[0].appendChild(script);
-};
-
 function handleScriptLoad(updateQuery, autoCompleteRef, address, setAddress) {
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current.input,
@@ -49,11 +30,7 @@ function SearchLocationInput({ value = null, onChange, address, setAddress }) {
   };
 
   useEffect(() => {
-    loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=AIzaSyClOb8cPlGvXFUnQglgTLo-U82dIRxP-TA&libraries=places`,
-      () =>
-        handleScriptLoad(triggerChange, autoCompleteRef, address, setAddress)
-    );
+    handleScriptLoad(triggerChange, autoCompleteRef, address, setAddress);
   }, []);
 
   return (
