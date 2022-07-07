@@ -283,7 +283,7 @@ export default function GarantForm({
                                 >
                                   <InputNumber pattern="\d*" />
                                 </Form.Item>
-                                <input type="text" pattern="\d*"></input>
+                                <input type="number" pattern="[0-9]*" inputmode="numeric"></input>
                                 <Space align="baseline">
                                   {[2, 1].map((e) => {
                                     const date = moment()
