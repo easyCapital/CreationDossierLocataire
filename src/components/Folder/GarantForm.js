@@ -281,7 +281,7 @@ export default function GarantForm({
                                   }
                                   name={[field.name, "monthly_income"]}
                                 >
-                                  <InputNumber />
+                                  <InputNumber pattern="\d*" />
                                 </Form.Item>
                                 <Space align="baseline">
                                   {[2, 1].map((e) => {
@@ -298,7 +298,7 @@ export default function GarantForm({
                                         ]}
                                         key={e}
                                       >
-                                        <InputNumber step={1} />
+                                        <InputNumber pattern="\d*" step={1} />
                                       </Form.Item>
                                     );
                                   })}
@@ -328,7 +328,7 @@ export default function GarantForm({
                                     label="Montant du loyer"
                                     name={[field.name, "rent_amount"]}
                                   >
-                                    <InputNumber />
+                                    <InputNumber pattern="\d*" />
                                   </Form.Item>
                                 )}
                               </TabPane>
