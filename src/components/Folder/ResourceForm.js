@@ -168,7 +168,7 @@ export default function ResourceForm({
                               name={"net_monthly_salary_before_deduction_" + e}
                               key={"date" + e}
                             >
-                              <InputNumber pattern="\d*" />
+                              <InputNumber type="text" pattern="\d*" />
                             </Form.Item>
                           );
                         })}
@@ -226,7 +226,7 @@ export default function ResourceForm({
                               name={"annual_income_tax_" + e}
                               key={e}
                             >
-                              <InputNumber pattern="\d*" />
+                              <InputNumber type="text" pattern="\d*" />
                             </Form.Item>
                           );
                         })}
@@ -256,7 +256,7 @@ export default function ResourceForm({
                       }
                       name="other_monthly_incomes"
                     >
-                      <InputNumber pattern="\d*" />
+                      <InputNumber type="text" pattern="\d*" />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled(
@@ -268,7 +268,7 @@ export default function ResourceForm({
                       label={"Montant du loyer actuel"}
                       name="current_rent_amount"
                     >
-                      <InputNumber pattern="\d*" />
+                      <InputNumber type="text" pattern="\d*" />
                     </Form.Item>
                   ) : null}
                 </>
