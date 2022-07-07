@@ -65,8 +65,10 @@ export default function GarantForm({
 
     let data = null;
     if (fieldName == "guarants") {
+      console.log(changedValues, allValues);
+      console.log(form.getFieldValue("guarants"));
       data = {
-        guarants: changedValues.guarants.map((e) => e ?? {}),
+        guarants: form.getFieldValue("guarants").map((e) => e ?? {}),
       };
     } else {
       data = {
@@ -281,6 +283,26 @@ export default function GarantForm({
                                 >
                                   <InputNumber />
                                 </Form.Item>
+                                <Space align="baseline">
+                                  {[2, 1].map((e) => {
+                                    const date = moment()
+                                      .subtract(e, "year")
+                                      .startOf("year")
+                                      .format("YYYY");
+                                    return (
+                                      <Form.Item
+                                        label={date}
+                                        name={[
+                                          field.name,
+                                          "annual_income_tax_" + e,
+                                        ]}
+                                        key={e}
+                                      >
+                                        <InputNumber step={1} />
+                                      </Form.Item>
+                                    );
+                                  })}
+                                </Space>
                                 <Form.Item
                                   label="Votre garant est"
                                   name={[field.name, "housing_situation"]}

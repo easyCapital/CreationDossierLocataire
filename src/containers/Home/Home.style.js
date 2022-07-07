@@ -104,16 +104,27 @@ export const HomeWrapper = styled.div`
   }
 
   @media screen and (max-width: 1024px) {
-    padding: 0px 5%;
+    padding: 100px 5%;
+    .main {
+      justify-content: flex-start;
+    }
     .arrow {
       top: 90vh !important;
     }
     h1 {
-      font-size: 36px;
+      font-size: 32px;
+      span {
+        font-size: 20px;
+      }
     }
 
     h2 {
       font-size: 30px;
+    }
+
+    strong {
+      text-align: center;
+      margin-top: 30px !important;
     }
 
     form {

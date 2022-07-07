@@ -5,11 +5,12 @@ import { blue } from "../../styles/variables.style";
 const flipAnimation = keyframes`${rollIn}`;
 
 export const FormWrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   > div {
+    height: 100%;
     flex: 1;
     display: flex;
     justify-content: center;
@@ -154,7 +155,7 @@ export const FormWrapper = styled.div`
 
   @media (max-width: 1024px) {
     padding: 0px !important;
-    height: 180vh;
+    padding-bottom: 500px !important;
     &.reverse {
       .content {
         flex-direction: column-reverse;
@@ -169,11 +170,17 @@ export const FormWrapper = styled.div`
         &.picture {
           margin-top: 70px;
           max-height: 100px;
+          position: relative !important;
           > span {
             width: 100%;
-            height: 100%;
+            max-height: 100% !important;
             position: relative !important;
+            > span {
+              min-width: 100%;
+              max-height: 100%;
+            }
             img {
+              height: 100px !important;
               &#presentez-vous,
               &#votre_situation_actuelle {
                 object-position: 0px -200px !important;
@@ -188,10 +195,6 @@ export const FormWrapper = styled.div`
                 object-position: 0px -300px !important;
               }
             }
-            > span {
-              min-width: 100%;
-              max-height: 100%;
-            }
           }
         }
       }
@@ -199,11 +202,17 @@ export const FormWrapper = styled.div`
     form {
       min-width: 90%;
     }
+    .ant-space {
+      flex-direction: column;
+    }
     .arrows {
       z-index: 1;
       svg {
         bottom: 20px;
         position: fixed;
+        &.disabled {
+          color: grey;
+        }
       }
       &.left {
         svg {

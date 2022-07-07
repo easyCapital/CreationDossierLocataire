@@ -86,8 +86,6 @@ export default function SituationForm({
     window.scrollTo(0, 0);
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <FormWrapper>
       <div className="arrows left">
@@ -126,23 +124,7 @@ export default function SituationForm({
                     Toutes vos données sont sauvegardées à chaque modification !
                   </p>
                   <Form.Item label={"Activité principale"} name="activity_id">
-                    <Select
-                      {...(isDesktop
-                        ? {}
-                        : {
-                            onChange: () => setIsOpen(false),
-                            onDropdownVisibleChange: (open) => setIsOpen(open),
-                            dropdownRender: (origin) => (
-                              <Modal
-                                closable={false}
-                                visible={isOpen}
-                                footer={null}
-                              >
-                                {origin}
-                              </Modal>
-                            ),
-                          })}
-                    >
+                    <Select>
                       {activities.map((activity) => {
                         return (
                           <Option
@@ -223,10 +205,13 @@ export default function SituationForm({
         </div>
       </div>
       <div className="arrows right">
-        {isFormFinished && (
+        {(isFormFinished || !isDesktop) && (
           <FontAwesomeIcon
             icon={faChevronCircleRight}
-            onClick={() => handleCurrentStepChanged(true)}
+            onClick={
+              isFormFinished ? () => handleCurrentStepChanged(true) : null
+            }
+            className={isFormFinished ? "" : "disabled"}
           />
         )}
       </div>

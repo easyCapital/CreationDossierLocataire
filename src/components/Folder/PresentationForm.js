@@ -3,11 +3,7 @@ import { FormWrapper } from "./Form.style";
 import validator from "validator";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMars,
-  faVenus,
-  faChevronCircleRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronCircleRight } from "@fortawesome/free-solid-svg-icons";
 import HttpService from "../../services/HttpService";
 import presentez_vous from "../../../public/forms/presentez-vous.jpg";
 import Image from "next/image";
@@ -19,6 +15,7 @@ export default function PresentationForm({
   handleCurrentStepChanged,
   folder,
   user,
+  isDesktop,
 }) {
   const [isFormFinished, setIsFormFinished] = useState();
 
@@ -192,10 +189,13 @@ export default function PresentationForm({
         </div>
       </div>
       <div className="arrows right">
-        {isFormFinished && (
+        {(isFormFinished || !isDesktop) && (
           <FontAwesomeIcon
             icon={faChevronCircleRight}
-            onClick={() => handleCurrentStepChanged(true)}
+            onClick={
+              isFormFinished ? () => handleCurrentStepChanged(true) : null
+            }
+            className={isFormFinished ? "" : "disabled"}
           />
         )}
       </div>

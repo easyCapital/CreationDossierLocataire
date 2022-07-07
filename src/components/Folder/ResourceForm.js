@@ -45,10 +45,7 @@ export default function ResourceForm({
     current_rent_amount: folder.current_rent_amount,
   };
   const [isFormFinished, setIsFormFinished] = useState();
-  const [fieldsToFill, setFieldsToFill] = useState(
-    []
-    // Object.keys(initFormValues ?? {})
-  );
+  const [fieldsToFill, setFieldsToFill] = useState([]);
 
   useEffect(() => {
     let ok = true;
@@ -270,10 +267,13 @@ export default function ResourceForm({
         </div>
       </div>
       <div className="arrows right">
-        {isFormFinished && (
+        {(isFormFinished || !isDesktop) && (
           <FontAwesomeIcon
             icon={faChevronCircleRight}
-            onClick={() => handleCurrentStepChanged(true)}
+            onClick={
+              isFormFinished ? () => handleCurrentStepChanged(true) : null
+            }
+            className={isFormFinished ? "" : "disabled"}
           />
         )}
       </div>

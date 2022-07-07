@@ -15,26 +15,32 @@ import "moment/locale/fr";
 config.autoAddCss = false;
 require("../styles/variables.less");
 moment.locale("fr");
-import NextNProgress from 'nextjs-progressbar';
+import NextNProgress from "nextjs-progressbar";
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
+  const router = useRouter();
 
   return (
     <Provider store={store}>
       <Navbar />
       <NextNProgress />
       <Head>
-        {/* <title>Passloc</title>
+        <title>Passloc</title>
         <meta
           name="description"
-          content="Le seul outil de gestion de patrimoine accessible qui compare toutes les solutions d’investissements immobilières ou financières afin d’optimiser votre fiscalité."
+          content="Créez votre dossier locataire propre et conforme en ligne pour trouver rapidement votre logement."
         />
-        <link rel="canonical" href={canonicalURL} />
         <link
-          rel="icon"
-          href="https://res.cloudinary.com/easycapital/image/upload/v1623230243/espace_client/zifepqxqhcunrtosgv0j.ico"
-        /> */}
+          rel="canonical"
+          href={
+            (
+              `https://www.passloc.fr` +
+              (router.asPath === "/" ? "" : router.asPath)
+            ).split("?")[0]
+          }
+        />
+        <link rel="icon" href="../../public/passloc-logo-small.png" />
       </Head>
       <AuthProvider>
         <Component {...pageProps} />
