@@ -7,87 +7,95 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Form,
-  message,
-  Popconfirm,
-  Popover,
-  Tabs,
-  Tooltip,
-  Upload,
-} from "antd";
+import { Form, message, Modal, Popconfirm, Tabs, Tooltip, Upload } from "antd";
 import { FormWrapper } from "./Form.style";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 import HttpService from "../../services/HttpService";
 import pieces_justificatives from "../../../public/forms/pieces_justificatives.jpg";
 import Image from "next/image";
 import Confetti from "react-confetti";
 
-export default function PiecesForm({ folder, handleCurrentStepChanged }) {
+export default function PiecesForm({
+  folder,
+  handleCurrentStepChanged,
+  isDesktop,
+}) {
   const [form] = Form.useForm();
-  const ref = useRef(null);
   const { TabPane } = Tabs;
 
-  const fieldsToFill = [];
-  [folder, ...folder.guarants].map((person, index) => {
-    fieldsToFill.push([
-      "valid_identity_piece",
-      ...(index || person.is_fiscally_attached == 0 ? ["tax_notice"] : []),
-      ...(!index && person?.activity.type == "student"
-        ? ["school_certificate"]
-        : []),
-      ...(person.housing_situation == "tenant"
-        ? ["proof_of_residence", "three_last_rent_receipts"]
-        : []),
-      ...(person.activity?.type == "employee"
-        ? ["three_last_salary_sheets"]
-        : []),
-      ...(person.activity?.type == "unemployment"
-        ? ["employment_center_payment_certificate"]
-        : []),
-      ...(person.activity?.type == "retirement"
-        ? ["pension_fund_certificate"]
-        : []),
-      ...(person.housing_situation == "free_accommodation"
-        ? ["host_sworn_statement"]
-        : []),
-      ...(person.activity?.type == "autoentrepreneur"
-        ? ["accounting_certificate", "kbis"]
-        : []),
-      ...(person.activity?.type == "liberal_profession"
-        ? ["professional_card", "resource_certificate"]
-        : []),
-      ...(person.housing_situation == "owner" ? ["forfeit_tax"] : []),
-      ...(!index &&
-      person.guarantees.filter((guaranty) => guaranty.value == "visale").length
-        ? ["visale_attestation"]
-        : []),
-    ]);
-  });
+  const [fieldsToFill, setFieldsToFill] = useState([]);
+  const [formValues, setFormValues] = useState(null);
 
-  const initFormValues = {
-    persons: [],
-  };
-  fieldsToFill.forEach((person, index) => {
-    initFormValues.persons[index] = {};
-    person.forEach((e) => {
-      initFormValues.persons[index][e] = {
-        fileList: (index ? folder.guarants[index - 1] : folder).files
-          .filter((file) => file.type == e)
-          .map((file) => {
-            return {
-              uid: file.id,
-              name: file.slug,
-              type: file.filetype,
-              status: "done",
-              url: "https://app.passloc.fr/api/files/" + file.slug,
-            };
-          }),
-      };
+  useEffect(() => {
+    let tmpFields = [];
+    [folder, ...folder.guarants].map((person, index) => {
+      tmpFields.push([
+        "valid_identity_piece",
+        ...(index || person.is_fiscally_attached == 0 ? ["tax_notice"] : []),
+        ...(!index && person?.activity.type == "student"
+          ? ["school_certificate"]
+          : []),
+        ...(person.housing_situation == "tenant"
+          ? ["proof_of_residence", "three_last_rent_receipts"]
+          : []),
+        ...(person.activity?.type == "employee"
+          ? ["three_last_salary_sheets"]
+          : []),
+        ...(person.activity?.type == "unemployment"
+          ? ["employment_center_payment_certificate"]
+          : []),
+        ...(person.activity?.type == "retirement"
+          ? ["pension_fund_certificate"]
+          : []),
+        ...(person.housing_situation == "free_accommodation"
+          ? ["host_sworn_statement"]
+          : []),
+        ...(person.activity?.type == "autoentrepreneur"
+          ? ["accounting_certificate", "kbis"]
+          : []),
+        ...(person.activity?.type == "liberal_profession"
+          ? ["professional_card", "resource_certificate"]
+          : []),
+        ...(person.housing_situation == "owner" ? ["forfeit_tax"] : []),
+        ...(!index &&
+        person.guarantees.filter((guaranty) => guaranty.value == "visale")
+          .length
+          ? ["visale_attestation"]
+          : []),
+      ]);
     });
-  });
-  const [formValues, setFormValues] = useState(initFormValues);
+    setFieldsToFill(tmpFields);
+  }, [folder]);
+
+  useEffect(() => {
+    setFormValues(null);
+    if (fieldsToFill.length) {
+      const initFormValues = {
+        persons: [],
+      };
+      fieldsToFill.forEach((person, index) => {
+        initFormValues.persons[index] = {};
+        person.forEach((e) => {
+          initFormValues.persons[index][e] = {
+            fileList: (index ? folder.guarants[index - 1] : folder).files
+              .filter((file) => file.type == e)
+              .map((file) => {
+                return {
+                  uid: file.id,
+                  name: file.slug,
+                  type: file.filetype,
+                  status: "done",
+                  url: "https://app.passloc.fr/api/files/" + file.slug,
+                };
+              }),
+          };
+        });
+      });
+      setFormValues(initFormValues);
+      form.setFieldsValue(initFormValues);
+    }
+  }, [fieldsToFill]);
 
   const fieldsDetails = [
     {
@@ -290,29 +298,57 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
 
   const [confettiSource, setConfettiSource] = useState({});
   useEffect(() => {
-    if (ref.current) {
-      setConfettiSource({
-        x: ref.current.children[0].getBoundingClientRect().x + 20,
-        y: ref.current.children[0].getBoundingClientRect().y,
-      });
-    }
-  }, [ref]);
+    setConfettiSource({
+      x: window.innerWidth - 80,
+      y: window.innerHeight / 2 - 30,
+    });
+  }, []);
 
   const [isFormFilled, setIsFormFilled] = useState(false);
+
   useEffect(() => {
-    let ok = true;
-    form.getFieldValue("persons").forEach((person) => {
-      if (Object.entries(person).filter((e) => !e[1].fileList.length).length) {
-        ok = false;
-      }
-    });
-    console.log(ok);
-    if (ok) setIsFormFilled(true);
+    if (form.getFieldValue("persons")) {
+      let ok = true;
+      form.getFieldValue("persons").forEach((person) => {
+        if (
+          Object.entries(person).filter((e) => !e[1].fileList.length).length
+        ) {
+          ok = false;
+        }
+      });
+      setIsFormFilled(ok);
+    }
   }, [form.getFieldValue("persons")]);
 
-  return (
-    <FormWrapper>
-      <div>
+  const { confirm } = Modal;
+
+  function showConfirm() {
+    confirm({
+      title: (
+        <p style={{ color: "#005fc3", fontSize: "14px" }}>
+          <b>Il manque les pièces justificatives... c'est dommage !</b>
+        </p>
+      ),
+      content: (
+        <p>
+          Un dossier complet augmente vos chances d'être retenue par un
+          propriétaire ou une agence. <br />
+          Pas d'inquiétudes, vos documents seront protégés par un filigrane et
+          vous pourrez choisir à qui vous allez transmettre votre dossier.{" "}
+          <br />
+          <b>Voulez-vous tout de même générer le pdf ?</b>
+        </p>
+      ),
+      onOk() {
+        handleGeneratePdf();
+      },
+      icon: <FontAwesomeIcon icon={faCloudUploadAlt} />,
+    });
+  }
+
+  return formValues ? (
+    <FormWrapper className="reverse">
+      <div className="arrows left">
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
           onClick={() => handleCurrentStepChanged(false)}
@@ -327,7 +363,9 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
                   <p className="stepTitle">
                     05 <span>Pièces justificatives</span>
                   </p>
-                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
+                  <p className="liveSave">
+                    Toutes vos données sont sauvegardées à chaque modification !
+                  </p>
                   <Form.List name="persons">
                     {(fields) => (
                       <Tabs>
@@ -336,7 +374,7 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
                             tab={index ? "Garant " + index : "Locataire"}
                             key={index.toString()}
                           >
-                            {fieldsToFill[index].map((e, i) => (
+                            {fieldsToFill[index]?.map((e, i) => (
                               <Form.Item
                                 label={
                                   fieldsDetails.find(
@@ -353,12 +391,12 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
                                   }}
                                   fileList={
                                     form.getFieldValue(["persons", index, e])
-                                      .fileList ?? []
+                                      ?.fileList ?? []
                                   }
                                   onRemove={(file) => onRemove(file, e, index)}
                                 >
                                   {(form.getFieldValue(["persons", index, e])
-                                    .fileList?.length ?? 0) <
+                                    ?.fileList?.length ?? 0) <
                                     fieldsDetails.find(
                                       (detail) => detail.value == e
                                     ).maxFiles && (
@@ -380,6 +418,7 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
         <div className="picture">
           <span>
             <Image
+              id="pieces_justificatives"
               src={pieces_justificatives}
               alt="Vos pièces justificatives"
               placeholder="blur"
@@ -388,36 +427,47 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
           </span>
         </div>
       </div>
-      <div ref={ref}>
-        <Popconfirm
-          placement="left"
-          title={
-            <p>
-              <b style={{ color: "#005fc3", fontSize: "16px" }}>
-                "Dossier rempli, propriétaire conquis"
-              </b>
-              <br />
-              Vous n'avez pas renseigné toutes les pièces justificatives. <br />
-              <b>Voulez-vous tout de même générer le pdf ?</b>
-            </p>
-          }
-          onConfirm={handleGeneratePdf}
-          okText="Oui"
-          cancelText="Non"
-          disabled={isFormFilled}
-          icon={<FontAwesomeIcon icon={faCloudBolt} />}
-        >
-          <Tooltip title="Générer le dossier locataire" placement="left">
-            <FontAwesomeIcon
-              icon={faCloudArrowDown}
-              onClick={isFormFilled ? handleGeneratePdf : null}
-            />
-          </Tooltip>
-        </Popconfirm>
+      <div className="arrows right">
+        {isDesktop ? (
+          <Popconfirm
+            placement="left"
+            title={
+              <p>
+                <b style={{ color: "#005fc3", fontSize: "16px" }}>
+                  Il manque les pièces justificatives... c'est dommage !
+                </b>
+                <br />
+                Un dossier complet augmente vos chances d'être retenue par un
+                propriétaire ou une agence. <br />
+                Pas d'inquiétudes, vos documents seront protégés par un
+                filigrane et vous pourrez choisir à qui vous allez transmettre
+                votre dossier. <br />
+                <b>Voulez-vous tout de même générer le pdf ?</b>
+              </p>
+            }
+            onConfirm={handleGeneratePdf}
+            okText="Oui"
+            cancelText="Non"
+            disabled={isFormFilled}
+            icon={<FontAwesomeIcon icon={faCloudBolt} />}
+          >
+            <Tooltip title="Générer le dossier locataire" placement="left">
+              <FontAwesomeIcon
+                icon={faCloudArrowDown}
+                onClick={isFormFilled ? handleGeneratePdf : null}
+              />
+            </Tooltip>
+          </Popconfirm>
+        ) : (
+          <FontAwesomeIcon
+            icon={faCloudArrowDown}
+            onClick={isFormFilled ? handleGeneratePdf : showConfirm}
+          />
+        )}
         {isFormFilled && (
           <Confetti confettiSource={confettiSource} recycle={false} />
         )}
       </div>
     </FormWrapper>
-  );
+  ) : null;
 }

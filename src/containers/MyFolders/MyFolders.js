@@ -18,6 +18,7 @@ import { useSpring, animated, config } from "react-spring";
 import dynamic from "next/dynamic";
 import { blue } from "../../styles/variables.style";
 import useSWR from "swr";
+import { useSwipeable } from "react-swipeable";
 
 function Card({ folder, createFolder, deleteFolder }) {
   const [show, setShown] = useState(false);
@@ -59,7 +60,10 @@ function Card({ folder, createFolder, deleteFolder }) {
                 format={(percent) =>
                   percent == 100 ? (
                     <Tooltip title="Générer le pdf">
-                      <FontAwesomeIcon icon={faCloudArrowDown} onClick={handleGeneratePdf} />
+                      <FontAwesomeIcon
+                        icon={faCloudArrowDown}
+                        onClick={handleGeneratePdf}
+                      />
                     </Tooltip>
                   ) : (
                     `${percent} %`
@@ -100,7 +104,7 @@ const Carousel = dynamic(() => import("react-spring-3d-carousel"), {
   ssr: false,
 });
 
-export default function MyFolders({ profileResponse }) {
+export default function MyFolders({ profileResponse, isDesktop }) {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     if (window) setLoaded(true);
@@ -162,31 +166,43 @@ export default function MyFolders({ profileResponse }) {
           onClick: () => setGoToSlide(index),
         });
       });
-      if (tmpSlides.length < 3) {
-        tmpSlides.push({
-          key: 0,
-          content: <Card folder={"add"} createFolder={createFolder} />,
-          onClick: () => setGoToSlide(tmpSlides.length - 1),
-        });
-      }
+      tmpSlides.push({
+        key: 0,
+        content: <Card folder={"add"} createFolder={createFolder} />,
+        onClick: () => setGoToSlide(tmpSlides.length - 1),
+      });
     }
     setSlides(tmpSlides);
   }, [user]);
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => {
+      if (eventData.dir == "Left") {
+        setGoToSlide(goToSlide == 0 ? slides.length - 1 : goToSlide + 1);
+      }
+      if (eventData.dir == "Right") {
+        setGoToSlide(goToSlide == slides.length - 1 ? 0 : goToSlide - 1);
+      }
+    },
+    ...config,
+  });
+
   return loaded ? (
     <MyFoldersWrapper>
       <h1>
-        <span>Retrouvez tout vôtre dossier locataire</span>
+        <span>Retrouvez votre dossier locataire</span>
         <br />
         Conforme et prêt à l’envoi
       </h1>
       {slides.length > 2 ? (
         <div
+          className="carouselWrapper"
           style={{
-            width: 700,
+            width: isDesktop ? 700 : "100%",
             height: 500,
             margin: 10,
           }}
+          {...handlers}
         >
           <Carousel
             slides={slides}

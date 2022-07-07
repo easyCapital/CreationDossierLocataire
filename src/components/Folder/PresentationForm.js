@@ -12,7 +12,6 @@ import HttpService from "../../services/HttpService";
 import presentez_vous from "../../../public/forms/presentez-vous.jpg";
 import Image from "next/image";
 import SearchLocationInput from "../google/SearchLocationInput";
-import { getCookie } from "cookies-next";
 
 export default function PresentationForm({
   arePreviousItemsFilled,
@@ -32,7 +31,7 @@ export default function PresentationForm({
     firstname: folder.firstname,
     lastname: folder.lastname,
     date_of_birth: folder.date_of_birth,
-    email: folder.email ?? getCookie("email") ?? user.email,
+    email: folder.email ?? user.email,
     mobile: folder.mobile,
     address: folder.address,
   };
@@ -67,10 +66,8 @@ export default function PresentationForm({
     checkIfFormIsFinished();
   }, []);
 
-  console.log(getCookie("email"));
-
   return (
-    <FormWrapper>
+    <FormWrapper className="reverse">
       <div></div>
       <div className="content">
         <div>
@@ -92,12 +89,11 @@ export default function PresentationForm({
                   </p>
                   <Form.Item label="Civilité" name="civility">
                     <Radio.Group buttonStyle="solid">
-                      <Radio.Button value={"Mr"}>
-                        <FontAwesomeIcon icon={faMars} />
-                      </Radio.Button>
-                      <Radio.Button value={"Mme"}>
-                        <FontAwesomeIcon icon={faVenus} />
-                      </Radio.Button>
+                      {["Mr", "Mme"].map((civility, i) => (
+                        <Radio.Button value={civility} key={"civility_" + i}>
+                          {civility}
+                        </Radio.Button>
+                      ))}
                     </Radio.Group>
                   </Form.Item>
                   {arePreviousItemsFilled("marital_status", values) ? (
@@ -188,11 +184,13 @@ export default function PresentationForm({
               id="presentez-vous"
               placeholder="blur"
               priority
+              objectFit="cover"
+              objectPosition={"bottom"}
             />
           </span>
         </div>
       </div>
-      <div>
+      <div className="arrows right">
         {isFormFinished && (
           <FontAwesomeIcon
             icon={faChevronCircleRight}

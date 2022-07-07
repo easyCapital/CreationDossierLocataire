@@ -3,6 +3,7 @@ import {
   faChevronCircleRight,
   faCloudBolt,
   faCloudSun,
+  faCloudUploadAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,6 +12,7 @@ import {
   Input,
   InputNumber,
   message,
+  Modal,
   Popconfirm,
   Radio,
   Select,
@@ -25,13 +27,15 @@ import HttpService from "../../services/HttpService";
 import vos_garants from "../../../public/forms/vos_garants.jpg";
 import Image from "next/image";
 import SearchLocationInput from "../google/SearchLocationInput";
+import { blue } from "../../styles/variables.style";
 
 export default function GarantForm({
   handleCurrentStepChanged,
   validateMessages,
   folder,
   guarantees,
-  activities
+  activities,
+  isDesktop,
 }) {
   const [form] = Form.useForm();
   const initFormValues = {
@@ -61,7 +65,7 @@ export default function GarantForm({
     let data = null;
     if (fieldName == "guarants") {
       data = {
-        guarants: allValues.guarants.map((e) => e ?? {}),
+        guarants: changedValues.guarants.map((e) => e ?? {}),
       };
     } else {
       data = {
@@ -78,9 +82,33 @@ export default function GarantForm({
     });
   };
 
+  const { confirm } = Modal;
+
+  function showConfirm() {
+    confirm({
+      title: (
+        <p>
+          <b style={{ color: "#005fc3" }}>Attention !</b> Vous n'avez pas
+          renseigné de garantie.
+        </p>
+      ),
+      content: (
+        <p>
+          Votre dossier a 2 fois plus de chances d'être sélectionné <br />
+          si vous présentez des garanties pour votre location. <br />
+          Voulez-vous passez à l'étape suivante ?
+        </p>
+      ),
+      onOk() {
+        handleCurrentStepChanged(true);
+      },
+      icon: <FontAwesomeIcon icon={faCloudBolt} style={{ color: blue }} />,
+    });
+  }
+
   return (
     <FormWrapper>
-      <div>
+      <div className="arrows left">
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
           onClick={() => handleCurrentStepChanged(false)}
@@ -90,6 +118,7 @@ export default function GarantForm({
         <div className="picture">
           <span>
             <Image
+              id="vos_garanties"
               src={vos_garants}
               alt="Vos garanties"
               placeholder="blur"
@@ -111,7 +140,9 @@ export default function GarantForm({
                   <p className="stepTitle">
                     04 <span>Garant(s) </span>
                   </p>
-                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
+                  <p className="liveSave">
+                    Toutes vos données sont sauvegardées à chaque modification !
+                  </p>
                   <div className="info">
                     <FontAwesomeIcon icon={faCloudSun} />
                     <div>
@@ -236,11 +267,15 @@ export default function GarantForm({
                                   </Select>
                                 </Form.Item>
                                 <Form.Item
-                                  label={form.getFieldValue([
-                                  "guarants",
-                                  index,
-                                  "activity_id",
-                                ]) != "18" ? "Revenus d'activité" : "Pension de retraite"}
+                                  label={
+                                    form.getFieldValue([
+                                      "guarants",
+                                      index,
+                                      "activity_id",
+                                    ]) != "18"
+                                      ? "Revenus d'activité"
+                                      : "Pension de retraite"
+                                  }
                                   name={[field.name, "monthly_income"]}
                                 >
                                   <InputNumber />
@@ -286,34 +321,45 @@ export default function GarantForm({
           </Form>
         </div>
       </div>
-      <div>
-        <Popconfirm
-          placement="left"
-          title={
-            <p>
-              <b style={{ color: "#005fc3" }}>Attention !</b> Vous n'avez pas
-              renseigné de garantie.
-              <br />
-              Votre dossier a 2 fois plus de chances d'être sélectionné <br />
-              si vous présentez des garanties pour votre location. <br />
-              Voulez-vous passez à l'étape suivante ?
-            </p>
-          }
-          onConfirm={() => handleCurrentStepChanged(true)}
-          okText="Oui"
-          cancelText="Non"
-          disabled={form.getFieldValue("guarantees")?.length}
-          icon={<FontAwesomeIcon icon={faCloudBolt} />}
-        >
+      <div className="arrows right">
+        {isDesktop ? (
+          <Popconfirm
+            placement={"left"}
+            title={
+              <p>
+                <b style={{ color: "#005fc3" }}>Attention !</b> Vous n'avez pas
+                renseigné de garantie.
+                <br />
+                Votre dossier a 2 fois plus de chances d'être sélectionné <br />
+                si vous présentez des garanties pour votre location. <br />
+                Voulez-vous passez à l'étape suivante ?
+              </p>
+            }
+            onConfirm={() => handleCurrentStepChanged(true)}
+            okText="Oui"
+            cancelText="Non"
+            disabled={form.getFieldValue("guarantees")?.length}
+            icon={<FontAwesomeIcon icon={faCloudBolt} />}
+          >
+            <FontAwesomeIcon
+              icon={faChevronCircleRight}
+              onClick={
+                form.getFieldValue("guarantees")?.length
+                  ? () => handleCurrentStepChanged(true)
+                  : null
+              }
+            />
+          </Popconfirm>
+        ) : (
           <FontAwesomeIcon
             icon={faChevronCircleRight}
             onClick={
               form.getFieldValue("guarantees")?.length
                 ? () => handleCurrentStepChanged(true)
-                : null
+                : showConfirm
             }
           />
-        </Popconfirm>
+        )}
       </div>
     </FormWrapper>
   );

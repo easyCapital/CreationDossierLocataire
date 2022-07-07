@@ -154,19 +154,41 @@ export const ConnexionWrapper = styled.div`
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 1024px) {
+    height: 100vh;
+    .signIn {
+      height: 100%;
+      margin: 0px;
+    }
     .gauche {
-      margin-top: 100px;
+      padding: 0 5%;
       text-align: center;
+      width: 100%;
+      border-radius: 0px !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       .title {
-        font-size: 30px;
+        margin: 0px !important;
+        margin-bottom: 80px;
+        font-size: 38px !important;
         font-weight: bold;
         color: #327ac7;
-        margin-bottom: 80px;
       }
       .txt {
         margin-top: 20px;
         margin-bottom: 20px;
+      }
+      .ant-col {
+        margin: 0px;
+        .ant-btn {
+          max-width: 100%;
+        }
+      }
+      .buttons {
+        .ant-btn {
+          width: 100% !important;
+        }
       }
       .ant-form-item-control-input-content {
         .ant-btn {

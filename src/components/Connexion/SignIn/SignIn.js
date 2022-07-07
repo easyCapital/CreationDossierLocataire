@@ -4,8 +4,9 @@ import { useRouter } from "next/router";
 import Connexion from "../../../containers/Connexion/Connexion";
 import { LoginAction } from "../../../redux/actions/AuthActions";
 import { useDispatch, useSelector } from "react-redux";
+import { getCookie } from "cookies-next";
 
-export default function SignIn() {
+export default function SignIn(props) {
   const [form] = Form.useForm();
   const selector = useSelector((state) => state.userAuth);
   const router = useRouter();
@@ -27,14 +28,19 @@ export default function SignIn() {
     dispatch(LoginAction(form.getFieldsValue(), router));
   };
 
+  useEffect(() => {
+    if (getCookie("creatingFolder")) {
+      form.setFieldsValue({ email: getCookie("creatingFolder") });
+    }
+  }, []);
+
   return (
-    <Connexion>
+    <Connexion {...props}>
       <Form
         form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserLogin}
-        initialValues={{ email: "", password: "" }}
       >
         <Form.Item
           label="E-mail"
@@ -42,7 +48,7 @@ export default function SignIn() {
           rules={[
             {
               type: "email",
-              message: "Veuillez renseigner une adresse e-mail correcte.",
+              message: "Veuillez renseigner une adresse e-mail valide.",
             },
             {
               required: true,

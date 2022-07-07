@@ -1,10 +1,11 @@
 import * as ActionTypes from "../ActionTypes";
-import { message } from "antd";
 import {
   RegisterUserService,
   LoginUserService,
   LogOutUserService,
 } from "../../services/AuthServices";
+import { getCookie, setCookies } from "cookies-next";
+import { CreateFolder } from "../../services/CreateFolderService";
 
 export const RegisterAction = (credentials, router) => {
   return (dispatch) => {
@@ -35,7 +36,12 @@ export const LoginAction = (credentials, router) => {
         if (res.hasOwnProperty("success") && res.success === true) {
           localStorage.setItem("user-token", res.data.token);
           dispatch({ type: ActionTypes.LOGIN_SUCCESS });
-          router.push("/mes-dossiers");
+          if (getCookie("creatingFolder")) {
+            setCookies("creatingFolder", false);
+            CreateFolder();
+          } else {
+            router.push("/mes-dossiers");
+          }
         } else if (res.hasOwnProperty("success") && res.success === false) {
           dispatch({ type: ActionTypes.LOGIN_ERROR, res });
         }
@@ -54,6 +60,7 @@ export const LogoutAction = () => {
       (res) => {
         if (res.hasOwnProperty("success") && res.success === true) {
           dispatch({ type: ActionTypes.LOGOUT_SUCCESS, res });
+          router.push("/");
         } else if (res.hasOwnProperty("success") && res.success === false) {
           dispatch({ type: ActionTypes.LOGOUT_SUCCESS, res });
         }

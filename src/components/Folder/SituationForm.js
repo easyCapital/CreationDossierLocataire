@@ -4,7 +4,7 @@ import {
   faCloudSun,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, Input, message, Radio, Select, Space } from "antd";
+import { Form, Input, message, Modal, Radio, Select, Space } from "antd";
 import { FormWrapper } from "./Form.style";
 import { useEffect, useState } from "react";
 import HttpService from "../../services/HttpService";
@@ -17,6 +17,7 @@ export default function SituationForm({
   activities,
   folder,
   handleCurrentStepChanged,
+  isDesktop,
 }) {
   const getActivityType = (activity) => {
     return activities.find((e) => e.id == activity)?.type ?? "";
@@ -25,7 +26,7 @@ export default function SituationForm({
   const [form] = Form.useForm();
   const initFormValues = {
     activity_id: folder.activity_id,
-    ...(getActivityType(form.getFieldValue("activity_id")) == "employee"
+    ...(folder.activity?.type == "employee"
       ? {
           company_name: folder.company_name,
           employer_firstname: folder.employer_firstname,
@@ -55,10 +56,6 @@ export default function SituationForm({
           ]
         : []),
       "housing_situation",
-      // ...(form.getFieldValue("housing_situation") != "tenant"
-      //   ? []
-      //   : []),
-      // : ["owner_name", "owner_phone", "owner_email"]),
     ].forEach((e) => {
       if (!form.getFieldValue(e)) ok = false;
     });
@@ -87,10 +84,15 @@ export default function SituationForm({
   useEffect(() => {
     checkIfFormIsFinished();
   }, []);
+  useEffect(() => {
+    console.log(isOpen);
+  }, [isOpen]);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <FormWrapper>
-      <div>
+      <div className="arrows left">
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
           onClick={() => handleCurrentStepChanged(false)}
@@ -100,6 +102,7 @@ export default function SituationForm({
         <div className="picture">
           <span>
             <Image
+              id="votre_situation_actuelle"
               src={votre_situation_actuelle}
               alt="Votre situation actuelle"
               placeholder="blur"
@@ -116,15 +119,32 @@ export default function SituationForm({
             onValuesChange={onValuesChange}
           >
             {(values, formInstance) => {
-              console.log(values);
               return (
                 <>
                   <p className="stepTitle">
                     02 <span>Votre situation actuelle</span>
                   </p>
-                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
+                  <p className="liveSave">
+                    Toutes vos données sont sauvegardées à chaque modification !
+                  </p>
                   <Form.Item label={"Activité principale"} name="activity_id">
-                    <Select>
+                    <Select
+                      {...(isDesktop
+                        ? {}
+                        : {
+                            onChange: () => setIsOpen(false),
+                            onDropdownVisibleChange: (open) => setIsOpen(open),
+                            dropdownRender: (origin) => (
+                              <Modal
+                                closable={false}
+                                visible={isOpen}
+                                footer={null}
+                              >
+                                {origin}
+                              </Modal>
+                            ),
+                          })}
+                    >
                       {activities.map((activity) => {
                         return (
                           <Option
@@ -198,33 +218,13 @@ export default function SituationForm({
                       </Radio.Group>
                     </Form.Item>
                   ) : null}
-                  {/* {arePreviousItemsFilled("owner_email", values) &&
-                  values.housing_situation == "tenant" ? (
-                    <Form.Item
-                      label={"Nom du propriétaire actuel / agence actuelle"}
-                      name="owner_name"
-                    >
-                      <Input />
-                    </Form.Item>
-                  ) : null}
-                  {arePreviousItemsFilled("owner_email", values) &&
-                  values.housing_situation == "tenant" ? (
-                    <Space align="baseline">
-                      <Form.Item label={"Téléphone"} name="owner_phone">
-                        <Input />
-                      </Form.Item>
-                      <Form.Item label={"Mail"} name="owner_email">
-                        <Input />
-                      </Form.Item>
-                    </Space>
-                  ) : null} */}
                 </>
               );
             }}
           </Form>
         </div>
       </div>
-      <div>
+      <div className="arrows right">
         {isFormFinished && (
           <FontAwesomeIcon
             icon={faChevronCircleRight}

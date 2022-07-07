@@ -11,7 +11,7 @@ class MyDocument extends Document {
           />
           <script
             type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClOb8cPlGvXFUnQglgTLo-U82dIRxP-TA&libraries=geometry,places"
+            src={"https://maps.googleapis.com/maps/api/js?key=" + process.env.GOOGLE_API_KEY + "&libraries=geometry,places"}
             defer
           />
         </Head>

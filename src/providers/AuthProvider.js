@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Footer from "../components/global/Footer/Footer";
 import LoadingSpinner from "../components/global/LoadingSpinner/LoadingSpinner";
 import { LoadProfileAction } from "../redux/actions/ProfileActions";
+import { useMediaQuery } from "react-responsive";
 
 export default function AuthProvider({ children }) {
   const [loaded, setLoaded] = useState(false);
@@ -34,7 +35,7 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     setLoggedIn(state?.userDetails?.userProfile?.data != null);
     if (state.userDetails.userProfile.data === null) {
-      if (router.asPath == "/folder") {
+      if (router.asPath.includes("/folder")) {
         router.push("/");
       }
     }
@@ -49,9 +50,11 @@ export default function AuthProvider({ children }) {
     }
   }, [state]);
 
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
+
   return loaded ? (
     <>
-      {React.cloneElement(children, { loggedIn, profileResponse })}
+      {React.cloneElement(children, { loggedIn, profileResponse, isDesktop })}
       {["/mes-dossiers", "/"].includes(router.asPath) ? <Footer /> : null}
     </>
   ) : (

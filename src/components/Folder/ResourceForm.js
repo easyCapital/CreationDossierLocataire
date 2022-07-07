@@ -3,12 +3,13 @@ import {
   faChevronCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, InputNumber, message, Radio, Space } from "antd";
+import { Form, InputNumber, message, Popover, Radio, Space } from "antd";
 import { FormWrapper } from "./Form.style";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import HttpService from "../../services/HttpService";
 import vos_ressources from "../../../public/forms/vos_ressources.jpg";
+import vos_ressources_2 from "../../../public/forms/vos_ressources_2.webp";
 import Image from "next/image";
 
 export default function ResourceForm({
@@ -16,22 +17,23 @@ export default function ResourceForm({
   validateMessages,
   folder,
   handleCurrentStepChanged,
-  activities,
+  isDesktop,
 }) {
   const [form] = Form.useForm();
-  const isStudent = (activity) => {
-    return activities.find((e) => e.id === activity)?.type == "student";
-  };
   const initFormValues = {
-    net_monthly_salary_before_deduction_1:
-      folder.net_monthly_salary_before_deduction_1,
-    net_monthly_salary_before_deduction_2:
-      folder.net_monthly_salary_before_deduction_2,
-    net_monthly_salary_before_deduction_3:
-      folder.net_monthly_salary_before_deduction_3,
+    ...(folder.activity?.type == "employee"
+      ? {
+          net_monthly_salary_before_deduction_1:
+            folder.net_monthly_salary_before_deduction_1,
+          net_monthly_salary_before_deduction_2:
+            folder.net_monthly_salary_before_deduction_2,
+          net_monthly_salary_before_deduction_3:
+            folder.net_monthly_salary_before_deduction_3,
+        }
+      : {}),
     is_fiscally_attached:
       folder.is_fiscally_attached == null
-        ? isStudent()
+        ? folder.activity?.type == "student"
           ? true
           : false
         : folder.is_fiscally_attached == "1"
@@ -44,7 +46,8 @@ export default function ResourceForm({
   };
   const [isFormFinished, setIsFormFinished] = useState();
   const [fieldsToFill, setFieldsToFill] = useState(
-    Object.keys(initFormValues ?? {})
+    []
+    // Object.keys(initFormValues ?? {})
   );
 
   useEffect(() => {
@@ -59,11 +62,33 @@ export default function ResourceForm({
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  useEffect(() => {
+    setFieldsToFill([
+      ...(folder.activity?.type == "employee"
+        ? [
+            "net_monthly_salary_before_deduction_1",
+            "net_monthly_salary_before_deduction_2",
+            "net_monthly_salary_before_deduction_3",
+          ]
+        : []),
+      "is_fiscally_attached",
+      ...(!form.getFieldValue("is_fiscally_attached")
+        ? ["annual_income_tax_1", "annual_income_tax_2"]
+        : []),
+      "other_monthly_incomes",
+      ...(folder.housing_situation == "tenant" ? ["current_rent_amount"] : []),
+    ]);
+  }, [folder]);
+
   const onValuesChange = (changedValues) => {
     setFieldsToFill([
-      "net_monthly_salary_before_deduction_1",
-      "net_monthly_salary_before_deduction_2",
-      "net_monthly_salary_before_deduction_3",
+      ...(folder.activity?.type == "employee"
+        ? [
+            "net_monthly_salary_before_deduction_1",
+            "net_monthly_salary_before_deduction_2",
+            "net_monthly_salary_before_deduction_3",
+          ]
+        : []),
       "is_fiscally_attached",
       ...(!form.getFieldValue("is_fiscally_attached")
         ? ["annual_income_tax_1", "annual_income_tax_2"]
@@ -88,8 +113,8 @@ export default function ResourceForm({
   };
 
   return (
-    <FormWrapper>
-      <div>
+    <FormWrapper className="reverse">
+      <div className="arrows left">
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
           onClick={() => handleCurrentStepChanged(false)}
@@ -110,37 +135,59 @@ export default function ResourceForm({
                   <p className="stepTitle">
                     03 <span>Vos ressources</span>
                   </p>
-                  <p className="liveSave">Toutes vos données sont sauvegardées à chaque modification !</p>
-                  <Form.Item
-                    label={
-                      folder.activity_id == 18
-                        ? "Pension de retraite"
-                        : "Salaire net mensuel avant prélèvement"
-                    }
-                  >
-                    <Space align="baseline">
-                      {[3, 2, 1].map((e) => {
-                        const date = capitalizeFirstLetter(
-                          moment()
-                            .subtract(e, "month")
-                            .startOf("month")
-                            .format("MMMM")
-                        );
-                        return (
-                          <Form.Item
-                            label={date}
-                            name={"net_monthly_salary_before_deduction_" + e}
-                            key={"date" + e}
-                          >
-                            <InputNumber step={1} />
-                          </Form.Item>
-                        );
-                      })}
-                    </Space>
-                  </Form.Item>
+                  {fieldsToFill.includes(
+                    "net_monthly_salary_before_deduction_1"
+                  ) && (
+                    <Form.Item
+                      label={
+                        folder.activity_id == 18
+                          ? "Pension de retraite"
+                          : "Salaire net mensuel avant prélèvement"
+                      }
+                    >
+                      <Space align="baseline">
+                        {[3, 2, 1].map((e) => {
+                          const date = capitalizeFirstLetter(
+                            moment()
+                              .subtract(e, "month")
+                              .startOf("month")
+                              .format("MMMM")
+                          );
+                          return (
+                            <Form.Item
+                              label={date}
+                              name={"net_monthly_salary_before_deduction_" + e}
+                              key={"date" + e}
+                            >
+                              <InputNumber step={1} />
+                            </Form.Item>
+                          );
+                        })}
+                      </Space>
+                    </Form.Item>
+                  )}
                   {arePreviousItemsFilled("is_fiscally_attached", values) ? (
                     <Form.Item
-                      label={"Êtes-vous rattaché fiscalement à vos parents ?"}
+                      label={
+                        <p style={{ margin: 0 }}>
+                          Êtes-vous rattaché fiscalement à vos parents ?<br />
+                          <Popover
+                            content={
+                              <p>
+                                Pour savoir si vous êtes ou non rattaché à la
+                                déclaration de vos parents,
+                                <br /> il suffit de savoir si vous déclarez vous
+                                même des revenus sur impots.gouv.fr.
+                                <br /> Si ça ne vous parle pas, alors vous êtes
+                                encore rattachés à vos parents.
+                              </p>
+                            }
+                            trigger="click"
+                          >
+                            <i className="mean">Qu'est ce que ça veut dire ?</i>
+                          </Popover>
+                        </p>
+                      }
                       name="is_fiscally_attached"
                     >
                       <Radio.Group>
@@ -209,7 +256,8 @@ export default function ResourceForm({
         <div className="picture">
           <span>
             <Image
-              src={vos_ressources}
+              id="vos_ressources"
+              src={isDesktop ? vos_ressources : vos_ressources_2}
               alt="Vos ressources"
               placeholder="blur"
               priority
@@ -217,7 +265,7 @@ export default function ResourceForm({
           </span>
         </div>
       </div>
-      <div>
+      <div className="arrows right">
         {isFormFinished && (
           <FontAwesomeIcon
             icon={faChevronCircleRight}

@@ -1,15 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Input, Button, Modal, message } from "antd";
 import { useRouter } from "next/router";
 import HttpService from "../../../services/HttpService";
 import Connexion from "../../../containers/Connexion/Connexion";
+import { getCookie } from "cookies-next";
 
-export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_confirmation, setConfirmPassword] = useState("");
-
+export default function SignUp(props) {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const registerFromEmail = (credentials) => {
     const http = new HttpService();
@@ -22,27 +20,34 @@ export default function SignUp() {
           router.push("/signin");
           return;
         }
-        message.error("Mail ou mot de passe incorrect !");
-
+        message.error("Veuillez vérifier vos informations.");
+        setIsSubmitting(false);
         return data;
       })
       .catch((error) => {
         console.log(error);
+        setIsSubmitting(false);
         return error;
       });
   };
+
+  const [form] = Form.useForm();
+
   const handleUserRegister = () => {
-    const fields = {
-      email: email,
-      password: password,
-      confirm_password: password_confirmation,
-    };
-    registerFromEmail(fields);
+    setIsSubmitting(true);
+    registerFromEmail(form.getFieldsValue());
   };
 
+  useEffect(() => {
+    if (getCookie("creatingFolder")) {
+      form.setFieldsValue({ email: getCookie("creatingFolder") });
+    }
+  }, []);
+
   return (
-    <Connexion>
+    <Connexion {...props}>
       <Form
+        form={form}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 13 }}
         onFinish={handleUserRegister}
@@ -54,7 +59,7 @@ export default function SignUp() {
           rules={[
             {
               type: "email",
-              message: "Veuillez renseigner une adresse e-mail correcte.",
+              message: "Veuillez renseigner une adresse e-mail valide.",
             },
             {
               required: true,
@@ -62,16 +67,7 @@ export default function SignUp() {
             },
           ]}
         >
-          <Input
-            id={"email"}
-            name="email"
-            type="text"
-            value={email}
-            placeholder="exemple@exemple.com"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
+          <Input placeholder="exemple@exemple.com" />
         </Form.Item>
         <Form.Item
           label="Mot de passe"
@@ -88,19 +84,11 @@ export default function SignUp() {
             },
           ]}
         >
-          <Input
-            id={"password"}
-            name="password"
-            type="password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
+          <Input type="password" />
         </Form.Item>
         <Form.Item
           label="Confirmer le mot de passe"
-          name="password_confirmation"
+          name="confirm_password"
           dependencies={["password"]}
           hasFeedback
           rules={[
@@ -121,18 +109,10 @@ export default function SignUp() {
             }),
           ]}
         >
-          <Input
-            id={"password_confirmation"}
-            name="password_confirmation"
-            type="password"
-            value={password_confirmation}
-            onChange={(e) => {
-              setConfirmPassword(e.target.value);
-            }}
-          />
+          <Input type="password" />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={isSubmitting}>
             Créer mon compte
           </Button>
         </Form.Item>

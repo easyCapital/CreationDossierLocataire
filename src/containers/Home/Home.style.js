@@ -44,9 +44,8 @@ export const HomeWrapper = styled.div`
       font-size: 18px;
     }
 
-    > div {
+    form {
       display: flex;
-      align-items: center;
       .ant-input {
         width: 400px;
         height: 50px;
@@ -104,44 +103,27 @@ export const HomeWrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 1500px) {
-    .upper {
-      text-align: center;
-      h2 {
-        font-size: 60px;
+  @media screen and (max-width: 1024px) {
+    padding: 0px 5%;
+    h1 {
+      font-size: 36px;
+    }
+
+    h2 {
+      font-size: 30px;
+    }
+
+    form {
+      flex-direction: column;
+      width: 100%;
+      .ant-input {
+        max-width: 100%;
       }
-      .mainText h3 {
-        position: relative;
-        color: #005fc3;
-      }
-      h3 {
-        font-size: 20px;
-        margin: 10px 100px;
-        position: relative;
+      .ant-btn {
+        margin: 0px !important;
       }
     }
 
-    .home_btn {
-      margin: 10px 20px;
-      font-size: 18px;
-      padding: 30px 22px;
-      background: #005fc3;
-      position: relative;
-    }
-  }
-
-  @media screen and (max-width: 1400px) {
-    .explanation .steps {
-      display: flex;
-      padding: 0px 100px;
-      flex: wrap;
-      .column {
-        flex: wrap;
-      }
-    }
-  }
-
-  @media screen and (max-width: 1100px) {
     .explanation .steps {
       display: block;
       .column {
@@ -149,50 +131,25 @@ export const HomeWrapper = styled.div`
           margin-top: 50px;
         }
       }
-    }
-  }
-
-  @media screen and (max-width: 580px) {
-    .upper {
-      margin-top: 150px;
-      text-align: center;
-      h3 {
-        font-size: 20px;
-        margin: 10px 10px;
+      > div {
+        padding: 0px;
+        width: 100%;
       }
     }
 
-    .home_btn {
-      margin: 100px 2px;
-      font-size: 18px;
+    .ant-divider {
+      width: 100%;
     }
-    .home_btn:last-child {
-      position: relative;
-      top: 50px;
-      right: 120px;
-    }
-    .home_btn:first-child {
-      position: relative;
-      left: 150px;
-    }
-  }
 
-  @media screen and (max-width: 480px) {
-    .home_btn {
-      position: absolute;
-      top: 800px;
-      left: 167px;
-      right: 160px;
-    }
-  }
-
-  .tarif {
-    h3 {
-      margin: 0;
-    }
-    display: flex;
-    > div {
-      width: 50%;
+    .partenaires {
+      margin: 50px 0px;
+      h2 {
+        margin: 0px;
+      }
+      img {
+        margin: 0px !important;
+        margin-top: 30px !important;
+      }
     }
   }
 

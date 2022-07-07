@@ -15,6 +15,7 @@ import "moment/locale/fr";
 config.autoAddCss = false;
 require("../styles/variables.less");
 moment.locale("fr");
+import NextNProgress from 'nextjs-progressbar';
 
 function MyApp({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Navbar />
+      <NextNProgress />
       <Head>
         {/* <title>Passloc</title>
         <meta

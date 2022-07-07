@@ -134,4 +134,26 @@ export const MyFoldersWrapper = styled.div`
       }
     }
   }
+
+  @media (max-width: 1024px) {
+    padding: 80px 3%;
+    padding-bottom: 0px;
+    h1 {
+      font-size: 24px;
+    }
+    .cardsWrapper {
+      flex-direction: column;
+      .card {
+        margin-bottom: 10px;
+      }
+    }
+    .carouselWrapper {
+      > div:last-child {
+        margin: 0px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
 `;

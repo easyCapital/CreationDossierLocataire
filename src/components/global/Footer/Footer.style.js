@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const FooterWrapper = styled.div`
   padding: 20px 100px;
-  bottom: 0;
+  margin-top: auto;
   width: 100%;
   img {
     height: 50px;
@@ -19,6 +19,19 @@ export const FooterWrapper = styled.div`
         margin: 0px;
         margin-left: 10px;
       }
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    padding: 10px 5%;
+    text-align: center;
+    .top {
+      justify-content: center;
+    }
+    .bottom,
+    .bottom > div {
+      justify-content: center;
+      flex-direction: column;
     }
   }
 `;

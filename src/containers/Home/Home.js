@@ -1,6 +1,6 @@
 import { HomeWrapper } from "./Home.style";
 import { useState, useEffect } from "react";
-import { Input, Button, Spin, Space, Divider, Modal, Card } from "antd";
+import { Input, Button, Spin, Space, Divider, Modal, Card, Form } from "antd";
 import { useRouter } from "next/router";
 import { RightOutlined } from "@ant-design/icons";
 import { setCookies, getCookies } from "cookies-next";
@@ -11,9 +11,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
-export default function Home({ profileResponse }) {
+export default function Home({ profileResponse, isDesktop }) {
   const router = useRouter();
-  const [hasAccount, setHasAccount] = useState(false);
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
 
@@ -22,31 +21,19 @@ export default function Home({ profileResponse }) {
   }, []);
 
   async function checkIfUserHasAccount() {
-    // const http = new HttpService();
-    // const url = "users/userHasAccount";
-    // const data = {
-    //   email: String(getCookies("mail")?.mail)
-    //     .replace("%40", "@")
-    //     .replace("undefined", ""),
-    // };
-    // http
-    //   .postData(data, url)
-    //   .then((data) => {
-    //     setHasAccount(data["data"]["hasAccount"]);
-    //     if (data["data"]["hasAccount"]) {
-    //       router.push("/signin");
-    //       return;
-    //     }
-    //     router.push("/signup");
-    //   })
-    //   .catch((error) => {});
-    // return hasAccount;
-
     const http = new HttpService();
-    setCookies("email", email);
-    http.postData(null, "folders").then((response) => {
-      router.push("/folder/" + response.data.folder.slug);
-    });
+    const url = "users/userHasAccount";
+    http
+      .postData(
+        {
+          email: email,
+        },
+        url
+      )
+      .then((res) => {
+        setCookies("creatingFolder", email);
+        router.push(res.data.hasAccount ? "/signin" : "/signup");
+      });
   }
 
   return (
@@ -59,32 +46,30 @@ export default function Home({ profileResponse }) {
         </h1>
         <strong>
           Passloc vous permet de transmettre rapidement à n'importe quel
-          propriétaire ou <br /> agence immobilière votre dossier de candidature
-          propre et conforme.
+          propriétaire ou {isDesktop ? <br /> : ""} agence immobilière votre
+          dossier de candidature propre et conforme.
         </strong>
-        {profileResponse?.data?.user.folders.length == 3 ? (
-          <div>
+        {profileResponse?.data?.user.folders.length > 2 ? (
+          <Form>
             <Button type="primary" shape={"round"}>
               <Link href="/mes-dossiers">Accéder à mes dossiers</Link>
             </Button>
-          </div>
+          </Form>
         ) : (
-          <div>
-            <Input
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Votre adresse e-mail"
-              value={email}
-            />
-            <Button
-              shape="round"
-              type="primary"
-              onClick={checkIfUserHasAccount}
-            >
+          <Form onFinish={checkIfUserHasAccount}>
+            <Form.Item>
+              <Input
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                placeholder="Votre adresse e-mail"
+                value={email}
+              />
+            </Form.Item>
+            <Button shape="round" type="primary" htmlType="submit">
               Commencer
             </Button>
-          </div>
+          </Form>
         )}
         <FontAwesomeIcon icon={faAngleDown} className="arrow" />
       </div>
@@ -138,11 +123,15 @@ export default function Home({ profileResponse }) {
       <div className="partenaires">
         <h2>Nos partenaires</h2>
         <div>
-          <img src={"/logo_wilok.png"} alt="logo wilok" width="400" />
+          <img
+            src={"/logo_wilok.png"}
+            alt="logo wilok"
+            width={isDesktop ? "400" : "200"}
+          />
           <img
             src={"/easycapital_logo.svg"}
             alt="logo easycapital"
-            width="600"
+            width={isDesktop ? "600" : "300"}
           />
         </div>
       </div>

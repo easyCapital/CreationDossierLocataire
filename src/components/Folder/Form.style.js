@@ -1,5 +1,8 @@
-import styled from "styled-components";
+import { bounce, flipInX, rollIn } from "react-animations";
+import styled, { keyframes } from "styled-components";
 import { blue } from "../../styles/variables.style";
+
+const flipAnimation = keyframes`${rollIn}`;
 
 export const FormWrapper = styled.div`
   height: 100vh;
@@ -12,12 +15,20 @@ export const FormWrapper = styled.div`
     justify-content: center;
   }
   > div > svg {
+    animation: 1s ${flipAnimation};
     position: fixed;
-    font-size: 40px;
+    font-size: 60px;
     color: ${blue};
     cursor: pointer;
     &:hover {
       color: #0079f2;
+    }
+  }
+  .mean {
+    color: ${blue};
+    cursor: pointer;
+    &:hover {
+      font-weight: bold;
     }
   }
   .content {
@@ -61,7 +72,6 @@ export const FormWrapper = styled.div`
         .ant-radio-group {
           display: flex;
           .ant-radio-button-wrapper {
-            height: 50px;
             width: 100%;
             span {
               display: flex;
@@ -139,6 +149,87 @@ export const FormWrapper = styled.div`
         font-size: 30px;
         color: ${blue};
       }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0px !important;
+    height: 180vh;
+    &.reverse {
+      .content {
+        flex-direction: column-reverse;
+      }
+    }
+    .content {
+      padding: 0px;
+      min-width: 100%;
+      flex-direction: column;
+      > div {
+        min-width: 100% !important;
+        &.picture {
+          margin-top: 70px;
+          max-height: 100px;
+          > span {
+            width: 100%;
+            height: 100%;
+            position: relative !important;
+            img {
+              &#presentez-vous,
+              &#votre_situation_actuelle {
+                object-position: 0px -200px !important;
+              }
+              &#vos_ressources {
+                object-position: 0px -85px !important;
+              }
+              &#vos_garanties {
+                object-position: 0px -150px !important;
+              }
+              &#pieces_justificatives {
+                object-position: 0px -300px !important;
+              }
+            }
+            > span {
+              min-width: 100%;
+              max-height: 100%;
+            }
+          }
+        }
+      }
+    }
+    form {
+      min-width: 90%;
+    }
+    .arrows {
+      z-index: 1;
+      svg {
+        bottom: 20px;
+        position: fixed;
+      }
+      &.left {
+        svg {
+          right: 100px;
+        }
+      }
+      &.right {
+        svg {
+          right: 20px;
+        }
+      }
+    }
+    .info {
+      display: flex;
+      svg {
+        flex: 1;
+        margin: 0px !important;
+      }
+      p {
+        margin-left: 10px !important;
+        flex: 5;
+        text-align: justify;
+      }
+    }
+    .ant-radio-group {
+      flex-direction: column;
     }
   }
 `;

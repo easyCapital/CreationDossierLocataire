@@ -7,8 +7,10 @@ import { HeaderWrapper } from "./Header.style";
 import { Button } from "antd";
 import HttpService from "../../services/HttpService";
 import { LoadProfileAction } from "../../redux/actions/ProfileActions";
+import { useMediaQuery } from "react-responsive";
+import MobileHeader from "./MobileHeader";
 
-export default function Header(props) {
+export default function Header() {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -20,6 +22,7 @@ export default function Header(props) {
       dispatch(LoadProfileAction());
     }, 1000);
   };
+  
   const createFolder = () => {
     setIsCreatingFolder(true);
     const http = new HttpService();
@@ -28,7 +31,7 @@ export default function Header(props) {
       .postData(null, url)
       .then((response) => {
         router.push("/folder/" + response.data.folder.slug);
-        // setIsCreatingFolder(false);
+        setIsCreatingFolder(false);
       })
       .catch((error) => {
         setIsCreatingFolder(false);
@@ -36,8 +39,9 @@ export default function Header(props) {
   };
 
   const isLoggedIn = useSelector((state) => state.userDetails.userProfile.data);
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-  return (
+  return isDesktop ? (
     <HeaderWrapper style={{ backgroundColor: router.asPath == "/" && "#fff" }}>
       <div className="left">
         <div className="logoImage">
@@ -80,5 +84,7 @@ export default function Header(props) {
         </Button>
       )}
     </HeaderWrapper>
+  ) : (
+    <MobileHeader isLoggedIn={isLoggedIn} createFolder={createFolder} logOut={logOut}/>
   );
 }

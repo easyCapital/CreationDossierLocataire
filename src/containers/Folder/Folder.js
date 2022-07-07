@@ -60,7 +60,7 @@ export default function Folder({ activities, guarantees }) {
         if (key == name) {
           return true;
         } else {
-          if (values[key] == null) {
+          if (values[key] === null || values[key] === "") {
             ok = false;
             return true;
           }
@@ -92,9 +92,9 @@ export default function Folder({ activities, guarantees }) {
     }
   }, [window]);
 
-  return mapLoaded ? (
+  return mapLoaded && folder ? (
     <FolderWrapper>
-      {currentStep == 1 && <PresentationForm {...formsProps} user={user}/>}
+      {currentStep == 1 && <PresentationForm {...formsProps} user={user} />}
       {currentStep == 2 && <SituationForm {...formsProps} />}
       {currentStep == 3 && <ResourceForm {...formsProps} />}
       {currentStep == 4 && <GarantForm {...formsProps} />}

@@ -1,12 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,700,900');
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,700,900");
 
 html,
 body {
   padding: 0;
   margin: 0;
-  scroll-behavior: smooth; 
-  
-  
+  scroll-behavior: smooth;
+  #__next {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
   /* background-image: url("../public/easycapital_01.svg") ; */
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -19,7 +23,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: 'Poppins',sans-serif;
+  font-family: "Poppins", sans-serif;
   font-display: swap;
 }
 
@@ -29,5 +33,63 @@ a {
   svg {
     color: #005fc3;
     font-size: 20px;
+  }
+}
+
+#nprogress {
+  .bar {
+    background: #005fc3 !important;
+  }
+  .spinner-icon {
+    border-top-color: #005fc3 !important;
+    border-left-color: #005fc3 !important;
+  }
+  .peg {
+    box-shadow: 0 0 10px #005fc3, 0 0 5px #005fc3 !important;
+  }
+}
+
+.ant-drawer-content-wrapper {
+  width: 60% !important;
+}
+.ant-drawer-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0px;
+  align-items: center;
+  padding-bottom: 20px;
+  max-height: 100vh !important;
+  svg {
+    font-size: 26px;
+  }
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .top a,
+  .ant-btn-link {
+    height: 50px;
+    border-bottom: 1px solid grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: black;
+  }
+  img {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  .ant-btn-primary {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  .ant-btn-secondary {
+    font-size: 14px;
+    border: 1px solid lightgrey;
+    color: black;
   }
 }
