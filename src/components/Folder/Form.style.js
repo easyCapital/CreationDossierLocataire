@@ -5,7 +5,9 @@ import { blue } from "../../styles/variables.style";
 const flipAnimation = keyframes`${rollIn}`;
 
 export const FormWrapper = styled.div`
-  min-height: 100vh;
+  @media (min-width: 1024px) {
+    height: 100vh;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +16,12 @@ export const FormWrapper = styled.div`
     flex: 1;
     display: flex;
     justify-content: center;
+  }
+  .arrows {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   > div > svg {
     animation: 1s ${flipAnimation};
@@ -154,6 +162,7 @@ export const FormWrapper = styled.div`
   }
 
   @media (max-width: 1024px) {
+    min-height: 100vh;
     padding: 0px !important;
     padding-bottom: 500px !important;
     &.reverse {

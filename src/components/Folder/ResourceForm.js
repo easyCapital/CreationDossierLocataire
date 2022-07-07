@@ -3,7 +3,15 @@ import {
   faChevronCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, InputNumber, message, Popover, Radio, Space } from "antd";
+import {
+  Button,
+  Form,
+  InputNumber,
+  message,
+  Popover,
+  Radio,
+  Space,
+} from "antd";
 import { FormWrapper } from "./Form.style";
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -160,7 +168,7 @@ export default function ResourceForm({
                               name={"net_monthly_salary_before_deduction_" + e}
                               key={"date" + e}
                             >
-                              <InputNumber step={1} />
+                              <InputNumber pattern="\d*" />
                             </Form.Item>
                           );
                         })}
@@ -218,7 +226,7 @@ export default function ResourceForm({
                               name={"annual_income_tax_" + e}
                               key={e}
                             >
-                              <InputNumber step={1} />
+                              <InputNumber pattern="\d*" />
                             </Form.Item>
                           );
                         })}
@@ -231,10 +239,24 @@ export default function ResourceForm({
                     fieldsToFill
                   ) ? (
                     <Form.Item
-                      label={"Autre(s) revenu(s) net(s) mensuel(s)"}
+                      label={
+                        <label>
+                          Autre(s) revenu(s) net(s) mensuel(s){" "}
+                          <Button
+                            onClick={() =>
+                              form.setFieldsValue({
+                                ...form.getFieldsValue(),
+                                other_monthly_incomes: 0,
+                              })
+                            }
+                          >
+                            Aucun
+                          </Button>
+                        </label>
+                      }
                       name="other_monthly_incomes"
                     >
-                      <InputNumber />
+                      <InputNumber pattern="\d*" />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled(
@@ -246,7 +268,7 @@ export default function ResourceForm({
                       label={"Montant du loyer actuel"}
                       name="current_rent_amount"
                     >
-                      <InputNumber />
+                      <InputNumber pattern="\d*" />
                     </Form.Item>
                   ) : null}
                 </>
