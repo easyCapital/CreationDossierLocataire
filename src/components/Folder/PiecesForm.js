@@ -15,6 +15,7 @@ import HttpService from "../../services/HttpService";
 import pieces_justificatives from "../../../public/forms/pieces_justificatives.jpg";
 import Image from "next/image";
 import Confetti from "react-confetti";
+import { blue } from "../../styles/variables.style";
 
 export default function PiecesForm({
   folder,
@@ -302,6 +303,7 @@ export default function PiecesForm({
       x: window.innerWidth - 80,
       y: window.innerHeight / 2 - 30,
     });
+    window.scrollTo(0, 0);
   }, []);
 
   const [isFormFilled, setIsFormFilled] = useState(false);
@@ -342,7 +344,7 @@ export default function PiecesForm({
       onOk() {
         handleGeneratePdf();
       },
-      icon: <FontAwesomeIcon icon={faCloudUploadAlt} />,
+      icon: <FontAwesomeIcon icon={faCloudBolt} style={{ color: blue }} />,
     });
   }
 

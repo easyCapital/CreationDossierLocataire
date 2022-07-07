@@ -44,6 +44,7 @@ export default function GarantForm({
   };
   useEffect(() => {
     form.setFieldsValue(initFormValues);
+    window.scrollTo(0, 0);
   }, []);
   const { TabPane } = Tabs;
   const { Option } = Select;

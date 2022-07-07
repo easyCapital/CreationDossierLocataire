@@ -105,6 +105,9 @@ export const HomeWrapper = styled.div`
 
   @media screen and (max-width: 1024px) {
     padding: 0px 5%;
+    .arrow {
+      top: 90vh !important;
+    }
     h1 {
       font-size: 36px;
     }

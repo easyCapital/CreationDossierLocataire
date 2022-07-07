@@ -83,10 +83,8 @@ export default function SituationForm({
 
   useEffect(() => {
     checkIfFormIsFinished();
+    window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
 
   const [isOpen, setIsOpen] = useState(false);
 

@@ -64,6 +64,7 @@ export default function PresentationForm({
 
   useEffect(() => {
     checkIfFormIsFinished();
+    window.scrollTo(0, 0);
   }, []);
 
   return (

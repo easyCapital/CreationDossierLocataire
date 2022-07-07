@@ -112,6 +112,10 @@ export default function ResourceForm({
     });
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <FormWrapper className="reverse">
       <div className="arrows left">
