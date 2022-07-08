@@ -201,6 +201,9 @@ export default function PiecesForm({
   }
 
   function customRequest(options, type, index) {
+    console.log(options);
+    console.log(type);
+    console.log(index);
     const { onSuccess, onError, file } = options;
     const person = index ? folder.guarants[index - 1] : folder;
     let data = new FormData();
@@ -224,6 +227,7 @@ export default function PiecesForm({
         return res.json();
       })
       .then((res) => {
+        console.log(res);
         if (res.data.file) {
           let fileList = [
             ...form.getFieldValue(["persons", index, type]).fileList,
@@ -251,7 +255,8 @@ export default function PiecesForm({
             "Nous avons rencontré une erreur lors de l'enregistrement du fichier."
           );
         }
-      });
+      })
+      .catch((e) => console.log(e));
   }
   const handleGeneratePdf = () => {
     window.open(
