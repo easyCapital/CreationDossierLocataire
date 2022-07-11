@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
             ).split("?")[0]
           }
         />
-        <link rel="icon" href="../../public/passloc-logo-small.png" />
+        <link rel="icon" href="../../passloc-logo-small.png" />
       </Head>
       <AuthProvider>
         <Component {...pageProps} />

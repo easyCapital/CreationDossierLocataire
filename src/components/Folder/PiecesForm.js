@@ -7,7 +7,16 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, message, Modal, Popconfirm, Tabs, Tooltip, Upload } from "antd";
+import {
+  Form,
+  message,
+  Modal,
+  notification,
+  Popconfirm,
+  Tabs,
+  Tooltip,
+  Upload,
+} from "antd";
 import { FormWrapper } from "./Form.style";
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -16,6 +25,7 @@ import pieces_justificatives from "../../../public/forms/pieces_justificatives.j
 import Image from "next/image";
 import Confetti from "react-confetti";
 import { blue } from "../../styles/variables.style";
+import LoadingSpinner from "../../components/global/LoadingSpinner/LoadingSpinner";
 
 export default function PiecesForm({
   folder,
@@ -201,9 +211,7 @@ export default function PiecesForm({
   }
 
   function customRequest(options, type, index) {
-    console.log(options);
-    console.log(type);
-    console.log(index);
+    setIsUploading(type);
     const { onSuccess, onError, file } = options;
     const person = index ? folder.guarants[index - 1] : folder;
     let data = new FormData();
@@ -227,7 +235,6 @@ export default function PiecesForm({
         return res.json();
       })
       .then((res) => {
-        console.log(res);
         if (res.data.file) {
           let fileList = [
             ...form.getFieldValue(["persons", index, type]).fileList,
@@ -250,6 +257,7 @@ export default function PiecesForm({
             },
           };
           form.setFieldsValue(newFields);
+          setIsUploading(false);
         } else {
           message.error(
             "Nous avons rencontré une erreur lors de l'enregistrement du fichier."
@@ -259,11 +267,49 @@ export default function PiecesForm({
       .catch((e) => console.log(e));
   }
   const handleGeneratePdf = () => {
-    window.open(
-      "https://app.passloc.fr/api/generatePdf/" + folder.slug,
-      "_blank"
-    );
+    if (folder.user.email_verified_at) {
+      window.open(
+        "https://app.passloc.fr/api/generatePdf/" + folder.slug,
+        "_blank"
+      );
+    } else {
+      notification.info({
+        message: (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <p>
+              Vous devez valider votre adresse email avant de pouvoir générer le
+              PDF.
+            </p>
+            <Button onClick={sendValidationMail} type="primary">
+              Renvoyer le mail de validation
+            </Button>
+          </div>
+        ),
+      });
+    }
   };
+
+  const sendValidationMail = () => {
+    new HttpService()
+      .postData({ email: folder.user.email }, "send-confirmation-mail")
+      .then((res) => {
+        if (res.success) {
+          message.success("Mail envoyé");
+        } else {
+          message.error("Nous avons rencontré une erreur");
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const [isUploading, setIsUploading] = useState(true);
 
   const uploadprops = {
     headers: {
@@ -299,6 +345,15 @@ export default function PiecesForm({
       ) : (
         normal
       );
+    },
+    beforeUpload: (file) => {
+      const isLt4M = file.size / 1024 / 1024 < 4;
+
+      if (!isLt4M) {
+        message.error("La taille du fichier doit être inférieure à 4MB !");
+      }
+
+      return isLt4M;
     },
   };
 
@@ -340,9 +395,9 @@ export default function PiecesForm({
         <p>
           Un dossier complet augmente vos chances d'être retenue par un
           propriétaire ou une agence. <br />
-          Pas d'inquiétudes, vos documents seront protégés par un filigrane et
-          vous pourrez choisir à qui vous allez transmettre votre dossier.{" "}
-          <br />
+          {/* Pas d'inquiétudes, vos documents seront protégés par un filigrane et
+          vous pourrez choisir à qui vous allez transmettre votre dossier.
+          <br /> */}
           <b>Voulez-vous tout de même générer le pdf ?</b>
         </p>
       ),
@@ -406,9 +461,17 @@ export default function PiecesForm({
                                     ?.fileList?.length ?? 0) <
                                     fieldsDetails.find(
                                       (detail) => detail.value == e
-                                    ).maxFiles && (
-                                    <FontAwesomeIcon icon={faCloudUploadAlt} />
-                                  )}
+                                    ).maxFiles &&
+                                    (isUploading == e ? (
+                                      <LoadingSpinner />
+                                    ) : (
+                                      <span className="uploadIcon">
+                                        <FontAwesomeIcon
+                                          icon={faCloudUploadAlt}
+                                        />
+                                        (4 mb max)
+                                      </span>
+                                    ))}
                                 </Upload>
                               </Form.Item>
                             ))}
@@ -446,9 +509,9 @@ export default function PiecesForm({
                 <br />
                 Un dossier complet augmente vos chances d'être retenue par un
                 propriétaire ou une agence. <br />
-                Pas d'inquiétudes, vos documents seront protégés par un
+                {/* Pas d'inquiétudes, vos documents seront protégés par un
                 filigrane et vous pourrez choisir à qui vous allez transmettre
-                votre dossier. <br />
+                votre dossier. <br /> */}
                 <b>Voulez-vous tout de même générer le pdf ?</b>
               </p>
             }

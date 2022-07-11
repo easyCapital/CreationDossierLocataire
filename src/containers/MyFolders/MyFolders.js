@@ -3,10 +3,12 @@ import {
   faCloudBolt,
   faEdit,
   faPlusCircle,
+  faShare,
+  faShareAlt,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Popconfirm, Progress, Tooltip } from "antd";
+import { Button, message, notification, Popconfirm, Progress, Tooltip } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -19,6 +21,7 @@ import dynamic from "next/dynamic";
 import { blue } from "../../styles/variables.style";
 import useSWR from "swr";
 import { useSwipeable } from "react-swipeable";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 function Card({ folder, createFolder, deleteFolder }) {
   const [show, setShown] = useState(false);
@@ -30,12 +33,57 @@ function Card({ folder, createFolder, deleteFolder }) {
       : "0 2px 10px rgb(0 0 0 / 8%)",
   });
 
-  const handleGeneratePdf = () => {
-    window.open(
-      "https://app.passloc.fr/api/generatePdf/" + folder.slug,
-      "_blank"
-    );
+  const sendValidationMail = () => {
+    new HttpService()
+      .postData({ email: folder.user.email }, "send-confirmation-mail")
+      .then((res) => {
+        if (res.success) {
+          message.success("Mail envoyé");
+        } else {
+          message.error("Nous avons rencontré une erreur");
+        }
+      })
+      .catch((e) => console.log(e));
   };
+
+  const handleGeneratePdf = () => {
+    if (folder.user.email_verified_at) {
+      window.open(
+        "https://app.passloc.fr/api/generatePdf/" + folder.slug,
+        "_blank"
+      );
+    } else {
+      notification.info({
+        message: (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <p>
+              Vous devez valider votre adresse email avant de pouvoir générer le
+              PDF.
+            </p>
+            <Button onClick={sendValidationMail} type="primary">
+              Renvoyer le mail de validation
+            </Button>
+          </div>
+        ),
+      });
+    }
+  };
+
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (copied) {
+      message.info("Lien de téléchargement copié dans le presse-papier.");
+      setCopied(false);
+    }
+  }, [copied]);
 
   return (
     <animated.div
@@ -75,10 +123,23 @@ function Card({ folder, createFolder, deleteFolder }) {
             <h2>{(folder.firstname ?? "") + " " + (folder.lastname ?? "")}</h2>
             <div className="description">
               <p>{folder.activity?.label ?? ""}</p>
-              <p>{folder.email}</p>
-              <p>{folder.mobile}</p>
+              <p>{folder.email ?? folder.user.email ?? ""}</p>
+              <p>{folder.mobile ?? ""}</p>
             </div>
             <div className="btns">
+              {(folder.current_step * 100) / 5 == 100 && (
+                <CopyToClipboard
+                  text={"https://app.passloc.fr/api/generatePdf/" + folder.slug}
+                  onCopy={() => setCopied(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faShareAlt}
+                    onClick={() =>
+                      "https://app.passloc.fr/api/generatePdf/" + folder.slug
+                    }
+                  />
+                </CopyToClipboard>
+              )}
               <Link href={"/folder/" + folder.slug}>
                 <FontAwesomeIcon icon={faEdit} />
               </Link>

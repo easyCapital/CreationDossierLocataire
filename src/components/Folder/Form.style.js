@@ -104,6 +104,16 @@ export const FormWrapper = styled.div`
             color: ${blue};
             font-size: 24px;
           }
+          > div {
+            margin: 0px;
+          }
+          .uploadIcon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-style: italic;
+            color: grey;
+          }
         }
         .pdfThumbnail {
           &:hover {
