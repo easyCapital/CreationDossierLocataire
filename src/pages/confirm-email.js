@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import HttpService from "../services/HttpService";
 
-export default function confirmEmail() {
+export default function confirmEmailPage() {
   const router = useRouter();
   const [success, setSuccess] = useState(null);
 

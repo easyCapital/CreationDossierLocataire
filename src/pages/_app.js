@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <Navbar />
+      {router.asPath != "/contact" && <Navbar />}
       <NextNProgress />
       <Head>
         <title>Passloc</title>

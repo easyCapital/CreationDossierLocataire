@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Input, Button, Modal, message } from "antd";
+import { Form, Input, Button, Modal, message, Checkbox } from "antd";
 import { useRouter } from "next/router";
 import HttpService from "../../../services/HttpService";
 import Connexion from "../../../containers/Connexion/Connexion";
@@ -110,6 +110,34 @@ export default function SignUp(props) {
           ]}
         >
           <Input type="password" />
+        </Form.Item>
+        <Form.Item
+          name="accept_conditions"
+          valuePropName="checked"
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(
+                      new Error(
+                        "Vous devez accepter les conditions générales d'utilisation."
+                      )
+                    ),
+            },
+          ]}
+          wrapperCol={{
+            offset: 4,
+            span: 13,
+          }}
+        >
+          <Checkbox>
+            J'accepte les{" "}
+            <a href="/traitement-des-donnees" target="_blank">
+              conditions générales d'utilisation
+            </a>
+            .
+          </Checkbox>
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
           <Button type="primary" htmlType="submit" loading={isSubmitting}>

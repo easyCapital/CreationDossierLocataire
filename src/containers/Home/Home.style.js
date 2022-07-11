@@ -49,11 +49,11 @@ export const HomeWrapper = styled.div`
       .ant-input {
         width: 400px;
         height: 50px;
+        margin-right: 20px;
       }
       .ant-btn {
         font-size: 18px;
         height: 50px;
-        margin-left: 20px;
         font-weight: bold;
       }
     }
@@ -99,6 +99,7 @@ export const HomeWrapper = styled.div`
     > div {
       img {
         margin: 0px 100px;
+        cursor: pointer;
       }
     }
   }

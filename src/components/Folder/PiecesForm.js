@@ -347,13 +347,13 @@ export default function PiecesForm({
       );
     },
     beforeUpload: (file) => {
-      const isLt4M = file.size / 1024 / 1024 < 4;
+      const isLt8M = file.size / 1024 / 1024 < 8;
 
-      if (!isLt4M) {
-        message.error("La taille du fichier doit être inférieure à 4MB !");
+      if (!isLt8M) {
+        message.error("La taille du fichier doit être inférieure à 8MB !");
       }
 
-      return isLt4M;
+      return isLt8M;
     },
   };
 

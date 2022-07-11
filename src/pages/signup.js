@@ -1,5 +1,5 @@
 import SignUp from "../components/Connexion/SignUp/SignUp";
 
-export default function indexPage(props) {
+export default function signupPage(props) {
   return <SignUp {...props} />;
 }

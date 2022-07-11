@@ -1,4 +1,5 @@
 import { Divider } from "antd";
+import Link from "next/link";
 import { FooterWrapper } from "./Footer.style";
 
 export default function Footer() {
@@ -10,8 +11,8 @@ export default function Footer() {
       <Divider />
       <div className="bottom">
         <div>
-          <p>Traitement des données</p>
-          <p>Contact</p>
+          <Link href="/traitement-des-donnees">Traitement des données</Link>
+          <Link href="/contact">Contact</Link>
         </div>
         <div>
           <p>70 Avenue de Branne, 33370 TRESSES</p>

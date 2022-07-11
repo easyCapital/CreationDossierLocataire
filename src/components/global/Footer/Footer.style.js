@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { blue } from "../../../styles/variables.style";
 
 export const FooterWrapper = styled.div`
   padding: 20px 100px;
@@ -15,9 +16,13 @@ export const FooterWrapper = styled.div`
     justify-content: space-between;
     > div {
       display: flex;
-      p {
+      a {
         margin: 0px;
         margin-left: 10px;
+        color: black;
+        &:hover {
+          color: ${blue};
+        }
       }
     }
   }

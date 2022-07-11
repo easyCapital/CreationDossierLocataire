@@ -123,16 +123,20 @@ export default function Home({ profileResponse, isDesktop }) {
       <div className="partenaires">
         <h2>Nos partenaires</h2>
         <div>
-          <img
-            src={"/logo_wilok.png"}
-            alt="logo wilok"
-            width={isDesktop ? "400" : "200"}
-          />
-          <img
-            src={"/easycapital_logo.svg"}
-            alt="logo easycapital"
-            width={isDesktop ? "600" : "300"}
-          />
+          <a href="https://www.wilok.fr" target="_blank">
+            <img
+              src={"/logo_wilok.png"}
+              alt="logo wilok"
+              width={isDesktop ? "400" : "200"}
+            />
+          </a>
+          <a href="https://www.easycapital.fr" target="_blank">
+            <img
+              src={"/easycapital_logo.svg"}
+              alt="logo easycapital"
+              width={isDesktop ? "600" : "300"}
+            />
+          </a>
         </div>
       </div>
     </HomeWrapper>
