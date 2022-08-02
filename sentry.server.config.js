@@ -2,14 +2,24 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from '@sentry/nextjs';
+import * as Sentry from "@sentry/nextjs";
 
 const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 Sentry.init({
-  dsn: SENTRY_DSN || 'https://3993b05943f2476390ae34b7793c0554@o1315080.ingest.sentry.io/6566709',
+  dsn:
+    SENTRY_DSN ||
+    "https://3993b05943f2476390ae34b7793c0554@o1315080.ingest.sentry.io/6566709",
   // Adjust this value in production, or use tracesSampler for greater control
   tracesSampleRate: 1.0,
+  beforeSend(event, hint) {
+    // Check if it is an exception, and if so, show the report dialog
+    if (event.exception) {
+      // Sentry.showReportDialog({ eventId: event.event_id });
+      setCookie("sentry_event_id", event.event_id);
+    }
+    return event;
+  },
   // ...
   // Note: if you want to override the automatic release value, do not set a
   // `release` value here - use the environment variable `SENTRY_RELEASE`, so
