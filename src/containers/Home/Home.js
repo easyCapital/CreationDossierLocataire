@@ -42,7 +42,7 @@ export default function Home({ profileResponse, isDesktop }) {
         <h1>
           Constituez votre dossier locataire
           <br />
-          <span className="blue">Partagez le en toute sécurité</span>
+          <span className="blue">Partagez-le en toute sécurité</span>
         </h1>
         <strong>
           Passloc vous permet de transmettre rapidement à n'importe quel

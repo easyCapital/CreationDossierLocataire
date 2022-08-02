@@ -18,7 +18,7 @@
     "@types/googlemaps": "^3.43.3",
     "antd": "^4.21.3",
     "antd-mobile": "^2.3.4",
-    "cookies-next": "^2.0.4",
+    "cookies-next": "^2.1.1",
     "moment": "^2.29.1",
     "next": "^12.1.6",
     "next-plugin-antd-less": "^1.8.0",
