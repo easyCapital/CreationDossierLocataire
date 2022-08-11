@@ -90,6 +90,11 @@ export const MyFoldersWrapper = styled.div`
       align-items: center;
       justify-content: center;
       text-align: center;
+      > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
     .createFolder {
