@@ -21,6 +21,43 @@ export const HomeWrapper = styled.div`
     color: ${blue};
   }
 
+  .form {
+    display: flex;
+    align-items: center;
+    > * {
+      margin: 10px;
+    }
+    > Button {
+      min-height: 60px;
+      width: 170px;
+      :hover {
+        background-color: white;
+        color: ${blue};
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    height: 60px;
+
+    > label {
+      text-align: left;
+      font-weight: bold;
+      margin-left: 11px;
+    }
+    > Input {
+      border: none;
+      height: 20px !important;
+    }
+  }
+
   .ant-divider {
     min-width: 100px;
     width: 500px;

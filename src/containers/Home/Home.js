@@ -56,15 +56,19 @@ export default function Home({ profileResponse, isDesktop }) {
             </Button>
           </Form>
         ) : (
-          <Form onFinish={checkIfUserHasAccount}>
+          <Form className="form" onFinish={checkIfUserHasAccount}>
             <Form.Item>
-              <Input
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                placeholder="Votre adresse e-mail"
-                value={email}
-              />
+              <div className="inputContainer">
+                <label htmlFor="email">Votre adresse e-mail</label>
+                <Input
+                  id="email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  placeholder="example@mail.com"
+                  value={email}
+                />
+              </div>
             </Form.Item>
             <Button shape="round" type="primary" htmlType="submit">
               Commencer
