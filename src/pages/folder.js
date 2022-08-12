@@ -5,7 +5,7 @@ export default function folderPage(props) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch("https://app.passloc.fr/api/activities");
+  const res = await fetch(process.env.API_URL + "activities");
   const { data: activities } = await res.json();
 
   return { props: { activities } };

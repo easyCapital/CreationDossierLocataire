@@ -26,7 +26,7 @@ export default function Folder({ activities, guarantees }) {
   };
   const { data, mutate } = useSWR(
     profileResponse?.data?.user
-      ? "https://app.passloc.fr/api/users/" + profileResponse.data.user.id
+      ? process.env.API_URL + "users/" + profileResponse.data.user.id
       : null,
     fetcher
   );

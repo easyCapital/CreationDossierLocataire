@@ -49,7 +49,7 @@ function Card({ folder, createFolder, deleteFolder }) {
   const handleGeneratePdf = () => {
     if (folder.user.email_verified_at) {
       window.open(
-        "https://app.passloc.fr/api/generatePdf/" + folder.slug,
+        process.env.API_URL + "generatePdf/" + folder.slug,
         "_blank"
       );
     } else {
@@ -129,13 +129,13 @@ function Card({ folder, createFolder, deleteFolder }) {
             <div className="btns">
               {(folder.current_step * 100) / 5 == 100 && (
                 <CopyToClipboard
-                  text={"https://app.passloc.fr/api/generatePdf/" + folder.slug}
+                  text={process.env.API_URL + "generatePdf/" + folder.slug}
                   onCopy={() => setCopied(true)}
                 >
                   <FontAwesomeIcon
                     icon={faShareAlt}
                     onClick={() =>
-                      "https://app.passloc.fr/api/generatePdf/" + folder.slug
+                      process.env.API_URL + "generatePdf/" + folder.slug
                     }
                   />
                 </CopyToClipboard>
@@ -187,7 +187,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
   };
   const { data, mutate } = useSWR(
     profileResponse?.data?.user
-      ? "https://app.passloc.fr/api/users/" + profileResponse.data.user.id
+      ? process.env.API_URL + "users/" + profileResponse.data.user.id
       : null,
     fetcher
   );

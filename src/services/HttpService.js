@@ -1,34 +1,33 @@
 export default class HttpService {
-  url = "https://app.passloc.fr/api";
   postData = async (item, added_url, tokenId = "", pdf = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.postRequestOptions(token, item, pdf);
-    return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
-      response.json()
+    return fetch(process.env.API_URL + added_url, requestOptions).then(
+      (response) => response.json()
     );
   };
 
   getData = async (added_url, file = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.getRequestOptions(token);
-    return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
-      file ? response : response.json()
+    return fetch(process.env.API_URL + added_url, requestOptions).then(
+      (response) => (file ? response : response.json())
     );
   };
 
   putData = async (item, added_url, tokenId, pdf = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.putRequestOptions(token, item, pdf);
-    return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
-      response.json()
+    return fetch(process.env.API_URL + added_url, requestOptions).then(
+      (response) => response.json()
     );
   };
 
   deleteData = async (added_url, file = false) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.deleteRequestOptions(token);
-    return fetch(this.url + "/" + added_url, requestOptions).then((response) =>
-      file ? response : response.json()
+    return fetch(process.env.API_URL + added_url, requestOptions).then(
+      (response) => (file ? response : response.json())
     );
   };
 
@@ -90,7 +89,7 @@ export default class HttpService {
   postFileData = async (item, added_url) => {
     const token = await localStorage.getItem("user-token");
     const requestOptions = this.postFileRequestOptions(token, item);
-    return fetch(this.url + "/" + added_url, requestOptions).then(
+    return fetch(process.env.API_URL + added_url, requestOptions).then(
       (response) => response
     );
   };

@@ -97,7 +97,7 @@ export default function PiecesForm({
                   name: file.slug,
                   type: file.filetype,
                   status: "done",
-                  url: "https://app.passloc.fr/api/files/" + file.slug,
+                  url:  process.env.API_URL + "files/" + file.slug,
                 };
               }),
           };
@@ -245,7 +245,7 @@ export default function PiecesForm({
             name: res.data.file.slug,
             type: res.data.file.filetype,
             status: "done",
-            url: "https://app.passloc.fr/api/files/" + res.data.file.slug,
+            url:process.env.API_URL + "files/" + res.data.file.slug,
           });
           const newFields = {
             persons: [...form.getFieldValue("persons")],
@@ -269,7 +269,7 @@ export default function PiecesForm({
   const handleGeneratePdf = () => {
     if (folder.user.email_verified_at) {
       window.open(
-        "https://app.passloc.fr/api/generatePdf/" + folder.slug,
+        process.env.API_URL + "generatePdf/" + folder.slug,
         "_blank"
       );
     } else {
@@ -329,7 +329,7 @@ export default function PiecesForm({
               icon={faEye}
               onClick={() =>
                 window.open(
-                  "https://app.passloc.fr/api/files/" + file.name,
+                  process.env.API_URL + "files/" + file.name,
                   "_blank"
                 )
               }
@@ -337,7 +337,7 @@ export default function PiecesForm({
             <FontAwesomeIcon icon={faTrash} onClick={() => actions.remove()} />
           </div>
           <embed
-            src={"https://app.passloc.fr/api/files/" + file.name}
+            src={process.env.API_URL + "files/" + file.name}
             width="100"
             height="100"
           ></embed>
