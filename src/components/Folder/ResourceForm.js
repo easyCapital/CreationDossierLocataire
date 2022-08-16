@@ -153,6 +153,7 @@ export default function ResourceForm({
                           ? "Pension de retraite"
                           : "Salaire net mensuel avant prélèvement"
                       }
+                      required={true}
                     >
                       <Space align="baseline">
                         {[3, 2, 1].map((e) => {
@@ -167,8 +168,13 @@ export default function ResourceForm({
                               label={date}
                               name={"net_monthly_salary_before_deduction_" + e}
                               key={"date" + e}
+                              required={true}
                             >
-                              <InputNumber pattern="[0-9]*" inputMode="numeric" step={1} />
+                              <InputNumber
+                                pattern="[0-9]*"
+                                inputMode="numeric"
+                                step={1}
+                              />
                             </Form.Item>
                           );
                         })}
@@ -198,6 +204,7 @@ export default function ResourceForm({
                         </p>
                       }
                       name="is_fiscally_attached"
+                      required={true}
                     >
                       <Radio.Group>
                         <Radio value={true}>Oui</Radio>
@@ -213,6 +220,7 @@ export default function ResourceForm({
                     <Form.Item
                       label={"Impôts sur le revenu annuel"}
                       name="annual_income_tax"
+                      required={true}
                     >
                       <Space align="baseline">
                         {[2, 1].map((e) => {
@@ -225,8 +233,13 @@ export default function ResourceForm({
                               label={date}
                               name={"annual_income_tax_" + e}
                               key={e}
+                              required={true}
                             >
-                              <InputNumber pattern="[0-9]*" inputMode="numeric" step={1} />
+                              <InputNumber
+                                pattern="[0-9]*"
+                                inputMode="numeric"
+                                step={1}
+                              />
                             </Form.Item>
                           );
                         })}
@@ -255,6 +268,7 @@ export default function ResourceForm({
                         </label>
                       }
                       name="other_monthly_incomes"
+                      required={true}
                     >
                       <InputNumber pattern="[0-9]*" inputMode="numeric" />
                     </Form.Item>
@@ -267,6 +281,7 @@ export default function ResourceForm({
                     <Form.Item
                       label={"Montant du loyer actuel"}
                       name="current_rent_amount"
+                      required={true}
                     >
                       <InputNumber pattern="[0-9]*" inputMode="numeric" />
                     </Form.Item>

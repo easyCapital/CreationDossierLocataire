@@ -85,7 +85,7 @@ export default function PresentationForm({
                   <p className="liveSave">
                     Toutes vos données sont sauvegardées à chaque modification !
                   </p>
-                  <Form.Item label="Civilité" name="civility">
+                  <Form.Item label="Civilité" name="civility" required={true}>
                     <Radio.Group buttonStyle="solid">
                       {["Mr", "Mme"].map((civility, i) => (
                         <Radio.Button value={civility} key={"civility_" + i}>
@@ -98,6 +98,7 @@ export default function PresentationForm({
                     <Form.Item
                       label={"Situation matrimoniale"}
                       name="marital_status"
+                      required={true}
                     >
                       <Select>
                         <Option value={"single"}>Célibataire</Option>
@@ -136,16 +137,24 @@ export default function PresentationForm({
                   ) : null}
                   {arePreviousItemsFilled("firstname", values) ? (
                     <Space align="baseline">
-                      <Form.Item label={"Prénom"} name="firstname">
+                      <Form.Item
+                        label={"Prénom"}
+                        name="firstname"
+                        required={true}
+                      >
                         <Input />
                       </Form.Item>
-                      <Form.Item label={"Nom"} name="lastname">
+                      <Form.Item label={"Nom"} name="lastname" required={true}>
                         <Input />
                       </Form.Item>
                     </Space>
                   ) : null}
                   {arePreviousItemsFilled("date_of_birth", values) ? (
-                    <Form.Item label={"Date de naissance"} name="date_of_birth">
+                    <Form.Item
+                      label={"Date de naissance"}
+                      name="date_of_birth"
+                      required={true}
+                    >
                       <Input type={"date"} />
                     </Form.Item>
                   ) : null}
@@ -154,18 +163,19 @@ export default function PresentationForm({
                       label={"Adresse e-mail"}
                       name="email"
                       rules={[{ type: "email" }]}
+                      required={true}
                     >
                       <Input />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled("mobile", values) &&
                   validator.isEmail(values.email) ? (
-                    <Form.Item label={"Mobile"} name="mobile">
+                    <Form.Item label={"Mobile"} name="mobile" required={true}>
                       <Input />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled("address", values) ? (
-                    <Form.Item label={"Adresse"} name="address">
+                    <Form.Item label={"Adresse"} name="address" required={true}>
                       <SearchLocationInput />
                     </Form.Item>
                   ) : null}

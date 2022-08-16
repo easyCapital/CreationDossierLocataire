@@ -123,7 +123,11 @@ export default function SituationForm({
                   <p className="liveSave">
                     Toutes vos données sont sauvegardées à chaque modification !
                   </p>
-                  <Form.Item label={"Activité principale"} name="activity_id">
+                  <Form.Item
+                    label={"Activité principale"}
+                    name="activity_id"
+                    required={true}
+                  >
                     <Select>
                       {activities.map((activity) => {
                         return (
@@ -151,6 +155,7 @@ export default function SituationForm({
                       <Form.Item
                         label={"Nom de l'entreprise"}
                         name="company_name"
+                        required={true}
                       >
                         <Input />
                       </Form.Item>
@@ -185,7 +190,11 @@ export default function SituationForm({
                     </>
                   )}
 
-                  <Form.Item label={"Vous êtes"} name="housing_situation">
+                  <Form.Item
+                    label={"Vous êtes"}
+                    name="housing_situation"
+                    required={true}
+                  >
                     <Radio.Group buttonStyle="solid">
                       <Radio.Button value={"owner"}>Propriétaire</Radio.Button>
                       <Radio.Button value={"tenant"}>Locataire</Radio.Button>
