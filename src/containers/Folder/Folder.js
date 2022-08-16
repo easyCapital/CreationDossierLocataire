@@ -10,7 +10,7 @@ import SituationForm from "../../components/Folder/SituationForm";
 import HttpService from "../../services/HttpService";
 import { FolderWrapper } from "./Folder.style";
 
-export default function Folder({ activities, guarantees }) {
+export default function Folder({ activities, guarantees, isDesktop }) {
   const profileResponse = useSelector((state) => state.userDetails.userProfile);
   const fetcher = async (url) => {
     const token = await localStorage.getItem("user-token");
@@ -82,6 +82,7 @@ export default function Folder({ activities, guarantees }) {
     activities,
     guarantees,
     handleCurrentStepChanged,
+    isDesktop,
   };
 
   const [mapLoaded, setMapLoaded] = useState(false);
