@@ -6,13 +6,13 @@ export default function folderPage(props) {
 }
 
 export async function getServerSideProps() {
-  const { data: activities } = await axios.get(
-    process.env.API_URL + "activities"
-  );
+  const {
+    data: { data: activities },
+  } = await axios.get(process.env.API_URL + "activities");
 
-  const { data: guarantees } = await axios.get(
-    process.env.API_URL + "guarantees"
-  );
+  const {
+    data: { data: guarantees },
+  } = await axios.get(process.env.API_URL + "guarantees");
 
   return { props: { activities, guarantees } };
 }
