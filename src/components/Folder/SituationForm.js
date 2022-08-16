@@ -185,19 +185,15 @@ export default function SituationForm({
                     </>
                   )}
 
-                  {arePreviousItemsFilled("housing_situation", values) ? (
-                    <Form.Item label={"Vous êtes"} name="housing_situation">
-                      <Radio.Group buttonStyle="solid">
-                        <Radio.Button value={"owner"}>
-                          Propriétaire
-                        </Radio.Button>
-                        <Radio.Button value={"tenant"}>Locataire</Radio.Button>
-                        <Radio.Button value={"free_accommodation"}>
-                          Logé à titre gratuit
-                        </Radio.Button>
-                      </Radio.Group>
-                    </Form.Item>
-                  ) : null}
+                  <Form.Item label={"Vous êtes"} name="housing_situation">
+                    <Radio.Group buttonStyle="solid">
+                      <Radio.Button value={"owner"}>Propriétaire</Radio.Button>
+                      <Radio.Button value={"tenant"}>Locataire</Radio.Button>
+                      <Radio.Button value={"free_accommodation"}>
+                        Logé à titre gratuit
+                      </Radio.Button>
+                    </Radio.Group>
+                  </Form.Item>
                 </>
               );
             }}
