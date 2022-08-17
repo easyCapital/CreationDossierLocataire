@@ -3,24 +3,36 @@ import React, { useState, useEffect, useRef } from "react";
 
 let autoComplete;
 
-function handleScriptLoad(updateQuery, autoCompleteRef, address, setAddress) {
+function handleScriptLoad(updateQuery, autoCompleteRef, placeOfBirthMode) {
+  let options = {
+    componentRestrictions: { country: "fr" },
+  };
+
+  if (placeOfBirthMode) options = { types: ["(cities)"] };
+
   autoComplete = new window.google.maps.places.Autocomplete(
     autoCompleteRef.current.input,
-    { componentRestrictions: { country: "fr" } }
+    options
   );
   autoComplete.setFields(["address_components", "formatted_address"]);
   autoComplete.addListener("place_changed", () =>
-    handlePlaceSelect(updateQuery, address, setAddress)
+    handlePlaceSelect(updateQuery)
   );
 }
 
-async function handlePlaceSelect(updateQuery, address, setAddress) {
+async function handlePlaceSelect(updateQuery) {
+  console.log(autoComplete.getPlace());
   const addressObject = autoComplete.getPlace();
+
   const query = addressObject.formatted_address;
   updateQuery(query);
 }
 
-function SearchLocationInput({ value = null, onChange, address, setAddress }) {
+function SearchLocationInput({
+  value = null,
+  onChange,
+  placeOfBirthMode = false,
+}) {
   const [query, setQuery] = useState(value);
   const autoCompleteRef = useRef(null);
 
@@ -30,7 +42,7 @@ function SearchLocationInput({ value = null, onChange, address, setAddress }) {
   };
 
   useEffect(() => {
-    handleScriptLoad(triggerChange, autoCompleteRef, address, setAddress);
+    handleScriptLoad(triggerChange, autoCompleteRef, placeOfBirthMode);
   }, []);
 
   return (

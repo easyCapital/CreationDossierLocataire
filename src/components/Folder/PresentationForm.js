@@ -30,6 +30,7 @@ export default function PresentationForm({
     date_of_birth: folder.date_of_birth,
     email: folder.email ?? user.email,
     mobile: folder.mobile,
+    place_of_birth: folder.place_of_birth,
     address: folder.address,
   };
 
@@ -172,6 +173,15 @@ export default function PresentationForm({
                   validator.isEmail(values.email) ? (
                     <Form.Item label={"Mobile"} name="mobile" required={true}>
                       <Input />
+                    </Form.Item>
+                  ) : null}
+                  {arePreviousItemsFilled("place_of_birth", values) ? (
+                    <Form.Item
+                      label={"Lieu de naissance"}
+                      name="place_of_birth"
+                      required={true}
+                    >
+                      <SearchLocationInput />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled("address", values) ? (
