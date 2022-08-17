@@ -181,12 +181,15 @@ export default function PresentationForm({
                       name="place_of_birth"
                       required={true}
                     >
-                      <SearchLocationInput />
+                      <SearchLocationInput
+                        placeOfBirthMode
+                        placeholder="Recherchez une ville"
+                      />
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled("address", values) ? (
                     <Form.Item label={"Adresse"} name="address" required={true}>
-                      <SearchLocationInput />
+                      <SearchLocationInput placeholder="Recherchez une adresse" />
                     </Form.Item>
                   ) : null}
                 </>

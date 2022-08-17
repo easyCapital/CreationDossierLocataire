@@ -247,10 +247,19 @@ export default function GarantForm({
                                   </Form.Item>
                                 </Space>
                                 <Form.Item
+                                  label={"Lieu de naissance"}
+                                  name={[field.name, "place_of_birth"]}
+                                >
+                                  <SearchLocationInput
+                                    placeOfBirthMode
+                                    placeholder="Recherchez une ville"
+                                  />
+                                </Form.Item>
+                                <Form.Item
                                   label={"Adresse"}
                                   name={[field.name, "address"]}
                                 >
-                                  <SearchLocationInput />
+                                  <SearchLocationInput placeholder="Recherchez une addresse" />
                                 </Form.Item>
                                 <Form.Item
                                   label="Activité principale"
