@@ -4,10 +4,12 @@ import { Spin, Space } from "antd";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudSun } from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery } from "react-responsive";
 
-export default function Connexion({ children, isDesktop }) {
+export default function Connexion({ children }) {
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
+  const isDesktop = useMediaQuery({ minWidth: 1300 });
 
   useEffect(() => {
     setLoaded(true);

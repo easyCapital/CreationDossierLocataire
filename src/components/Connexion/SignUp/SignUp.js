@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Input, Button, Modal, message, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { useRouter } from "next/router";
 import HttpService from "../../../services/HttpService";
 import Connexion from "../../../containers/Connexion/Connexion";
@@ -8,21 +8,30 @@ import { getCookie } from "cookies-next";
 export default function SignUp(props) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
   const registerFromEmail = (credentials) => {
     const http = new HttpService();
     let signupUrl = "register";
     return http
       .postData(credentials, signupUrl)
-      .then((data) => {
-        console.log(data);
-        if (data["success"]) {
+      .then((info) => {
+        console.log(info);
+        if (info.success) {
           router.push("/signin");
           return;
         }
-        message.error("Veuillez vérifier vos informations.");
+        const emailError = info.data.email[0];
+
+        if (emailError) {
+          setError(info.data.email[0]);
+        } else {
+          setError("Veuillez vérifier vos informations.");
+        }
+
         setIsSubmitting(false);
-        return data;
+
+        return info;
       })
       .catch((error) => {
         console.log(error);
@@ -144,6 +153,15 @@ export default function SignUp(props) {
             Créer mon compte
           </Button>
         </Form.Item>
+        {error && (
+          <Alert
+            description={error}
+            type="error"
+            showIcon
+            closable
+            afterClose={() => setError(null)}
+          />
+        )}
         <Form.Item
           wrapperCol={{ offset: 4, span: 16 }}
           className="noAccountWrapper"
