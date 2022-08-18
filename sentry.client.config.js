@@ -5,12 +5,10 @@
 import * as Sentry from "@sentry/nextjs";
 import { setCookie } from "cookies-next";
 
-const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
+const SENTRY_DSN = process.env.NEXT_PUBLIC_SENTRY_DSN ?? null;
 
 Sentry.init({
-  dsn:
-    SENTRY_DSN ||
-    "https://3993b05943f2476390ae34b7793c0554@o1315080.ingest.sentry.io/6566709",
+  dsn: SENTRY_DSN,
   // Adjust this value in production, or use tracesSampler for greater control
   tracesSampleRate: 1.0,
   beforeSend(event, hint) {
