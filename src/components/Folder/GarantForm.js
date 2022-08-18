@@ -60,13 +60,11 @@ export default function GarantForm({
     return diff >= 18 && diff <= 30;
   };
 
-  const onValuesChange = (changedValues, allValues) => {
+  const onValuesChange = (changedValues) => {
     const fieldName = Object.keys(changedValues)[0];
 
     let data = null;
     if (fieldName == "guarants") {
-      console.log(changedValues, allValues);
-      console.log(form.getFieldValue("guarants"));
       data = {
         guarants: form.getFieldValue("guarants").map((e) => e ?? {}),
       };
