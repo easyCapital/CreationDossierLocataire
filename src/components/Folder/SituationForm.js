@@ -132,10 +132,7 @@ export default function SituationForm({
                     <Select>
                       {activities.map((activity) => {
                         return (
-                          <Option
-                            value={activity.id.toString()}
-                            key={activity.value}
-                          >
+                          <Option value={activity.id} key={activity.value}>
                             {activity.label}
                           </Option>
                         );
