@@ -285,7 +285,7 @@ export default function GarantForm({
                                     {activities.map((activity) => {
                                       return (
                                         <Option
-                                          value={activity.id.toString()}
+                                          value={activity.id}
                                           key={activity.value}
                                         >
                                           {activity.label}
