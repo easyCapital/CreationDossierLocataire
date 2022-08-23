@@ -36,6 +36,7 @@ export default function GarantForm({
   guarantees,
   activities,
   isDesktop,
+  maritalStatuses,
 }) {
   const [form] = Form.useForm();
   const initFormValues = {
@@ -244,6 +245,23 @@ export default function GarantForm({
                                     <Input />
                                   </Form.Item>
                                 </Space>
+                                <Form.Item
+                                  label={"Situation matrimoniale"}
+                                  name={[field.name, "marital_status_id"]}
+                                >
+                                  <Select>
+                                    {maritalStatuses.map((maritalStatus) => {
+                                      return (
+                                        <Option
+                                          value={maritalStatus.id}
+                                          key={maritalStatus.value}
+                                        >
+                                          {maritalStatus.label}
+                                        </Option>
+                                      );
+                                    })}
+                                  </Select>
+                                </Form.Item>
                                 <Form.Item
                                   label={"Lieu de naissance"}
                                   name={[field.name, "place_of_birth"]}
