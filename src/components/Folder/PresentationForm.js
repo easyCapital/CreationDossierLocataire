@@ -13,6 +13,7 @@ export default function PresentationForm({
   arePreviousItemsFilled,
   validateMessages,
   handleCurrentStepChanged,
+  maritalStatuses,
   folder,
   user,
   isDesktop,
@@ -24,7 +25,7 @@ export default function PresentationForm({
   const [form] = Form.useForm();
   const initFormValues = {
     civility: folder.civility,
-    marital_status: folder.marital_status,
+    marital_status_id: folder.marital_status.id,
     firstname: folder.firstname,
     lastname: folder.lastname,
     date_of_birth: folder.date_of_birth,
@@ -98,41 +99,20 @@ export default function PresentationForm({
                   {arePreviousItemsFilled("marital_status", values) ? (
                     <Form.Item
                       label={"Situation matrimoniale"}
-                      name="marital_status"
+                      name="marital_status_id"
                       required={true}
                     >
                       <Select>
-                        <Option value={"single"}>Célibataire</Option>
-                        <Option value={"married"}>
-                          Marié
-                          {formInstance.getFieldValue("civility") == "Mme"
-                            ? "e"
-                            : ""}
-                        </Option>
-                        <Option value={"pacs"}>
-                          Pacsé
-                          {formInstance.getFieldValue("civility") == "Mme"
-                            ? "e"
-                            : ""}
-                        </Option>
-                        <Option value={"divorced"}>
-                          Divorcé
-                          {formInstance.getFieldValue("civility") == "Mme"
-                            ? "e"
-                            : ""}
-                        </Option>
-                        <Option value={"separated"}>
-                          Séparé
-                          {formInstance.getFieldValue("civility") == "Mme"
-                            ? "e"
-                            : ""}
-                        </Option>
-                        <Option value={"widower"}>
-                          Veu
-                          {formInstance.getFieldValue("civility") == "Mme"
-                            ? "ve"
-                            : "f"}
-                        </Option>
+                        {maritalStatuses.map((maritalStatus) => {
+                          return (
+                            <Option
+                              value={maritalStatus.id}
+                              key={maritalStatus.value}
+                            >
+                              {maritalStatus.label}
+                            </Option>
+                          );
+                        })}
                       </Select>
                     </Form.Item>
                   ) : null}
