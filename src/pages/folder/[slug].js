@@ -11,8 +11,12 @@ export async function getServerSideProps() {
   } = await axios.get(process.env.API_URL + "activities");
 
   const {
+    data: { data: maritalStatuses },
+  } = await axios.get(process.env.API_URL + "marital_statuses");
+
+  const {
     data: { data: guarantees },
   } = await axios.get(process.env.API_URL + "guarantees");
 
-  return { props: { activities, guarantees } };
+  return { props: { activities, guarantees, maritalStatuses } };
 }

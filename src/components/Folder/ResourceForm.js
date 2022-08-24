@@ -39,6 +39,7 @@ export default function ResourceForm({
             folder.net_monthly_salary_before_deduction_3,
         }
       : {}),
+    children_in_charge: folder.children_in_charge,
     is_fiscally_attached:
       folder.is_fiscally_attached == null
         ? folder.activity?.type == "student"
@@ -181,6 +182,19 @@ export default function ResourceForm({
                       </Space>
                     </Form.Item>
                   )}
+                  {arePreviousItemsFilled("children_in_charge", values) ? (
+                    <Form.Item
+                      label="Enfants à charge"
+                      name="children_in_charge"
+                    >
+                      <InputNumber
+                        pattern="[0-9]*"
+                        inputMode="numeric"
+                        step={1}
+                        max={99}
+                      />
+                    </Form.Item>
+                  ) : null}
                   {arePreviousItemsFilled("is_fiscally_attached", values) ? (
                     <Form.Item
                       label={

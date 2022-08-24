@@ -1,28 +1,40 @@
 import { Input } from "antd";
 import React, { useState, useEffect, useRef } from "react";
 
-let autoComplete;
-
-function handleScriptLoad(updateQuery, autoCompleteRef, address, setAddress) {
-  autoComplete = new window.google.maps.places.Autocomplete(
-    autoCompleteRef.current.input,
-    { componentRestrictions: { country: "fr" } }
-  );
-  autoComplete.setFields(["address_components", "formatted_address"]);
-  autoComplete.addListener("place_changed", () =>
-    handlePlaceSelect(updateQuery, address, setAddress)
-  );
-}
-
-async function handlePlaceSelect(updateQuery, address, setAddress) {
-  const addressObject = autoComplete.getPlace();
-  const query = addressObject.formatted_address;
-  updateQuery(query);
-}
-
-function SearchLocationInput({ value = null, onChange, address, setAddress }) {
+function SearchLocationInput({
+  value = null,
+  onChange,
+  placeOfBirthMode = false,
+  placeholder = "",
+}) {
   const [query, setQuery] = useState(value);
   const autoCompleteRef = useRef(null);
+
+  let autoComplete;
+
+  function handleScriptLoad(updateQuery, autoCompleteRef, placeOfBirthMode) {
+    let options = {
+      componentRestrictions: { country: "fr" },
+    };
+
+    if (placeOfBirthMode) options = { types: ["(cities)"] };
+
+    autoComplete = new window.google.maps.places.Autocomplete(
+      autoCompleteRef.current.input,
+      options
+    );
+    autoComplete.setFields(["address_components", "formatted_address"]);
+    autoComplete.addListener("place_changed", () =>
+      handlePlaceSelect(updateQuery)
+    );
+  }
+
+  async function handlePlaceSelect(updateQuery) {
+    const addressObject = autoComplete.getPlace();
+
+    const query = addressObject.formatted_address;
+    updateQuery(query);
+  }
 
   const triggerChange = (changedValue) => {
     setQuery(changedValue?.target?.value ?? changedValue);
@@ -30,14 +42,14 @@ function SearchLocationInput({ value = null, onChange, address, setAddress }) {
   };
 
   useEffect(() => {
-    handleScriptLoad(triggerChange, autoCompleteRef, address, setAddress);
+    handleScriptLoad(triggerChange, autoCompleteRef, placeOfBirthMode);
   }, []);
 
   return (
     <Input
       ref={autoCompleteRef}
       onChange={triggerChange}
-      placeholder="Recherchez une adresse"
+      placeholder={placeholder}
       value={typeof query != "object" ? query : value}
     />
   );

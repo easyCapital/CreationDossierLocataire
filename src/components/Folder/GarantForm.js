@@ -36,6 +36,7 @@ export default function GarantForm({
   guarantees,
   activities,
   isDesktop,
+  maritalStatuses,
 }) {
   const [form] = Form.useForm();
   const initFormValues = {
@@ -60,13 +61,11 @@ export default function GarantForm({
     return diff >= 18 && diff <= 30;
   };
 
-  const onValuesChange = (changedValues, allValues) => {
+  const onValuesChange = (changedValues) => {
     const fieldName = Object.keys(changedValues)[0];
 
     let data = null;
     if (fieldName == "guarants") {
-      console.log(changedValues, allValues);
-      console.log(form.getFieldValue("guarants"));
       data = {
         guarants: form.getFieldValue("guarants").map((e) => e ?? {}),
       };
@@ -247,10 +246,36 @@ export default function GarantForm({
                                   </Form.Item>
                                 </Space>
                                 <Form.Item
+                                  label={"Situation matrimoniale"}
+                                  name={[field.name, "marital_status_id"]}
+                                >
+                                  <Select>
+                                    {maritalStatuses.map((maritalStatus) => {
+                                      return (
+                                        <Option
+                                          value={maritalStatus.id}
+                                          key={maritalStatus.value}
+                                        >
+                                          {maritalStatus.label}
+                                        </Option>
+                                      );
+                                    })}
+                                  </Select>
+                                </Form.Item>
+                                <Form.Item
+                                  label={"Lieu de naissance"}
+                                  name={[field.name, "place_of_birth"]}
+                                >
+                                  <SearchLocationInput
+                                    placeOfBirthMode
+                                    placeholder="Recherchez une ville"
+                                  />
+                                </Form.Item>
+                                <Form.Item
                                   label={"Adresse"}
                                   name={[field.name, "address"]}
                                 >
-                                  <SearchLocationInput />
+                                  <SearchLocationInput placeholder="Recherchez une addresse" />
                                 </Form.Item>
                                 <Form.Item
                                   label="Activité principale"
@@ -260,7 +285,7 @@ export default function GarantForm({
                                     {activities.map((activity) => {
                                       return (
                                         <Option
-                                          value={activity.id.toString()}
+                                          value={activity.id}
                                           key={activity.value}
                                         >
                                           {activity.label}

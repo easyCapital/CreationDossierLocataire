@@ -10,7 +10,12 @@ import SituationForm from "../../components/Folder/SituationForm";
 import HttpService from "../../services/HttpService";
 import { FolderWrapper } from "./Folder.style";
 
-export default function Folder({ activities, guarantees, isDesktop }) {
+export default function Folder({
+  maritalStatuses,
+  activities,
+  guarantees,
+  isDesktop,
+}) {
   const profileResponse = useSelector((state) => state.userDetails.userProfile);
   const fetcher = async (url) => {
     const token = await localStorage.getItem("user-token");
@@ -79,6 +84,7 @@ export default function Folder({ activities, guarantees, isDesktop }) {
     arePreviousItemsFilled,
     validateMessages,
     folder,
+    maritalStatuses,
     activities,
     guarantees,
     handleCurrentStepChanged,

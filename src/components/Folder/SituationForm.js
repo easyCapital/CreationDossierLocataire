@@ -26,6 +26,7 @@ export default function SituationForm({
   const [form] = Form.useForm();
   const initFormValues = {
     activity_id: folder.activity_id,
+    seniority: folder.seniority,
     ...(folder.activity?.type == "employee"
       ? {
           company_name: folder.company_name,
@@ -131,10 +132,7 @@ export default function SituationForm({
                     <Select>
                       {activities.map((activity) => {
                         return (
-                          <Option
-                            value={activity.id.toString()}
-                            key={activity.value}
-                          >
+                          <Option value={activity.id} key={activity.value}>
                             {activity.label}
                           </Option>
                         );
@@ -187,6 +185,9 @@ export default function SituationForm({
                           <Input />
                         </Form.Item>
                       </Space>
+                      <Form.Item label={"Ancienneté"} name="seniority">
+                        <Input />
+                      </Form.Item>
                     </>
                   )}
 
