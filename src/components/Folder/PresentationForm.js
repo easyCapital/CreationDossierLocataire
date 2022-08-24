@@ -25,7 +25,7 @@ export default function PresentationForm({
   const [form] = Form.useForm();
   const initFormValues = {
     civility: folder.civility,
-    marital_status_id: folder.marital_status.id,
+    marital_status_id: folder.marital_status?.id,
     firstname: folder.firstname,
     lastname: folder.lastname,
     date_of_birth: folder.date_of_birth,
