@@ -45,7 +45,7 @@ export default function PiecesForm({
       tmpFields.push([
         "valid_identity_piece",
         ...(index || person.is_fiscally_attached == 0 ? ["tax_notice"] : []),
-        ...(!index && person?.activity.type == "student"
+        ...(!index && person?.activity?.type == "student"
           ? ["school_certificate"]
           : []),
         ...(person.housing_situation == "tenant"
