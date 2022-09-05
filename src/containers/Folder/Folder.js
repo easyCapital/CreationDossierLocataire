@@ -74,6 +74,12 @@ export default function Folder({
     return ok;
   };
 
+  const getActivityType = (activityId) => {
+    console.log("activity", activityId);
+    // console.log("activities", activities);
+    return activities.find((e) => e.id == activityId)?.type ?? "";
+  };
+
   const validateMessages = {
     types: {
       email: "Veuillez spécifier une adresse e-mail valide.",
@@ -82,6 +88,7 @@ export default function Folder({
 
   const formsProps = {
     arePreviousItemsFilled,
+    getActivityType,
     validateMessages,
     folder,
     maritalStatuses,

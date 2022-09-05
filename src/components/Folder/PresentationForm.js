@@ -25,14 +25,14 @@ export default function PresentationForm({
   const [form] = Form.useForm();
   const initFormValues = {
     civility: folder.civility,
-    marital_status_id: folder.marital_status?.id,
-    firstname: folder.firstname,
-    lastname: folder.lastname,
-    date_of_birth: folder.date_of_birth,
-    email: folder.email ?? user.email,
-    mobile: folder.mobile,
-    place_of_birth: folder.place_of_birth,
-    address: folder.address,
+    marital_status_id: folder.person.marital_status?.id,
+    firstname: folder.person.firstname,
+    lastname: folder.person.lastname,
+    date_of_birth: folder.person.date_of_birth,
+    email: folder.person.email ?? user.email,
+    mobile: folder.person.mobile,
+    place_of_birth: folder.person.place_of_birth,
+    address: folder.person.address,
   };
 
   const checkIfFormIsFinished = () => {
