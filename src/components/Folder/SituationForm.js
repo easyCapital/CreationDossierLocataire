@@ -25,7 +25,7 @@ export default function SituationForm({
 
   const [form] = Form.useForm();
   const initFormValues = {
-    activity_id: folder.activity_id,
+    activity_id: parseInt(folder.activity_id),
     seniority: folder.seniority,
     ...(folder.activity?.type == "employee"
       ? {
