@@ -13,22 +13,21 @@ import Image from "next/image";
 
 export default function SituationForm({
   arePreviousItemsFilled,
+  getActivityType,
   validateMessages,
   activities,
   folder,
   handleCurrentStepChanged,
   isDesktop,
 }) {
-  const getActivityType = (activity) => {
-    return activities.find((e) => e.id == activity)?.type ?? "";
-  };
-
   const [form] = Form.useForm();
   const initFormValues = {
     activity_id: parseInt(folder.activity_id),
     seniority: folder.seniority,
-    ...(folder.activity?.type == "employee"
+    course: folder.person.course,
+    ...(folder.person.activity?.type == "employee"
       ? {
+          profession: folder.person.profession,
           company_name: folder.company_name,
           employer_firstname: folder.employer_firstname,
           employer_lastname: folder.employer_lastname,
@@ -36,7 +35,7 @@ export default function SituationForm({
           employer_email: folder.employer_email,
         }
       : {}),
-    housing_situation: folder.housing_situation,
+    housing_situation: folder.person.housing_situation,
   };
 
   const [isFormFinished, setIsFormFinished] = useState();
@@ -147,9 +146,21 @@ export default function SituationForm({
                       selectionné.
                     </p>
                   </div>
+                  {[1, 2].includes(form.getFieldValue("activity_id")) && ( // student_with_job
+                    <Form.Item label={"Cursus"} name="course" required={true}>
+                      <Input />
+                    </Form.Item>
+                  )}
                   {getActivityType(form.getFieldValue("activity_id")) ==
                     "employee" && (
                     <>
+                      <Form.Item
+                        label={"Profession"}
+                        name="profession"
+                        required={true}
+                      >
+                        <Input />
+                      </Form.Item>
                       <Form.Item
                         label={"Nom de l'entreprise"}
                         name="company_name"

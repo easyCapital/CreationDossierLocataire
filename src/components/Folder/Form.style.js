@@ -47,6 +47,12 @@ export const FormWrapper = styled.div`
     height: 100%;
     padding: 100px;
     > div {
+      > div {
+        /* padding-top: 400px; */
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
       flex: 1;
       max-width: 50%;
       display: flex;

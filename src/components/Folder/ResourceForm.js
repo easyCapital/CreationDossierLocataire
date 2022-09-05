@@ -27,9 +27,11 @@ export default function ResourceForm({
   handleCurrentStepChanged,
   isDesktop,
 }) {
+  useEffect(() => console.log(folder));
+
   const [form] = Form.useForm();
   const initFormValues = {
-    ...(folder.activity?.type == "employee"
+    ...(folder.person.activity?.type == "employee"
       ? {
           net_monthly_salary_before_deduction_1:
             folder.net_monthly_salary_before_deduction_1,
@@ -42,16 +44,16 @@ export default function ResourceForm({
     children_in_charge: folder.children_in_charge,
     is_fiscally_attached:
       folder.is_fiscally_attached == null
-        ? folder.activity?.type == "student"
+        ? folder.person.activity?.type == "student"
           ? true
           : false
         : folder.is_fiscally_attached == "1"
         ? true
         : false,
-    annual_income_tax_1: folder.annual_income_tax_1,
-    annual_income_tax_2: folder.annual_income_tax_2,
-    other_monthly_incomes: folder.other_monthly_incomes,
-    current_rent_amount: folder.current_rent_amount,
+    annual_income_tax_1: folder.person.annual_income_tax_1,
+    annual_income_tax_2: folder.person.annual_income_tax_2,
+    other_monthly_incomes: folder.person.other_monthly_incomes,
+    rent_amount: folder.person.rent_amount,
   };
   const [isFormFinished, setIsFormFinished] = useState();
   const [fieldsToFill, setFieldsToFill] = useState([]);
@@ -70,7 +72,7 @@ export default function ResourceForm({
 
   useEffect(() => {
     setFieldsToFill([
-      ...(folder.activity?.type == "employee"
+      ...(folder.person.activity?.type == "employee"
         ? [
             "net_monthly_salary_before_deduction_1",
             "net_monthly_salary_before_deduction_2",
@@ -82,13 +84,13 @@ export default function ResourceForm({
         ? ["annual_income_tax_1", "annual_income_tax_2"]
         : []),
       "other_monthly_incomes",
-      ...(folder.housing_situation == "tenant" ? ["current_rent_amount"] : []),
+      ...(folder.person.housing_situation == "tenant" ? ["rent_amount"] : []),
     ]);
   }, [folder]);
 
   const onValuesChange = (changedValues) => {
     setFieldsToFill([
-      ...(folder.activity?.type == "employee"
+      ...(folder.person.activity?.type == "employee"
         ? [
             "net_monthly_salary_before_deduction_1",
             "net_monthly_salary_before_deduction_2",
@@ -100,7 +102,7 @@ export default function ResourceForm({
         ? ["annual_income_tax_1", "annual_income_tax_2"]
         : []),
       "other_monthly_incomes",
-      ...(folder.housing_situation == "tenant" ? ["current_rent_amount"] : []),
+      ...(folder.person.housing_situation == "tenant" ? ["rent_amount"] : []),
     ]);
 
     const fieldName = Object.keys(changedValues)[0];
@@ -150,7 +152,7 @@ export default function ResourceForm({
                   ) && (
                     <Form.Item
                       label={
-                        folder.activity_id == 18
+                        folder.person.activity_id == 18
                           ? "Pension de retraite"
                           : "Salaire net mensuel avant prélèvement"
                       }
@@ -270,12 +272,12 @@ export default function ResourceForm({
                         <label>
                           Autre(s) revenu(s) net(s) mensuel(s){" "}
                           <Button
-                            onClick={() =>
+                            onClick={() => {
                               form.setFieldsValue({
                                 ...form.getFieldsValue(),
                                 other_monthly_incomes: 0,
-                              })
-                            }
+                              });
+                            }}
                           >
                             Aucun
                           </Button>
@@ -288,13 +290,13 @@ export default function ResourceForm({
                     </Form.Item>
                   ) : null}
                   {arePreviousItemsFilled(
-                    "current_rent_amount",
+                    "rent_amount",
                     values,
                     fieldsToFill
-                  ) && folder.housing_situation == "tenant" ? (
+                  ) && folder.person.housing_situation == "tenant" ? (
                     <Form.Item
                       label={"Montant du loyer actuel"}
-                      name="current_rent_amount"
+                      name="rent_amount"
                       required={true}
                     >
                       <InputNumber pattern="[0-9]*" inputMode="numeric" />
