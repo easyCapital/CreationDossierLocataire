@@ -98,7 +98,7 @@ export default function PiecesForm({
                   name: file.slug,
                   type: file.filetype,
                   status: "done",
-                  url:  process.env.API_URL + "files/" + file.slug,
+                  url: process.env.API_URL + "files/" + file.slug,
                 };
               }),
           };
@@ -246,7 +246,7 @@ export default function PiecesForm({
             name: res.data.file.slug,
             type: res.data.file.filetype,
             status: "done",
-            url:process.env.API_URL + "files/" + res.data.file.slug,
+            url: process.env.API_URL + "files/" + res.data.file.slug,
           });
           const newFields = {
             persons: [...form.getFieldValue("persons")],
@@ -269,10 +269,7 @@ export default function PiecesForm({
   }
   const handleGeneratePdf = () => {
     if (folder.user.email_verified_at) {
-      window.open(
-        process.env.API_URL + "generatePdf/" + folder.slug,
-        "_blank"
-      );
+      window.open(process.env.API_URL + "generatePdf/" + folder.slug, "_blank");
     } else {
       notification.info({
         message: (
@@ -437,6 +434,9 @@ export default function PiecesForm({
                             tab={index ? "Garant " + index : "Locataire"}
                             key={index.toString()}
                           >
+                            <p className="acceptedFormats">
+                              Formats acceptés: jpg, png, pdf.
+                            </p>
                             {fieldsToFill[index]?.map((e, i) => (
                               <Form.Item
                                 label={
