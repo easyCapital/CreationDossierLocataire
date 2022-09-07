@@ -74,11 +74,8 @@ export default function Folder({
     return ok;
   };
 
-  const getActivityType = (activityId) => {
-    console.log("activity", activityId);
-    // console.log("activities", activities);
-    return activities.find((e) => e.id == activityId)?.type ?? "";
-  };
+  const getActivityType = (activityId) =>
+    activities.find((e) => e.id == activityId)?.type ?? "";
 
   const validateMessages = {
     types: {
