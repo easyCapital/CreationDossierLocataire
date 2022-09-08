@@ -93,3 +93,11 @@ a {
     color: black;
   }
 }
+.reportBugDrawer {
+  .ant-drawer-content-wrapper {
+    width: 500px !important;
+  }
+  .ant-drawer-body {
+    overflow: hidden;
+  }
+}
