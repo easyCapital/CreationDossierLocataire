@@ -35,7 +35,7 @@ export default function Folder({
       : null,
     fetcher
   );
-  const user = data?.data.user;
+  const user = data?.data?.user;
   const router = useRouter();
   const folder = user?.folders.find((e) => e.slug === router.query.slug);
 
