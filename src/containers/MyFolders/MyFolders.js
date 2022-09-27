@@ -191,7 +191,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
       : null,
     fetcher
   );
-  const user = data?.data.user;
+  const user = data?.data?.user;
 
   const dispatch = useDispatch();
 
