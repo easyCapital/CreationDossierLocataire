@@ -32,10 +32,10 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import Modal from "antd/lib/modal/Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import AdvertsTable from "./AdvertsTable/AdvertsTable";
+import { CreateFolder } from "../../services/CreateFolderService";
 
 function Card({
   folder,
-  createFolder,
   deleteFolder,
   folderLinkingMode,
   setFolderLinkingMode,
@@ -118,7 +118,7 @@ function Card({
             <Tooltip title="Créer un nouveau dossier">
               <FontAwesomeIcon
                 icon={faPlusCircle}
-                onClick={() => createFolder()}
+                onClick={() => CreateFolder()}
               />
             </Tooltip>
           </div>
@@ -298,14 +298,6 @@ export default function MyFolders({ profileResponse, isDesktop }) {
     setSelectedFolderAdverts(user.folders[goToSlide].adverts);
   }, [goToSlide, user]);
 
-  const createFolder = (request = null) => {
-    console.log(request);
-    const http = new HttpService();
-    http.postData(request, "folders").then((response) => {
-      window.location.href = "/folder/" + response.data.folder.slug;
-    });
-  };
-
   const deleteFolder = (folder) => {
     const http = new HttpService();
     http.deleteData("folders/" + folder.slug).then((response) => {
@@ -335,7 +327,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
       if (!folderLinkingMode) {
         tmpSlides.push({
           key: 0,
-          content: <Card folder={"add"} createFolder={createFolder} />,
+          content: <Card folder={"add"} />,
           onClick: () => setGoToSlide(-1),
         });
       }
@@ -454,7 +446,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
             icon={<FontAwesomeIcon icon={faPlusCircle} />}
             type="primary"
             onClick={() => {
-              createFolder({
+              CreateFolder({
                 externalSourceUrl: getCookie("externalSourceUrl"),
               });
               setModalOpen(false);
