@@ -382,7 +382,6 @@ export default function MyFolders({ profileResponse, isDesktop }) {
               {slides.map((slide) => slide.content)}
             </div>
           )}
-        </div>
         {folderLinkingMode && (
           <Button
             className="cancelFolderLinkingBtn"
@@ -395,6 +394,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
             Annuler
           </Button>
         )}
+        </div>
         {slides.length > 1 && (
           <div className="advertsTableWrapper infosWrapper">
             <h1>Mes candidatures</h1>

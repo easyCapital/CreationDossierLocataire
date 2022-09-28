@@ -218,6 +218,6 @@ export const MyFoldersWrapper = styled.div`
     }
   }
   .cancelFolderLinkingBtn {
-    margin-bottom: 35px;
+    margin: 5px 0;
   }
 `;
