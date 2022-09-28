@@ -28,7 +28,7 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
   const [addAdvertForm] = Form.useForm();
 
   useEffect(() => {
-    console.log(initAdverts);
+    // console.log(initAdverts);
     setAdverts(initAdverts);
   }, [initAdverts]);
 
@@ -89,7 +89,6 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
                     `folders/${folder_id}/adverts/${advert_id}/sendApplication`
                   )
                   .then((res) => {
-                    console.log(res);
                     if (res.success) {
                       const newAdverts = adverts.map((advert) => {
                         if (advert.pivot.advert_id == advert_id) {
