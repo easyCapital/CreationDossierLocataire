@@ -53,34 +53,6 @@ export const registerFromEmail = (credentials) =>{
     });
 };
 
-
-const createFolder = (credentials) =>{
-  const http = new HttpService();
-  let signupUrl = "/folders";
-  return http
-    .postData(credentials, signupUrl)
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      return error;
-    });
-};
-
-
-const getProfile = (credentials) =>{
-  const http = new HttpService();
-  let url = "profile";
-  return http
-    .getData(credentials, url)
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      return error;
-    });
-};
-
 export const getUserFromMail = (mail) =>{
   const http = new HttpService();
   let signupUrl = "/users/getUserFromEmail";
@@ -110,20 +82,6 @@ export const userHasAccount = (credentials) =>{
       if (error == "SyntaxError: JSON.parse: unexpected character at line 1 column 1 of the JSON data"){
         alert("Erreur d'accès à la base de données")
       }
-      return error;
-    });
-};
-
-
-const updateFolder = (credentials, id) =>{
-  const http = new HttpService();
-  let signupUrl = "/profile/" + id;
-  return http
-    .getData(credentials, signupUrl)
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
       return error;
     });
 };
