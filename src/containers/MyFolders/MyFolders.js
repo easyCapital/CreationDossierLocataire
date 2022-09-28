@@ -116,7 +116,10 @@ function Card({
         {folder == "add" ? (
           <div className="createFolder">
             <Tooltip title="Créer un nouveau dossier">
-              <FontAwesomeIcon icon={faPlusCircle} onClick={createFolder} />
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                onClick={() => createFolder()}
+              />
             </Tooltip>
           </div>
         ) : (
@@ -296,9 +299,10 @@ export default function MyFolders({ profileResponse, isDesktop }) {
   }, [goToSlide, user]);
 
   const createFolder = (request = null) => {
+    console.log(request);
     const http = new HttpService();
     http.postData(request, "folders").then((response) => {
-      router.push("/folder/" + response.data.folder.slug);
+      window.location.href = "/folder/" + response.data.folder.slug;
     });
   };
 
@@ -354,30 +358,31 @@ export default function MyFolders({ profileResponse, isDesktop }) {
   return loaded ? (
     <MyFoldersWrapper>
       <div className="carouselInfos">
-        {slides.length > 2 ? (
-          <div
-            className="carouselWrapper infosWrapper"
-            style={{
-              // width: isDesktop ? 700 : "100%",
-              height: 500,
-              margin: 10,
-            }}
-            {...handlers}
-          >
-            <h1 className="myFolders">Mes dossiers</h1>
-            <Carousel
-              slides={slides}
-              goToSlide={goToSlide}
-              offsetRadius={2}
-              animationConfig={config.gentle}
-              showNavigation={false}
-            />
-          </div>
-        ) : (
-          <div className="cardsWrapper">
-            {slides.map((slide) => slide.content)}
-          </div>
-        )}
+        <div className="foldersWrapper infosWrapper">
+          <h1 className="myFolders">Mes dossiers</h1>
+          {slides.length > 2 ? (
+            <div
+              className="carouselWrapper"
+              style={{
+                height: 500,
+                margin: 10,
+              }}
+              {...handlers}
+            >
+              <Carousel
+                slides={slides}
+                goToSlide={goToSlide}
+                offsetRadius={2}
+                animationConfig={config.gentle}
+                showNavigation={false}
+              />
+            </div>
+          ) : (
+            <div className="cardsWrapper">
+              {slides.map((slide) => slide.content)}
+            </div>
+          )}
+        </div>
         {folderLinkingMode && (
           <Button
             className="cancelFolderLinkingBtn"
@@ -390,19 +395,29 @@ export default function MyFolders({ profileResponse, isDesktop }) {
             Annuler
           </Button>
         )}
-        <div className="advertsTableWrapper infosWrapper">
-          {selectedFolderAdverts && user && (
-            <>
-              <h1>Mes candidatures</h1>
+        {slides.length > 1 && (
+          <div className="advertsTableWrapper infosWrapper">
+            <h1>Mes candidatures</h1>
+
+            {selectedFolderAdverts && user && slides.length > 2 && (
               <AdvertsTable
                 className="advertsTable"
                 initAdverts={selectedFolderAdverts}
                 folder={user.folders[goToSlide]}
                 folderLinkingMode={folderLinkingMode}
               />
-            </>
-          )}
-        </div>
+            )}
+
+            {slides.length == 2 && user && user.folders[0] && (
+              <AdvertsTable
+                className="advertsTable"
+                initAdverts={user.folders[0].adverts}
+                folder={user.folders[0]}
+                folderLinkingMode={folderLinkingMode}
+              />
+            )}
+          </div>
+        )}
       </div>
       {user && (
         <Modal

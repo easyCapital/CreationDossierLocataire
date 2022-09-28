@@ -14,11 +14,8 @@ export const MyFoldersWrapper = styled.div`
     text-align: center;
     font-size: 40px;
     margin-top: 40px;
-    margin-bottom: 10px;
   }
   h1.myFolders {
-    margin-top: 0;
-    margin-bottom: 40px;
     color: ${blue};
   }
 
@@ -27,6 +24,10 @@ export const MyFoldersWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     width: 80vw;
+  }
+
+  .foldersWrapper {
+    width: 100%;
   }
 
   .create-folder {
@@ -45,7 +46,6 @@ export const MyFoldersWrapper = styled.div`
 
   .cardsWrapper {
     display: flex;
-    padding-top: 50px;
     .card {
       margin: 0px 20px;
     }
@@ -182,8 +182,7 @@ export const MyFoldersWrapper = styled.div`
   }
 
   .carouselWrapper {
-    position: relative;
-    width: 50%;
+    width: 60%;
 
     @media (max-width: 900px) {
       width: 100%;

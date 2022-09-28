@@ -124,7 +124,9 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
             </Popconfirm>
 
             <Popconfirm
-              title="Sure to delete?"
+              okText="Oui"
+              cancelText="Non"
+              title="Supprimer cette candidature ?"
               onConfirm={() => {
                 new HttpService()
                   .deleteData(`folders/${folder_id}/adverts/${advert_id}`)
