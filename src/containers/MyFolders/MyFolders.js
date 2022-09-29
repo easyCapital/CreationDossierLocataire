@@ -246,11 +246,15 @@ export default function MyFolders({ profileResponse, isDesktop }) {
   const [folderLinkingMode, setFolderLinkingMode] = useState(false);
 
   useEffect(() => {
-    if (!router.query.externalSourceUrl) return;
-    setCookie("externalSourceUrl", router.query.externalSourceUrl);
-    router.replace("/mes-dossiers", undefined, { shallow: true });
+    if (router.query.externalSourceUrl) {
+      setCookie("externalSourceUrl", router.query.externalSourceUrl);
+    }
 
-    setModalOpen(true);
+    if (getCookie("externalSourceUrl")) {
+      router.replace("/mes-dossiers", undefined, { shallow: true });
+
+      setModalOpen(true);
+    }
   }, [router.query.externalSourceUrl]);
 
   useEffect(() => {
@@ -374,18 +378,18 @@ export default function MyFolders({ profileResponse, isDesktop }) {
               {slides.map((slide) => slide.content)}
             </div>
           )}
-        {folderLinkingMode && (
-          <Button
-            className="cancelFolderLinkingBtn"
-            type="default"
-            onClick={() => {
-              deleteCookie("externalSourceUrl");
-              setFolderLinkingMode(false);
-            }}
-          >
-            Annuler
-          </Button>
-        )}
+          {folderLinkingMode && (
+            <Button
+              className="cancelFolderLinkingBtn"
+              type="default"
+              onClick={() => {
+                deleteCookie("externalSourceUrl");
+                setFolderLinkingMode(false);
+              }}
+            >
+              Annuler
+            </Button>
+          )}
         </div>
         {slides.length > 1 && (
           <div className="advertsTableWrapper infosWrapper">
@@ -453,7 +457,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
           >
             Associer un dossier existant
           </Button>
-        <b>ou</b>
+          <b>ou</b>
           <Button
             icon={<FontAwesomeIcon icon={faPlusCircle} />}
             type="dashed"
