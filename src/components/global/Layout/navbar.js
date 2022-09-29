@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../layout/Header";
-import { useRouter } from "next/router";
 
 const Navbar = () => {
-  const router = useRouter();
   const navbarStyles = {
     position: "fixed",
     height: "73.89px",
