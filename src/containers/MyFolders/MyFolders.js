@@ -443,8 +443,20 @@ export default function MyFolders({ profileResponse, isDesktop }) {
           }
         >
           <Button
-            icon={<FontAwesomeIcon icon={faPlusCircle} />}
+            disabled={user.folders.length == 0}
+            icon={<FontAwesomeIcon icon={faLink} />}
             type="primary"
+            onClick={() => {
+              setModalOpen(false);
+              setFolderLinkingMode(true);
+            }}
+          >
+            Associer un dossier existant
+          </Button>
+        <b>ou</b>
+          <Button
+            icon={<FontAwesomeIcon icon={faPlusCircle} />}
+            type="dashed"
             onClick={() => {
               CreateFolder({
                 externalSourceUrl: getCookie("externalSourceUrl"),
@@ -454,18 +466,6 @@ export default function MyFolders({ profileResponse, isDesktop }) {
             }}
           >
             Créer un nouveau dossier
-          </Button>
-          <b>ou</b>
-          <Button
-            disabled={user.folders.length == 0}
-            icon={<FontAwesomeIcon icon={faLink} />}
-            type="dashed"
-            onClick={() => {
-              setModalOpen(false);
-              setFolderLinkingMode(true);
-            }}
-          >
-            Associer un dossier existant
           </Button>
         </Modal>
       )}
