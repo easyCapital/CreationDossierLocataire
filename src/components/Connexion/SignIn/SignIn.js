@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Input, Button, Modal, Alert } from "antd";
+import { Form, Input, Button, Alert } from "antd";
 import { useRouter } from "next/router";
 import Connexion from "../../../containers/Connexion/Connexion";
 import { LoginAction } from "../../../redux/actions/AuthActions";
