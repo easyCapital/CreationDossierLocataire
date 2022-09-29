@@ -93,3 +93,31 @@ a {
     color: black;
   }
 }
+.reportBugDrawer {
+  .ant-drawer-content-wrapper {
+    width: 500px !important;
+  }
+  .ant-drawer-body {
+    overflow: hidden;
+  }
+}
+
+.linkAdvertModal {
+  .ant-modal-body {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.ant-btn {
+  > * {
+    margin: 0 3px;
+  }
+}
+
+.advertsTablePopoverContent {
+  display: flex;
+  * {
+    margin: 0 1px !important;
+  }
+}

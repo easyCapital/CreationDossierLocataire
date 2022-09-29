@@ -9,6 +9,7 @@ import ResourceForm from "../../components/Folder/ResourceForm";
 import SituationForm from "../../components/Folder/SituationForm";
 import HttpService from "../../services/HttpService";
 import { FolderWrapper } from "./Folder.style";
+import ReportBug from "../../components/Folder/ReportBug/ReportBug";
 
 export default function Folder({
   maritalStatuses,
@@ -74,11 +75,8 @@ export default function Folder({
     return ok;
   };
 
-  const getActivityType = (activityId) => {
-    console.log("activity", activityId);
-    // console.log("activities", activities);
-    return activities.find((e) => e.id == activityId)?.type ?? "";
-  };
+  const getActivityType = (activityId) =>
+    activities.find((e) => e.id == activityId)?.type ?? "";
 
   const validateMessages = {
     types: {
@@ -113,6 +111,7 @@ export default function Folder({
       {currentStep == 3 && <ResourceForm {...formsProps} />}
       {currentStep == 4 && <GarantForm {...formsProps} />}
       {currentStep == 5 && <PiecesForm {...formsProps} />}
+      <ReportBug />
     </FolderWrapper>
   ) : null;
 }

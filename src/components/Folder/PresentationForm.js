@@ -96,7 +96,7 @@ export default function PresentationForm({
                       ))}
                     </Radio.Group>
                   </Form.Item>
-                  {arePreviousItemsFilled("marital_status", values) ? (
+                  {arePreviousItemsFilled("marital_status_id", values) ? (
                     <Form.Item
                       label={"Situation matrimoniale"}
                       name="marital_status_id"

@@ -30,10 +30,9 @@ export default function Header() {
     http
       .postData(null, url)
       .then((response) => {
-        router.push("/folder/" + response.data.folder.slug);
-        setIsCreatingFolder(false);
+        window.location.href = "/folder/" + response.data.folder.slug;
       })
-      .catch((error) => {
+      .finally(() => {
         setIsCreatingFolder(false);
       });
   };

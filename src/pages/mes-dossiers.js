@@ -5,7 +5,7 @@ export default function MyFoldersPage(props) {
   const router = useRouter();
 
   if (props.profileResponse?.message == "User is not signed in") {
-    router.push("/");
+    router.push("/signin");
   }
 
   return props.profileResponse ? <MyFolders {...props} /> : null;

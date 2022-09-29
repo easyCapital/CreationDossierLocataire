@@ -1,5 +1,8 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+import { tada } from "react-animations";
 import { blue, lightblue } from "../../styles/variables.style";
+
+const activeAnimation = keyframes`${tada}`;
 
 export const MyFoldersWrapper = styled.div`
   display: flex;
@@ -10,9 +13,10 @@ export const MyFoldersWrapper = styled.div`
   h1 {
     text-align: center;
     font-size: 40px;
-    span {
-      color: ${blue};
-    }
+    margin-top: 40px;
+  }
+  h1.myFolders {
+    color: ${blue};
   }
 
   .foldersList {
@@ -20,6 +24,10 @@ export const MyFoldersWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     width: 80vw;
+  }
+
+  .foldersWrapper {
+    width: 100%;
   }
 
   .create-folder {
@@ -38,7 +46,6 @@ export const MyFoldersWrapper = styled.div`
 
   .cardsWrapper {
     display: flex;
-    padding-top: 50px;
     .card {
       margin: 0px 20px;
     }
@@ -76,8 +83,20 @@ export const MyFoldersWrapper = styled.div`
       svg {
         color: white;
         font-size: 40px;
-        margin: 0 10px;
-        cursor: pointer;
+        margin: 0 -2px;
+        &:hover {
+          color: lightgrey;
+        }
+      }
+    }
+
+    .linkingBtn {
+      position: relative;
+      top: -50px;
+      animation: 2s ${activeAnimation} infinite;
+      svg {
+        color: white;
+        font-size: 40px;
         &:hover {
           color: lightgrey;
         }
@@ -160,5 +179,45 @@ export const MyFoldersWrapper = styled.div`
         justify-content: center;
       }
     }
+  }
+
+  .carouselWrapper {
+    width: 60%;
+
+    @media (max-width: 900px) {
+      width: 100%;
+    }
+  }
+
+  .carouselInfos {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+
+    @media (max-width: 1374px) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .infosWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .advertsTableWrapper {
+    width: 100%;
+  }
+
+  .disabled {
+    opacity: 50%;
+
+    path {
+      color: #cdcdcd;
+    }
+  }
+  .cancelFolderLinkingBtn {
+    margin: 5px 0;
   }
 `;

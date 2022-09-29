@@ -40,6 +40,10 @@ export const FormWrapper = styled.div`
       font-weight: bold;
     }
   }
+  .acceptedFormats {
+    font-style: italic;
+    opacity: 90%;
+  }
   .content {
     flex: 10;
     display: flex;

@@ -2,13 +2,20 @@ import {
   faCloudArrowDown,
   faCloudBolt,
   faEdit,
+  faLink,
   faPlusCircle,
-  faShare,
   faShareAlt,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, message, notification, Popconfirm, Progress, Tooltip } from "antd";
+import {
+  Button,
+  message,
+  notification,
+  Popconfirm,
+  Progress,
+  Tooltip,
+} from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -22,8 +29,17 @@ import { blue } from "../../styles/variables.style";
 import useSWR from "swr";
 import { useSwipeable } from "react-swipeable";
 import CopyToClipboard from "react-copy-to-clipboard";
+import Modal from "antd/lib/modal/Modal";
+import { setCookie, getCookie, deleteCookie } from "cookies-next";
+import AdvertsTable from "./AdvertsTable/AdvertsTable";
+import { CreateFolder } from "../../services/CreateFolderService";
 
-function Card({ folder, createFolder, deleteFolder }) {
+function Card({
+  folder,
+  deleteFolder,
+  folderLinkingMode,
+  setFolderLinkingMode,
+}) {
   const [show, setShown] = useState(false);
 
   const props3 = useSpring({
@@ -48,10 +64,7 @@ function Card({ folder, createFolder, deleteFolder }) {
 
   const handleGeneratePdf = () => {
     if (folder.user.email_verified_at) {
-      window.open(
-        process.env.API_URL + "generatePdf/" + folder.slug,
-        "_blank"
-      );
+      window.open(process.env.API_URL + "generatePdf/" + folder.slug, "_blank");
     } else {
       notification.info({
         message: (
@@ -85,6 +98,13 @@ function Card({ folder, createFolder, deleteFolder }) {
     }
   }, [copied]);
 
+  let isAlreadyLinkedToUrl = false;
+  if (folderLinkingMode) {
+    isAlreadyLinkedToUrl = folder.adverts.filter(
+      (advert) => advert.url === getCookie("externalSourceUrl")
+    ).length;
+  }
+
   return (
     <animated.div
       className={"card"}
@@ -96,7 +116,10 @@ function Card({ folder, createFolder, deleteFolder }) {
         {folder == "add" ? (
           <div className="createFolder">
             <Tooltip title="Créer un nouveau dossier">
-              <FontAwesomeIcon icon={faPlusCircle} onClick={createFolder} />
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                onClick={() => CreateFolder()}
+              />
             </Tooltip>
           </div>
         ) : (
@@ -126,33 +149,84 @@ function Card({ folder, createFolder, deleteFolder }) {
               <p>{folder.email ?? folder.user.email ?? ""}</p>
               <p>{folder.mobile ?? ""}</p>
             </div>
-            <div className="btns">
-              {(folder.current_step * 100) / 5 == 100 && (
-                <CopyToClipboard
-                  text={process.env.API_URL + "generatePdf/" + folder.slug}
-                  onCopy={() => setCopied(true)}
+            {folderLinkingMode && !isAlreadyLinkedToUrl && (
+              <Button type="text" className="linkingBtn">
+                <Popconfirm
+                  placement="top"
+                  title={<p>Êtes-vous sûr de vouloir lier ce dossier ?</p>}
+                  onConfirm={() => {
+                    const http = new HttpService();
+                    const errorMessage =
+                      "Désolé, nous avons rencontré un problème, le dossier n'a pas été lié";
+                    http
+                      .postData(
+                        {
+                          externalSourceUrl: getCookie("externalSourceUrl"),
+                          folder_id: folder.id,
+                        },
+                        `folders/${folder.id}/adverts`
+                      )
+                      .then((res) => {
+                        if (res.success) {
+                          message.success("Le dossier a été lié avec succès");
+                          setFolderLinkingMode(false);
+                          folder.adverts.push({
+                            ...res.advert,
+                            pivot: res.advertFolder,
+                          });
+
+                          deleteCookie("externalSourceUrl");
+                        } else {
+                          message.error(errorMessage);
+                        }
+                      })
+                      .catch(() => {
+                        message.error(errorMessage);
+                      });
+                  }}
+                  okText="Oui"
+                  cancelText="Non"
+                  icon={<FontAwesomeIcon icon={faCloudBolt} />}
                 >
-                  <FontAwesomeIcon
-                    icon={faShareAlt}
-                    onClick={() =>
-                      process.env.API_URL + "generatePdf/" + folder.slug
-                    }
-                  />
-                </CopyToClipboard>
+                  <FontAwesomeIcon icon={faLink} />
+                </Popconfirm>
+              </Button>
+            )}
+            <div className={`${folderLinkingMode && "disabled"} btns`}>
+              {(folder.current_step * 100) / 5 == 100 && (
+                <Button type="text" disabled={folderLinkingMode}>
+                  <CopyToClipboard
+                    text={process.env.API_URL + "generatePdf/" + folder.slug}
+                    onCopy={() => setCopied(true)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faShareAlt}
+                      onClick={() =>
+                        process.env.API_URL + "generatePdf/" + folder.slug
+                      }
+                    />
+                  </CopyToClipboard>
+                </Button>
               )}
-              <Link href={"/folder/" + folder.slug}>
-                <FontAwesomeIcon icon={faEdit} />
-              </Link>
-              <Popconfirm
-                placement="top"
-                title={<p>Êtes-vous sûr de vouloir supprimer ce dossier ?</p>}
-                onConfirm={() => deleteFolder(folder)}
-                okText="Oui"
-                cancelText="Non"
-                icon={<FontAwesomeIcon icon={faCloudBolt} />}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </Popconfirm>
+
+              <Button type="text" disabled={folderLinkingMode}>
+                <Link href={"/folder/" + folder.slug}>
+                  <FontAwesomeIcon icon={faEdit} />
+                </Link>
+              </Button>
+              <Button type="text" disabled={folderLinkingMode}>
+                <Popconfirm
+                  placement="top"
+                  title={<p>Êtes-vous sûr de vouloir supprimer ce dossier ?</p>}
+                  onConfirm={() => deleteFolder(folder)}
+                  okText="Oui"
+                  cancelText="Non"
+                  icon={<FontAwesomeIcon icon={faCloudBolt} />}
+                  disabled={folderLinkingMode}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Popconfirm>
+              </Button>
             </div>
           </div>
         )}
@@ -166,12 +240,22 @@ const Carousel = dynamic(() => import("react-spring-3d-carousel"), {
 });
 
 export default function MyFolders({ profileResponse, isDesktop }) {
+  const router = useRouter();
   const [loaded, setLoaded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [folderLinkingMode, setFolderLinkingMode] = useState(false);
+
+  useEffect(() => {
+    if (!router.query.externalSourceUrl) return;
+    setCookie("externalSourceUrl", router.query.externalSourceUrl);
+    router.replace("/mes-dossiers", undefined, { shallow: true });
+
+    setModalOpen(true);
+  }, [router.query.externalSourceUrl]);
+
   useEffect(() => {
     if (window) setLoaded(true);
   }, [window]);
-
-  const router = useRouter();
 
   const fetcher = async (url) => {
     const token = await localStorage.getItem("user-token");
@@ -199,14 +283,20 @@ export default function MyFolders({ profileResponse, isDesktop }) {
     dispatch(LoadProfileAction());
   }, []);
 
-  const [goToSlide, setGoToSlide] = useState(null);
+  const [goToSlide, setGoToSlide] = useState(0);
+  const [selectedFolderAdverts, setSelectedFolderAdverts] = useState(null);
 
-  const createFolder = () => {
-    const http = new HttpService();
-    http.postData(null, "folders").then((response) => {
-      router.push("/folder/" + response.data.folder.slug);
-    });
-  };
+  useEffect(() => {
+    if (
+      goToSlide == -1 ||
+      !user ||
+      typeof user.folders[goToSlide] === "undefined"
+    ) {
+      return setSelectedFolderAdverts(null);
+    }
+
+    setSelectedFolderAdverts(user.folders[goToSlide].adverts);
+  }, [goToSlide, user]);
 
   const deleteFolder = (folder) => {
     const http = new HttpService();
@@ -223,18 +313,27 @@ export default function MyFolders({ profileResponse, isDesktop }) {
       user.folders.forEach((folder, index) => {
         tmpSlides.push({
           key: index + 1,
-          content: <Card folder={folder} deleteFolder={deleteFolder} />,
+          content: (
+            <Card
+              folder={folder}
+              deleteFolder={deleteFolder}
+              folderLinkingMode={folderLinkingMode}
+              setFolderLinkingMode={setFolderLinkingMode}
+            />
+          ),
           onClick: () => setGoToSlide(index),
         });
       });
-      tmpSlides.push({
-        key: 0,
-        content: <Card folder={"add"} createFolder={createFolder} />,
-        onClick: () => setGoToSlide(tmpSlides.length - 1),
-      });
+      if (!folderLinkingMode) {
+        tmpSlides.push({
+          key: 0,
+          content: <Card folder={"add"} />,
+          onClick: () => setGoToSlide(-1),
+        });
+      }
     }
     setSlides(tmpSlides);
-  }, [user]);
+  }, [user, folderLinkingMode, goToSlide]);
 
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
@@ -250,33 +349,125 @@ export default function MyFolders({ profileResponse, isDesktop }) {
 
   return loaded ? (
     <MyFoldersWrapper>
-      <h1>
-        <span>Retrouvez votre dossier locataire</span>
-        <br />
-        Conforme et prêt à l’envoi
-      </h1>
-      {slides.length > 2 ? (
-        <div
-          className="carouselWrapper"
-          style={{
-            width: isDesktop ? 700 : "100%",
-            height: 500,
-            margin: 10,
-          }}
-          {...handlers}
+      <div className="carouselInfos">
+        <div className="foldersWrapper infosWrapper">
+          <h1 className="myFolders">Mes dossiers</h1>
+          {slides.length > 2 ? (
+            <div
+              className="carouselWrapper"
+              style={{
+                height: 500,
+                margin: 10,
+              }}
+              {...handlers}
+            >
+              <Carousel
+                slides={slides}
+                goToSlide={goToSlide}
+                offsetRadius={2}
+                animationConfig={config.gentle}
+                showNavigation={false}
+              />
+            </div>
+          ) : (
+            <div className="cardsWrapper">
+              {slides.map((slide) => slide.content)}
+            </div>
+          )}
+        {folderLinkingMode && (
+          <Button
+            className="cancelFolderLinkingBtn"
+            type="default"
+            onClick={() => {
+              deleteCookie("externalSourceUrl");
+              setFolderLinkingMode(false);
+            }}
+          >
+            Annuler
+          </Button>
+        )}
+        </div>
+        {slides.length > 1 && (
+          <div className="advertsTableWrapper infosWrapper">
+            <h1>Mes candidatures</h1>
+
+            {selectedFolderAdverts && user && slides.length > 2 && (
+              <AdvertsTable
+                className="advertsTable"
+                initAdverts={selectedFolderAdverts}
+                folder={user.folders[goToSlide]}
+                folderLinkingMode={folderLinkingMode}
+              />
+            )}
+
+            {slides.length == 2 && user && user.folders[0] && (
+              <AdvertsTable
+                className="advertsTable"
+                initAdverts={user.folders[0].adverts}
+                folder={user.folders[0]}
+                folderLinkingMode={folderLinkingMode}
+              />
+            )}
+          </div>
+        )}
+      </div>
+      {user && (
+        <Modal
+          className="linkAdvertModal"
+          title={
+            <>
+              <h3>Lier un dossier à l'annonce</h3>
+              <a
+                href={getCookie("externalSourceUrl")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {getCookie("externalSourceUrl")}
+              </a>
+            </>
+          }
+          visible={modalOpen}
+          closable={false}
+          centered
+          width={650}
+          footer={
+            <Button
+              type="link"
+              onClick={() => {
+                setModalOpen(false);
+                deleteCookie("externalSourceUrl");
+              }}
+            >
+              Annuler
+            </Button>
+          }
         >
-          <Carousel
-            slides={slides}
-            goToSlide={goToSlide}
-            offsetRadius={2}
-            animationConfig={config.gentle}
-            showNavigation={false}
-          />
-        </div>
-      ) : (
-        <div className="cardsWrapper">
-          {slides.map((slide) => slide.content)}
-        </div>
+          <Button
+            icon={<FontAwesomeIcon icon={faPlusCircle} />}
+            type="primary"
+            onClick={() => {
+              CreateFolder({
+                externalSourceUrl: getCookie("externalSourceUrl"),
+              });
+              setModalOpen(false);
+              deleteCookie("externalSourceUrl");
+            }}
+          >
+            Créer un nouveau dossier
+          </Button>
+          <b>ou</b>
+          <Button
+            disabled={user.folders.length == 0}
+            icon={<FontAwesomeIcon icon={faLink} />}
+            type="dashed"
+            onClick={() => {
+              setModalOpen(false);
+              setFolderLinkingMode(true);
+            }}
+          >
+            Associer un dossier existant
+          </Button>
+        </Modal>
       )}
     </MyFoldersWrapper>
   ) : null;
