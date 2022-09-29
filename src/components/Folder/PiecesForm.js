@@ -417,7 +417,7 @@ export default function PiecesForm({
       <div className="content">
         <div>
           <Form form={form} initialValues={formValues} layout={"vertical"}>
-            {(values, formInstance) => {
+            {() => {
               return (
                 <>
                   <p className="stepTitle">

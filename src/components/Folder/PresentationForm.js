@@ -54,8 +54,7 @@ export default function PresentationForm({
     let url = "folders/" + folder.slug;
 
     new HttpService().putData(data, url).then((res) => {
-      if (res.success) {
-      } else {
+      if (!res.success) {
         message.error(res.message);
       }
     });
@@ -78,7 +77,7 @@ export default function PresentationForm({
             validateMessages={validateMessages}
             onValuesChange={onValuesChange}
           >
-            {(values, formInstance) => {
+            {(values) => {
               return (
                 <>
                   <p className="stepTitle">

@@ -1,5 +1,5 @@
 import { HeaderWrapper } from "./Header.style";
-import { NavBar, List } from "antd-mobile";
+import { NavBar } from "antd-mobile";
 import { Button, Drawer } from "antd";
 import { useState } from "react";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export default function MobileHeader({ isLoggedIn, logOut }) {
     <HeaderWrapper>
       <NavBar
         leftContent={[
-          <Link href="/">
+          <Link href="/" key="link">
             <img
               style={{ marginTop: 0 }}
               src={"../../../passloc-logo.png"}

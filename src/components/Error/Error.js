@@ -21,7 +21,7 @@ export default function Error({ statusCode }) {
         },
         "send-feedback-email"
       )
-      .then((response) => {
+      .then(() => {
         message.success(
           "Merci ! Nous corrigerons ce problème dans les plus brefs délais."
         );

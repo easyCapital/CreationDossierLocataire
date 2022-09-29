@@ -4,7 +4,7 @@ import {
   faCloudSun,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, Input, message, Modal, Radio, Select, Space } from "antd";
+import { Form, Input, message, Radio, Select, Space } from "antd";
 import { FormWrapper } from "./Form.style";
 import { useEffect, useState } from "react";
 import HttpService from "../../services/HttpService";
@@ -12,7 +12,6 @@ import votre_situation_actuelle from "../../../public/forms/votre_situation_actu
 import Image from "next/image";
 
 export default function SituationForm({
-  arePreviousItemsFilled,
   getActivityType,
   validateMessages,
   activities,
@@ -74,8 +73,7 @@ export default function SituationForm({
     let url = "folders/" + folder.slug;
 
     new HttpService().putData(data, url).then((res) => {
-      if (res.success) {
-      } else {
+      if (!res.success) {
         message.error(res.message);
       }
     });
@@ -114,7 +112,7 @@ export default function SituationForm({
             validateMessages={validateMessages}
             onValuesChange={onValuesChange}
           >
-            {(values, formInstance) => {
+            {() => {
               return (
                 <>
                   <p className="stepTitle">

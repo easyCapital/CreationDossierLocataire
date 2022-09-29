@@ -130,7 +130,7 @@ export default function SignUp(props) {
                   ? Promise.resolve()
                   : Promise.reject(
                       new Error(
-                        "Vous devez accepter les conditions générales d\'utilisation."
+                        "Vous devez accepter les conditions générales d'utilisation."
                       )
                     ),
             },

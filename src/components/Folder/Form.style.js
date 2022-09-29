@@ -1,4 +1,4 @@
-import { bounce, flipInX, rollIn } from "react-animations";
+import { rollIn } from "react-animations";
 import styled, { keyframes } from "styled-components";
 import { blue } from "../../styles/variables.style";
 

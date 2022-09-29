@@ -4,9 +4,6 @@ import { useRouter } from "next/router";
 
 const Navbar = () => {
   const router = useRouter();
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [visible, setVisible] = useState(true);
-
   const navbarStyles = {
     position: "fixed",
     height: "73.89px",
@@ -29,7 +26,7 @@ const Navbar = () => {
     const range = 200;
     const offset = headerHeight / 2;
 
-    const didScrollPage = (e) => {
+    const didScrollPage = () => {
       let calc = 1 - (window.scrollY - offset + range) / range;
 
       if (calc > 1) {
@@ -47,30 +44,6 @@ const Navbar = () => {
       window.removeEventListener("keydown", didScrollPage);
     };
   }, []);
-  var color = "white";
-  switch (router.asPath) {
-    case "/":
-      color = "#F5F5F9";
-      break;
-    case "/outil":
-      color = "#F5F5F9";
-      break;
-    case "/nous":
-      color = "white";
-      break;
-    case "/securite":
-      color = "#142A3F";
-      break;
-    case "/tarifs":
-      color = "#4CA6E2";
-      break;
-    case "/guides":
-      color = "#F7F9FA";
-      break;
-    case "/folder":
-      color = "#fff";
-      break;
-  }
 
   if (!loaded) return <div></div>;
   else
@@ -78,9 +51,7 @@ const Navbar = () => {
       <div
         style={{
           ...navbarStyles,
-          top: visible ? "0" : "-60px",
-          // background: top === 1 ? color : "white",
-          // backgroundColor : (top===1 && router.asPath === "/nous") ? "transparent" : color,
+          top: "0",
           transform: "translateZ('0px')",
         }}
       >
