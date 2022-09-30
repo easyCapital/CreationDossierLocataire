@@ -357,6 +357,11 @@ export default function MyFolders({ profileResponse }) {
     ...config,
   });
 
+  useEffect(() => {
+    if (!user) return;
+    console.log("myfolders", user.folders);
+  }, [user]);
+
   return loaded ? (
     <MyFoldersWrapper>
       <div className="carouselInfos">
@@ -407,6 +412,7 @@ export default function MyFolders({ profileResponse }) {
                 initAdverts={selectedFolderAdverts}
                 folder={user.folders[goToSlide]}
                 folderLinkingMode={folderLinkingMode}
+                mutateFolders={mutate}
               />
             )}
 
@@ -416,6 +422,7 @@ export default function MyFolders({ profileResponse }) {
                 initAdverts={user.folders[0].adverts}
                 folder={user.folders[0]}
                 folderLinkingMode={folderLinkingMode}
+                mutateFolders={mutate}
               />
             )}
           </div>

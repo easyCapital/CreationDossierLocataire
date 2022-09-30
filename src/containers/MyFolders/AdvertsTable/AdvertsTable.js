@@ -22,15 +22,21 @@ import HttpService from "../../../services/HttpService";
 import { Form, Input } from "antd";
 import ButtonGroupRadio from "../../../components/util/ButtonGroupRadio/ButtonGroupRadio";
 
-const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
+const AdvertsTable = ({
+  initAdverts,
+  folder,
+  folderLinkingMode,
+  mutateFolders,
+}) => {
   const [adverts, setAdverts] = useState(initAdverts);
   const linkAdvertInput = useRef();
   const [addAdvertForm] = Form.useForm();
 
   useEffect(() => {
     // console.log(initAdverts);
-    setAdverts(initAdverts);
-  }, [initAdverts]);
+    console.log("table", folder);
+    setAdverts(folder?.adverts);
+  }, [folder]);
 
   useEffect(() => {
     addAdvertForm.getFieldError("url");
@@ -90,7 +96,7 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
                   )
                   .then((res) => {
                     if (res.success) {
-                      const newAdverts = adverts.map((advert) => {
+                      const newAdverts = folder.adverts.map((advert) => {
                         if (advert.pivot.advert_id == advert_id) {
                           advert.pivot.status = "processing";
                           advert.pivot.is_sent = true;
@@ -131,11 +137,12 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
                   .deleteData(`folders/${folder_id}/adverts/${advert_id}`)
                   .then((res) => {
                     if (res.success) {
-                      const newAdverts = adverts.filter(
+                      const newAdverts = folder.adverts.filter(
                         ({ pivot }) => pivot.advert_id != advert_id
                       );
 
                       setAdverts(newAdverts);
+                      mutateFolders();
                     } else {
                       message.error("Nous avons rencontré une erreur");
                     }
@@ -253,6 +260,7 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
               if (res2.success) {
                 message.success("L'annonce a été ajouté avec succès");
                 addAdvertForm.resetFields();
+                mutateFolders();
 
                 setAdverts((tmpAdverts) => {
                   tmpAdverts.push({
