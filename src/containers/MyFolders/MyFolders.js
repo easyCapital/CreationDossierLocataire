@@ -39,6 +39,8 @@ function Card({
   deleteFolder,
   folderLinkingMode,
   setFolderLinkingMode,
+  setGoToSlide,
+  slideIndex,
 }) {
   const [show, setShown] = useState(false);
 
@@ -175,6 +177,7 @@ function Card({
                             pivot: res.advertFolder,
                           });
 
+                          setGoToSlide(slideIndex);
                           deleteCookie("externalSourceUrl");
                         } else {
                           message.error(errorMessage);
@@ -239,7 +242,7 @@ const Carousel = dynamic(() => import("react-spring-3d-carousel"), {
   ssr: false,
 });
 
-export default function MyFolders({ profileResponse, isDesktop }) {
+export default function MyFolders({ profileResponse }) {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -262,8 +265,8 @@ export default function MyFolders({ profileResponse, isDesktop }) {
   }, [window]);
 
   const fetcher = async (url) => {
-    const token = await localStorage.getItem("user-token");
-    return fetch(url, {
+    const token = localStorage.getItem("user-token");
+    const r = await fetch(url, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token,
@@ -271,7 +274,8 @@ export default function MyFolders({ profileResponse, isDesktop }) {
         "Cache-Control": "private",
         Accept: "application/json",
       },
-    }).then((r) => r.json());
+    });
+    return await r.json();
   };
   const { data, mutate } = useSWR(
     profileResponse?.data?.user
@@ -291,6 +295,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
   const [selectedFolderAdverts, setSelectedFolderAdverts] = useState(null);
 
   useEffect(() => {
+    console.log(goToSlide);
     if (
       goToSlide == -1 ||
       !user ||
@@ -304,7 +309,7 @@ export default function MyFolders({ profileResponse, isDesktop }) {
 
   const deleteFolder = (folder) => {
     const http = new HttpService();
-    http.deleteData("folders/" + folder.slug).then((response) => {
+    http.deleteData("folders/" + folder.slug).then(() => {
       mutate();
     });
   };
@@ -323,6 +328,8 @@ export default function MyFolders({ profileResponse, isDesktop }) {
               deleteFolder={deleteFolder}
               folderLinkingMode={folderLinkingMode}
               setFolderLinkingMode={setFolderLinkingMode}
+              setGoToSlide={setGoToSlide}
+              slideIndex={index}
             />
           ),
           onClick: () => setGoToSlide(index),
