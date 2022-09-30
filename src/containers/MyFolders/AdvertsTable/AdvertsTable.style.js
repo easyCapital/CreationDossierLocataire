@@ -33,10 +33,14 @@ export const AdvertsTableWrapper = styled.div`
     margin-right: 5px;
   }
 
+  .ant-table-row:last-child {
+    border-top: 0;
+  }
+
   .ant-table-row {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid grey;
+    border-top: 1px solid grey;
     td {
       display: flex;
       justify-content: center;
