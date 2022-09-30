@@ -13,6 +13,10 @@ export const AdvertsTableWrapper = styled.div`
   overflow-y: scroll;
 
   table {
+    tbody {
+      display: flex;
+      flex-direction: column-reverse;
+    }
     table-layout: fixed;
   }
 

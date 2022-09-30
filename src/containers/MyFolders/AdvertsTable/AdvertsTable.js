@@ -277,16 +277,6 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
   return (
     <AdvertsTableWrapper>
       <>
-        {adverts.length > 0 ? (
-          <Table
-            columns={columns}
-            dataSource={adverts}
-            pagination={false}
-            showHeader={false}
-          />
-        ) : (
-          <Empty className="noData" description="Aucune candidature" />
-        )}
         {!folderLinkingMode && (
           <Popover
             content={
@@ -324,6 +314,16 @@ const AdvertsTable = ({ initAdverts, folder, folderLinkingMode }) => {
               Ajouter un suivi
             </Button>
           </Popover>
+        )}
+        {adverts.length > 0 ? (
+          <Table
+            columns={columns}
+            dataSource={adverts}
+            pagination={false}
+            showHeader={false}
+          />
+        ) : (
+          <Empty className="noData" description="Aucune candidature" />
         )}
       </>
     </AdvertsTableWrapper>
