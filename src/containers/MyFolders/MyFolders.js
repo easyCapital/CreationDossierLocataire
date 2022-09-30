@@ -295,7 +295,6 @@ export default function MyFolders({ profileResponse }) {
   const [selectedFolderAdverts, setSelectedFolderAdverts] = useState(null);
 
   useEffect(() => {
-    console.log(goToSlide);
     if (
       goToSlide == -1 ||
       !user ||
