@@ -357,11 +357,6 @@ export default function MyFolders({ profileResponse }) {
     ...config,
   });
 
-  useEffect(() => {
-    if (!user) return;
-    console.log("myfolders", user.folders);
-  }, [user]);
-
   return loaded ? (
     <MyFoldersWrapper>
       <div className="carouselInfos">

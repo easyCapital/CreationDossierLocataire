@@ -33,8 +33,6 @@ const AdvertsTable = ({
   const [addAdvertForm] = Form.useForm();
 
   useEffect(() => {
-    // console.log(initAdverts);
-    console.log("table", folder);
     setAdverts(folder?.adverts);
   }, [folder]);
 
