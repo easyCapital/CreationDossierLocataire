@@ -21,12 +21,15 @@ import { AdvertsTableWrapper } from "./AdvertsTable.style";
 import HttpService from "../../../services/HttpService";
 import { Form, Input } from "antd";
 import ButtonGroupRadio from "../../../components/util/ButtonGroupRadio/ButtonGroupRadio";
+import ClosablePopover from "../../../components/util/ClosablePopover/ClosablePopover";
 
 const AdvertsTable = ({
   initAdverts,
   folder,
   folderLinkingMode,
   mutateFolders,
+  showPopoverAlert,
+  onPopoverAlertClose,
 }) => {
   const [adverts, setAdverts] = useState(initAdverts);
   const linkAdvertInput = useRef();
@@ -75,10 +78,12 @@ const AdvertsTable = ({
         const buttonDisabled =
           is_sent || !advert.company_id || !folderIsCompleted;
 
-        let disabledButtonMessage = "Veuillez d'abord compléter le dossier";
+        let disabledButtonMessage = "";
         if (!advert.company_id) {
           disabledButtonMessage =
             "On ne peut pas envoyer le dossier pour vous parce que ce site n'est pas partenaire avec passloc";
+        } else if (!folderIsCompleted) {
+          disabledButtonMessage = "Veuillez d'abord compléter le dossier";
         }
 
         return (
@@ -109,21 +114,31 @@ const AdvertsTable = ({
                   });
               }}
             >
-              <Tooltip
-                title={
-                  !advert.company_id || !folderIsCompleted
-                    ? disabledButtonMessage
-                    : ""
+              <ClosablePopover
+                openOnInit={
+                  showPopoverAlert &&
+                  disabledButtonMessage != "" &&
+                  folder.adverts[folder.adverts.length - 1].id == advert.id
                 }
+                content={<p>{disabledButtonMessage}</p>}
+                onClose={() => onPopoverAlertClose()}
               >
-                <Button type="primary" disabled={buttonDisabled}>
-                  {advert.company_id ? (
-                    <p>{is_sent ? "Envoyé" : "Envoyer"}</p>
-                  ) : (
-                    <p className="unableToSendText">Envoyer</p>
-                  )}
-                </Button>
-              </Tooltip>
+                <Tooltip
+                  title={
+                    !advert.company_id || !folderIsCompleted
+                      ? disabledButtonMessage
+                      : ""
+                  }
+                >
+                  <Button type="primary" disabled={buttonDisabled}>
+                    {advert.company_id ? (
+                      <p>{is_sent ? "Envoyé" : "Envoyer"}</p>
+                    ) : (
+                      <p className="unableToSendText">Envoyer</p>
+                    )}
+                  </Button>
+                </Tooltip>
+              </ClosablePopover>
             </Popconfirm>
 
             <Popconfirm

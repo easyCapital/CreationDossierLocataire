@@ -121,3 +121,14 @@ a {
     margin: 0 1px !important;
   }
 }
+
+.closablePopover {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .xMark {
+    margin: 5px;
+    cursor: pointer;
+  }
+}

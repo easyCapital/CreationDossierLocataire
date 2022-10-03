@@ -41,6 +41,7 @@ function Card({
   setFolderLinkingMode,
   setGoToSlide,
   slideIndex,
+  setNewAdvertLinked,
 }) {
   const [show, setShown] = useState(false);
 
@@ -172,6 +173,7 @@ function Card({
                         if (res.success) {
                           message.success("Le dossier a été lié avec succès");
                           setFolderLinkingMode(false);
+                          setNewAdvertLinked(true);
                           folder.adverts.push({
                             ...res.advert,
                             pivot: res.advertFolder,
@@ -314,6 +316,7 @@ export default function MyFolders({ profileResponse }) {
   };
 
   const [slides, setSlides] = useState([]);
+  const [newAdvertLinked, setNewAdvertLinked] = useState(false);
 
   useEffect(() => {
     let tmpSlides = [];
@@ -328,6 +331,7 @@ export default function MyFolders({ profileResponse }) {
               folderLinkingMode={folderLinkingMode}
               setFolderLinkingMode={setFolderLinkingMode}
               setGoToSlide={setGoToSlide}
+              setNewAdvertLinked={setNewAdvertLinked}
               slideIndex={index}
             />
           ),
@@ -401,25 +405,28 @@ export default function MyFolders({ profileResponse }) {
           <div className="advertsTableWrapper infosWrapper">
             <h1>Mes candidatures</h1>
 
-            {selectedFolderAdverts && user && slides.length > 2 && (
-              <AdvertsTable
-                className="advertsTable"
-                initAdverts={selectedFolderAdverts}
-                folder={user.folders[goToSlide]}
-                folderLinkingMode={folderLinkingMode}
-                mutateFolders={mutate}
-              />
-            )}
-
-            {slides.length == 2 && user && user.folders[0] && (
-              <AdvertsTable
-                className="advertsTable"
-                initAdverts={user.folders[0].adverts}
-                folder={user.folders[0]}
-                folderLinkingMode={folderLinkingMode}
-                mutateFolders={mutate}
-              />
-            )}
+            {user.folders[0] &&
+              user.folders[goToSlide] &&
+              selectedFolderAdverts &&
+              user && (
+                <AdvertsTable
+                  className="advertsTable"
+                  showPopoverAlert={newAdvertLinked}
+                  onPopoverAlertClose={() => setNewAdvertLinked(false)}
+                  initAdverts={
+                    slides.length == 2
+                      ? user.folders[0].adverts
+                      : selectedFolderAdverts
+                  }
+                  folder={
+                    slides.length == 2
+                      ? user.folders[0]
+                      : user.folders[goToSlide]
+                  }
+                  folderLinkingMode={folderLinkingMode}
+                  mutateFolders={mutate}
+                />
+              )}
           </div>
         )}
       </div>
