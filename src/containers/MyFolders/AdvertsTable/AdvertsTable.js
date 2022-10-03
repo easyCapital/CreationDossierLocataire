@@ -22,6 +22,7 @@ import HttpService from "../../../services/HttpService";
 import { Form, Input } from "antd";
 import ButtonGroupRadio from "../../../components/util/ButtonGroupRadio/ButtonGroupRadio";
 import ClosablePopover from "../../../components/util/ClosablePopover/ClosablePopover";
+import FolderConfirm from "../../../components/util/FolderConfirm/FolderConfirm";
 
 const AdvertsTable = ({
   initAdverts,
@@ -88,47 +89,47 @@ const AdvertsTable = ({
 
         return (
           <div className="actionsCell">
-            <Popconfirm
-              title="you cannot modify after"
-              disabled={buttonDisabled}
-              onConfirm={() => {
-                new HttpService()
-                  .postData(
-                    { company_id: advert.company_id },
-                    `folders/${folder_id}/adverts/${advert_id}/sendApplication`
-                  )
-                  .then((res) => {
-                    if (res.success) {
-                      const newAdverts = folder.adverts.map((advert) => {
-                        if (advert.pivot.advert_id == advert_id) {
-                          advert.pivot.status = "processing";
-                          advert.pivot.is_sent = true;
-                        }
-                        return advert;
-                      });
-
-                      setAdverts(newAdverts);
-                    } else {
-                      message.error("Nous avons rencontré un erreur");
-                    }
-                  });
-              }}
+            <ClosablePopover
+              openOnInit={
+                showPopoverAlert &&
+                disabledButtonMessage != "" &&
+                folder.adverts[folder.adverts.length - 1].id == advert.id
+              }
+              content={<p>{disabledButtonMessage}</p>}
+              onClose={() => onPopoverAlertClose()}
             >
-              <ClosablePopover
-                openOnInit={
-                  showPopoverAlert &&
-                  disabledButtonMessage != "" &&
-                  folder.adverts[folder.adverts.length - 1].id == advert.id
+              <Tooltip
+                title={
+                  !advert.company_id || !folderIsCompleted
+                    ? disabledButtonMessage
+                    : ""
                 }
-                content={<p>{disabledButtonMessage}</p>}
-                onClose={() => onPopoverAlertClose()}
               >
-                <Tooltip
-                  title={
-                    !advert.company_id || !folderIsCompleted
-                      ? disabledButtonMessage
-                      : ""
-                  }
+                <FolderConfirm
+                  disabled={buttonDisabled}
+                  placement="bottom"
+                  onConfirm={() => {
+                    new HttpService()
+                      .postData(
+                        { company_id: advert.company_id },
+                        `folders/${folder_id}/adverts/${advert_id}/sendApplication`
+                      )
+                      .then((res) => {
+                        if (res.success) {
+                          const newAdverts = folder.adverts.map((advert) => {
+                            if (advert.pivot.advert_id == advert_id) {
+                              advert.pivot.status = "processing";
+                              advert.pivot.is_sent = true;
+                            }
+                            return advert;
+                          });
+
+                          setAdverts(newAdverts);
+                        } else {
+                          message.error("Nous avons rencontré un erreur");
+                        }
+                      });
+                  }}
                 >
                   <Button type="primary" disabled={buttonDisabled}>
                     {advert.company_id ? (
@@ -137,9 +138,9 @@ const AdvertsTable = ({
                       <p className="unableToSendText">Envoyer</p>
                     )}
                   </Button>
-                </Tooltip>
-              </ClosablePopover>
-            </Popconfirm>
+                </FolderConfirm>
+              </Tooltip>
+            </ClosablePopover>
 
             <Popconfirm
               okText="Oui"

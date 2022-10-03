@@ -33,6 +33,7 @@ import Modal from "antd/lib/modal/Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import AdvertsTable from "./AdvertsTable/AdvertsTable";
 import { CreateFolder } from "../../services/CreateFolderService";
+import FolderConfirm from "../../components/util/FolderConfirm/FolderConfirm";
 
 function Card({
   folder,
@@ -128,23 +129,22 @@ function Card({
         ) : (
           <div>
             <div className="avancement">
-              <Progress
-                type="circle"
-                percent={(folder.current_step * 100) / 5}
-                format={(percent) =>
-                  percent == 100 ? (
-                    <Tooltip title="Générer le pdf">
-                      <FontAwesomeIcon
-                        icon={faCloudArrowDown}
-                        onClick={handleGeneratePdf}
-                      />
-                    </Tooltip>
-                  ) : (
-                    `${percent} %`
-                  )
-                }
-                strokeColor={blue}
-              />
+              <FolderConfirm onConfirm={handleGeneratePdf}  placement="bottom">
+                <Progress
+                  type="circle"
+                  percent={(folder.current_step * 100) / 5}
+                  format={(percent) =>
+                    percent == 100 ? (
+                      <Tooltip title="Générer le pdf">
+                        <FontAwesomeIcon icon={faCloudArrowDown} />
+                      </Tooltip>
+                    ) : (
+                      `${percent} %`
+                    )
+                  }
+                  strokeColor={blue}
+                />
+              </FolderConfirm>
             </div>
             <h2>{(folder.firstname ?? "") + " " + (folder.lastname ?? "")}</h2>
             <div className="description">
@@ -405,10 +405,9 @@ export default function MyFolders({ profileResponse }) {
           <div className="advertsTableWrapper infosWrapper">
             <h1>Mes candidatures</h1>
 
-            {user.folders[0] &&
-              user.folders[goToSlide] &&
-              selectedFolderAdverts &&
-              user && (
+            {user?.folders[0] &&
+              user?.folders[goToSlide] &&
+              selectedFolderAdverts && (
                 <AdvertsTable
                   className="advertsTable"
                   showPopoverAlert={newAdvertLinked}

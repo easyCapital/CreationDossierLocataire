@@ -1,7 +1,6 @@
 import {
   faChevronCircleLeft,
   faCloudArrowDown,
-  faCloudBolt,
   faCloudUploadAlt,
   faEye,
   faTrash,
@@ -13,7 +12,6 @@ import {
   message,
   Modal,
   notification,
-  Popconfirm,
   Tabs,
   Tooltip,
   Upload,
@@ -25,8 +23,7 @@ import HttpService from "../../services/HttpService";
 import pieces_justificatives from "../../../public/forms/pieces_justificatives.jpg";
 import Image from "next/image";
 import Confetti from "react-confetti";
-import { blue } from "../../styles/variables.style";
-import LoadingSpinner from "../../components/global/LoadingSpinner/LoadingSpinner";
+import FolderConfirm from "../util/FolderConfirm/FolderConfirm";
 
 export default function PiecesForm({
   folder,
@@ -380,32 +377,6 @@ export default function PiecesForm({
     }
   }, [form.getFieldValue("persons")]);
 
-  const { confirm } = Modal;
-
-  function showConfirm() {
-    confirm({
-      title: (
-        <p style={{ color: "#005fc3", fontSize: "14px" }}>
-          <b>Il manque les pièces justificatives... c'est dommage !</b>
-        </p>
-      ),
-      content: (
-        <p>
-          Un dossier complet augmente vos chances d'être retenue par un
-          propriétaire ou une agence. <br />
-          {/* Pas d'inquiétudes, vos documents seront protégés par un filigrane et
-          vous pourrez choisir à qui vous allez transmettre votre dossier.
-          <br /> */}
-          <b>Voulez-vous tout de même générer le pdf ?</b>
-        </p>
-      ),
-      onOk() {
-        handleGeneratePdf();
-      },
-      icon: <FontAwesomeIcon icon={faCloudBolt} style={{ color: blue }} />,
-    });
-  }
-
   return formValues ? (
     <FormWrapper className="reverse">
       <div className="arrows left">
@@ -499,42 +470,15 @@ export default function PiecesForm({
         </div>
       </div>
       <div className="arrows right">
-        {isDesktop ? (
-          <Popconfirm
-            placement="left"
-            title={
-              <p>
-                <b style={{ color: "#005fc3", fontSize: "16px" }}>
-                  Il manque les pièces justificatives... c'est dommage !
-                </b>
-                <br />
-                Un dossier complet augmente vos chances d'être retenue par un
-                propriétaire ou une agence. <br />
-                {/* Pas d'inquiétudes, vos documents seront protégés par un
-                filigrane et vous pourrez choisir à qui vous allez transmettre
-                votre dossier. <br /> */}
-                <b>Voulez-vous tout de même générer le pdf ?</b>
-              </p>
-            }
-            onConfirm={handleGeneratePdf}
-            okText="Oui"
-            cancelText="Non"
-            disabled={isFormFilled}
-            icon={<FontAwesomeIcon icon={faCloudBolt} />}
-          >
-            <Tooltip title="Générer le dossier locataire" placement="left">
-              <FontAwesomeIcon
-                icon={faCloudArrowDown}
-                onClick={isFormFilled ? handleGeneratePdf : null}
-              />
-            </Tooltip>
-          </Popconfirm>
-        ) : (
-          <FontAwesomeIcon
-            icon={faCloudArrowDown}
-            onClick={isFormFilled ? handleGeneratePdf : showConfirm}
-          />
-        )}
+        <FolderConfirm
+          placement="left"
+          onConfirm={handleGeneratePdf}
+          disabled={isFormFilled}
+        >
+          <Tooltip title="Générer le dossier locataire" placement="left">
+            <FontAwesomeIcon icon={faCloudArrowDown} />
+          </Tooltip>
+        </FolderConfirm>
         {isFormFilled && (
           <Confetti confettiSource={confettiSource} recycle={false} />
         )}
