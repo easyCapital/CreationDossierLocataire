@@ -106,7 +106,7 @@ const AdvertsTable = ({
                 }
               >
                 <FolderConfirm
-                  disabled={buttonDisabled}
+                  disabled={folder.files.length > 0}
                   placement="bottom"
                   onConfirm={() => {
                     new HttpService()

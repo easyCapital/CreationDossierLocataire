@@ -10,7 +10,6 @@ import {
   Button,
   Form,
   message,
-  Modal,
   notification,
   Tabs,
   Tooltip,
@@ -24,11 +23,11 @@ import pieces_justificatives from "../../../public/forms/pieces_justificatives.j
 import Image from "next/image";
 import Confetti from "react-confetti";
 import FolderConfirm from "../util/FolderConfirm/FolderConfirm";
+import LoadingSpinner from "../../components/global/LoadingSpinner/LoadingSpinner";
 
 export default function PiecesForm({
   folder,
   handleCurrentStepChanged,
-  isDesktop,
 }) {
   const [form] = Form.useForm();
   const { TabPane } = Tabs;

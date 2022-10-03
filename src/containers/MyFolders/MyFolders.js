@@ -128,8 +128,13 @@ function Card({
           </div>
         ) : (
           <div>
+          {console.log(folder.files)}
             <div className="avancement">
-              <FolderConfirm onConfirm={handleGeneratePdf}  placement="bottom">
+              <FolderConfirm
+                onConfirm={handleGeneratePdf}
+                placement="bottom"
+                disabled={folder.files.length > 0}
+              >
                 <Progress
                   type="circle"
                   percent={(folder.current_step * 100) / 5}

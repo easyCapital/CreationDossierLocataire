@@ -61,7 +61,7 @@ export default function FolderConfirm({
           disabled={disabled}
           icon={<FontAwesomeIcon icon={faCloudBolt} />}
         >
-          {children}
+          <span onClick={disabled ? onConfirm : null}>{children}</span>
         </Popconfirm>
       ) : (
         <span onClick={disabled ? onConfirm : showConfirm}>{children}</span>
