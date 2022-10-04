@@ -83,26 +83,26 @@ function Card({
           <div>
             {console.log(folder.files)}
             <div className="avancement">
-              <FolderConfirm
-                onConfirm={() => HandleGeneratePdf(folder)}
-                placement="bottom"
-                disabled={folder.files.length > 0}
-              >
-                <Progress
-                  type="circle"
-                  percent={(folder.current_step * 100) / 5}
-                  format={(percent) =>
-                    percent == 100 ? (
+              <Progress
+                type="circle"
+                percent={(folder.current_step * 100) / 5}
+                format={(percent) =>
+                  percent == 100 ? (
+                    <FolderConfirm
+                      onConfirm={() => HandleGeneratePdf(folder)}
+                      placement="bottom"
+                      disabled={folder.files.length > 0}
+                    >
                       <Tooltip title="Générer le pdf">
                         <FontAwesomeIcon icon={faCloudArrowDown} />
                       </Tooltip>
-                    ) : (
-                      `${percent} %`
-                    )
-                  }
-                  strokeColor={blue}
-                />
-              </FolderConfirm>
+                    </FolderConfirm>
+                  ) : (
+                    `${percent} %`
+                  )
+                }
+                strokeColor={blue}
+              />
             </div>
             <h2>{(folder.firstname ?? "") + " " + (folder.lastname ?? "")}</h2>
             <div className="description">
