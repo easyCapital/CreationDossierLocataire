@@ -1,9 +1,6 @@
-import {
-  faCloudArrowDown,
-  faCloudBolt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCloudBolt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Modal, Popconfirm, Tooltip } from "antd";
+import { Modal, Popconfirm } from "antd";
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { blue } from "../../../styles/variables.style";
