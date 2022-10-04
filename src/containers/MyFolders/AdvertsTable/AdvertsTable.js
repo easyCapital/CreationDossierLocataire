@@ -39,7 +39,7 @@ const AdvertsTable = ({
 
   useEffect(() => {
     setAdverts(folder?.adverts);
-  }, [folder]);
+  }, [folder?.adverts]);
 
   useEffect(() => {
     addAdvertForm.getFieldError("url");

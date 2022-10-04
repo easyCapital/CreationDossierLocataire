@@ -36,6 +36,7 @@ function Card({
   setGoToSlide,
   slideIndex,
   setNewAdvertLinked,
+  mutate
 }) {
   const [show, setShown] = useState(false);
 
@@ -81,7 +82,6 @@ function Card({
           </div>
         ) : (
           <div>
-            {console.log(folder.files)}
             <div className="avancement">
               <Progress
                 type="circle"
@@ -132,10 +132,7 @@ function Card({
                           message.success("Le dossier a été lié avec succès");
                           setFolderLinkingMode(false);
                           setNewAdvertLinked(true);
-                          folder.adverts.push({
-                            ...res.advert,
-                            pivot: res.advertFolder,
-                          });
+                          mutate();
 
                           setGoToSlide(slideIndex);
                           deleteCookie("externalSourceUrl");
@@ -291,6 +288,7 @@ export default function MyFolders({ profileResponse }) {
               setGoToSlide={setGoToSlide}
               setNewAdvertLinked={setNewAdvertLinked}
               slideIndex={index}
+              mutate={mutate}
             />
           ),
           onClick: () => setGoToSlide(index),
