@@ -5,7 +5,7 @@ import {
   LogOutUserService,
 } from "../../services/AuthServices";
 import { getCookie, setCookies } from "cookies-next";
-import { CreateFolder } from "../../services/CreateFolderService";
+import { CreateFolder } from "../../services/FolderService";
 
 export const RegisterAction = (credentials, router) => {
   return (dispatch) => {

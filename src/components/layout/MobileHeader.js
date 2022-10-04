@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faPowerOff } from "@fortawesome/free-solid-svg-icons";
-import { CreateFolder } from "../../services/CreateFolderService";
+import { CreateFolder } from "../../services/FolderService";
 
 export default function MobileHeader({ isLoggedIn, logOut }) {
   const [visible, setVisible] = useState(false);

@@ -6,15 +6,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Button,
-  Form,
-  message,
-  notification,
-  Tabs,
-  Tooltip,
-  Upload,
-} from "antd";
+import { Form, message, Tabs, Tooltip, Upload } from "antd";
 import { FormWrapper } from "./Form.style";
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -24,11 +16,9 @@ import Image from "next/image";
 import Confetti from "react-confetti";
 import FolderConfirm from "../util/FolderConfirm/FolderConfirm";
 import LoadingSpinner from "../../components/global/LoadingSpinner/LoadingSpinner";
+import { HandleGeneratePdf } from "../../services/FolderService";
 
-export default function PiecesForm({
-  folder,
-  handleCurrentStepChanged,
-}) {
+export default function PiecesForm({ folder, handleCurrentStepChanged }) {
   const [form] = Form.useForm();
   const { TabPane } = Tabs;
 
@@ -263,45 +253,6 @@ export default function PiecesForm({
       })
       .catch((e) => console.log(e));
   }
-  const handleGeneratePdf = () => {
-    if (folder.user.email_verified_at) {
-      window.open(process.env.API_URL + "generatePdf/" + folder.slug, "_blank");
-    } else {
-      notification.info({
-        message: (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <p>
-              Vous devez valider votre adresse email avant de pouvoir générer le
-              PDF.
-            </p>
-            <Button onClick={sendValidationMail} type="primary">
-              Renvoyer le mail de validation
-            </Button>
-          </div>
-        ),
-      });
-    }
-  };
-
-  const sendValidationMail = () => {
-    new HttpService()
-      .postData({ email: folder.user.email }, "send-confirmation-mail")
-      .then((res) => {
-        if (res.success) {
-          message.success("Mail envoyé");
-        } else {
-          message.error("Nous avons rencontré une erreur");
-        }
-      })
-      .catch((e) => console.log(e));
-  };
 
   const [isUploading, setIsUploading] = useState(true);
 
@@ -315,7 +266,7 @@ export default function PiecesForm({
     isImageUrl: (file) => {
       return file.type != "pdf";
     },
-    itemRender: (normal, file, fileList, actions) => {
+    itemRender: (normal, file, _, actions) => {
       return file.type == "pdf" ? (
         <div className="pdfThumbnail">
           <div>
@@ -399,7 +350,7 @@ export default function PiecesForm({
                   <Form.List name="persons">
                     {(fields) => (
                       <Tabs>
-                        {fields.map((field, index) => (
+                        {fields.map((_, index) => (
                           <TabPane
                             tab={index ? "Garant " + index : "Locataire"}
                             key={index.toString()}
@@ -471,7 +422,7 @@ export default function PiecesForm({
       <div className="arrows right">
         <FolderConfirm
           placement="left"
-          onConfirm={handleGeneratePdf}
+          onConfirm={() => HandleGeneratePdf(folder)}
           disabled={isFormFilled}
         >
           <Tooltip title="Générer le dossier locataire" placement="left">

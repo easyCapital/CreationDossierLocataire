@@ -8,14 +8,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Button,
-  message,
-  notification,
-  Popconfirm,
-  Progress,
-  Tooltip,
-} from "antd";
+import { Button, message, Popconfirm, Progress, Tooltip } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -32,7 +25,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import Modal from "antd/lib/modal/Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import AdvertsTable from "./AdvertsTable/AdvertsTable";
-import { CreateFolder } from "../../services/CreateFolderService";
+import { CreateFolder, HandleGeneratePdf } from "../../services/FolderService";
 import FolderConfirm from "../../components/util/FolderConfirm/FolderConfirm";
 
 function Card({
@@ -52,46 +45,6 @@ function Card({
       ? "0 20px 25px rgb(0 0 0 / 25%)"
       : "0 2px 10px rgb(0 0 0 / 8%)",
   });
-
-  const sendValidationMail = () => {
-    new HttpService()
-      .postData({ email: folder.user.email }, "send-confirmation-mail")
-      .then((res) => {
-        if (res.success) {
-          message.success("Mail envoyé");
-        } else {
-          message.error("Nous avons rencontré une erreur");
-        }
-      })
-      .catch((e) => console.log(e));
-  };
-
-  const handleGeneratePdf = () => {
-    if (folder.user.email_verified_at) {
-      window.open(process.env.API_URL + "generatePdf/" + folder.slug, "_blank");
-    } else {
-      notification.info({
-        message: (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <p>
-              Vous devez valider votre adresse email avant de pouvoir générer le
-              PDF.
-            </p>
-            <Button onClick={sendValidationMail} type="primary">
-              Renvoyer le mail de validation
-            </Button>
-          </div>
-        ),
-      });
-    }
-  };
 
   const [copied, setCopied] = useState(false);
 
@@ -128,10 +81,10 @@ function Card({
           </div>
         ) : (
           <div>
-          {console.log(folder.files)}
+            {console.log(folder.files)}
             <div className="avancement">
               <FolderConfirm
-                onConfirm={handleGeneratePdf}
+                onConfirm={() => HandleGeneratePdf(folder)}
                 placement="bottom"
                 disabled={folder.files.length > 0}
               >

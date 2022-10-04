@@ -23,6 +23,7 @@ import { Form, Input } from "antd";
 import ButtonGroupRadio from "../../../components/util/ButtonGroupRadio/ButtonGroupRadio";
 import ClosablePopover from "../../../components/util/ClosablePopover/ClosablePopover";
 import FolderConfirm from "../../../components/util/FolderConfirm/FolderConfirm";
+import { SendEmailVerificationNotification } from "../../../services/FolderService";
 
 const AdvertsTable = ({
   initAdverts,
@@ -46,6 +47,34 @@ const AdvertsTable = ({
 
   const truncateStr = (str, n) => {
     return str.length > n ? str.slice(0, n - 1) + "..." : str;
+  };
+
+  const sendFolder = (advert) => {
+    if (!folder.user.email_verified_at) {
+      return SendEmailVerificationNotification(folder);
+    }
+
+    let { folder_id, advert_id } = advert.pivot;
+    new HttpService()
+      .postData(
+        { company_id: advert.company_id },
+        `folders/${folder_id}/adverts/${advert_id}/sendApplication`
+      )
+      .then((res) => {
+        if (res.success) {
+          const newAdverts = folder.adverts.map((advert) => {
+            if (advert.pivot.advert_id == advert_id) {
+              advert.pivot.status = "processing";
+              advert.pivot.is_sent = true;
+            }
+            return advert;
+          });
+
+          setAdverts(newAdverts);
+        } else {
+          message.error("Nous avons rencontré un erreur");
+        }
+      });
   };
 
   const columns = [
@@ -87,6 +116,24 @@ const AdvertsTable = ({
           disabledButtonMessage = "Veuillez d'abord compléter le dossier";
         }
 
+        const tooltipButton = (
+          <Tooltip
+            title={
+              !advert.company_id || !folderIsCompleted
+                ? disabledButtonMessage
+                : ""
+            }
+          >
+            <Button type="primary" disabled={buttonDisabled}>
+              {advert.company_id ? (
+                <p>{is_sent ? "Envoyé" : "Envoyer"}</p>
+              ) : (
+                <p className="unableToSendText">Envoyer</p>
+              )}
+            </Button>
+          </Tooltip>
+        );
+
         return (
           <div className="actionsCell">
             <ClosablePopover
@@ -98,48 +145,25 @@ const AdvertsTable = ({
               content={<p>{disabledButtonMessage}</p>}
               onClose={() => onPopoverAlertClose()}
             >
-              <Tooltip
-                title={
-                  !advert.company_id || !folderIsCompleted
-                    ? disabledButtonMessage
-                    : ""
-                }
-              >
+              {folder.files.length > 0 || buttonDisabled ? (
+                <Popconfirm
+                  title="Voulez-vous envoyer cette candidature?"
+                  onConfirm={() => sendFolder(advert)}
+                  okText="Oui"
+                  cancelText="Non"
+                  disabled={folder.files.length == 0}
+                >
+                  {tooltipButton}
+                </Popconfirm>
+              ) : (
                 <FolderConfirm
                   disabled={folder.files.length > 0}
                   placement="bottom"
-                  onConfirm={() => {
-                    new HttpService()
-                      .postData(
-                        { company_id: advert.company_id },
-                        `folders/${folder_id}/adverts/${advert_id}/sendApplication`
-                      )
-                      .then((res) => {
-                        if (res.success) {
-                          const newAdverts = folder.adverts.map((advert) => {
-                            if (advert.pivot.advert_id == advert_id) {
-                              advert.pivot.status = "processing";
-                              advert.pivot.is_sent = true;
-                            }
-                            return advert;
-                          });
-
-                          setAdverts(newAdverts);
-                        } else {
-                          message.error("Nous avons rencontré un erreur");
-                        }
-                      });
-                  }}
+                  onConfirm={() => sendFolder(advert)}
                 >
-                  <Button type="primary" disabled={buttonDisabled}>
-                    {advert.company_id ? (
-                      <p>{is_sent ? "Envoyé" : "Envoyer"}</p>
-                    ) : (
-                      <p className="unableToSendText">Envoyer</p>
-                    )}
-                  </Button>
+                  {tooltipButton}
                 </FolderConfirm>
-              </Tooltip>
+              )}
             </ClosablePopover>
 
             <Popconfirm
