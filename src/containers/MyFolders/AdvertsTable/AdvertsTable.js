@@ -126,7 +126,7 @@ const AdvertsTable = ({
           >
             <Button type="primary" disabled={buttonDisabled}>
               {advert.company_id ? (
-                <p>{is_sent ? "Envoyé" : "Envoyer"}</p>
+                <p>{is_sent != 0 ? "Envoyé" : "Envoyer"}</p>
               ) : (
                 <p className="unableToSendText">Envoyer</p>
               )}
@@ -230,7 +230,7 @@ const AdvertsTable = ({
           },
         ];
 
-        if (!is_sent) {
+        if (is_sent == 0) {
           states.unshift({
             value: null,
             color: "#1b40c4",
