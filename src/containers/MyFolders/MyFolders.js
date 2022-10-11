@@ -36,7 +36,7 @@ function Card({
   setGoToSlide,
   slideIndex,
   setNewAdvertLinked,
-  mutate
+  mutate,
 }) {
   const [show, setShown] = useState(false);
 
@@ -252,6 +252,10 @@ export default function MyFolders({ profileResponse }) {
   const [selectedFolderAdverts, setSelectedFolderAdverts] = useState(null);
 
   useEffect(() => {
+    if (user?.folders.length === 1) {
+      setGoToSlide(0);
+      setSelectedFolderAdverts(user.folders[0].adverts);
+    }
     if (
       goToSlide == -1 ||
       !user ||
@@ -261,7 +265,7 @@ export default function MyFolders({ profileResponse }) {
     }
 
     setSelectedFolderAdverts(user.folders[goToSlide].adverts);
-  }, [goToSlide, user]);
+  }, [goToSlide, user?.folders]);
 
   const deleteFolder = (folder) => {
     const http = new HttpService();
