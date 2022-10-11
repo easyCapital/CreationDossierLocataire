@@ -426,7 +426,10 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
           disabled={isFormFilled}
         >
           <Tooltip title="Générer le dossier locataire" placement="left">
-            <FontAwesomeIcon icon={faCloudArrowDown} />
+            <FontAwesomeIcon
+              className="downloadFolderIcon"
+              icon={faCloudArrowDown}
+            />
           </Tooltip>
         </FolderConfirm>
         {isFormFilled && (

@@ -139,15 +139,6 @@ export const MyFoldersWrapper = styled.div`
       justify-content: center;
     }
 
-    .ant-progress-text svg {
-      color: ${blue};
-      font-size: 50px;
-      cursor: pointer;
-      &:hover {
-        font-size: 60px;
-      }
-    }
-
     .description {
       height: 150px;
       padding: 10px 0px;

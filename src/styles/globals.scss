@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,700,900");
 
+$blue: #005fc3;
+
 html,
 body {
   padding: 0;
@@ -31,21 +33,21 @@ a {
   display: flex;
   align-items: center;
   svg {
-    color: #005fc3;
+    color: $blue;
     font-size: 20px;
   }
 }
 
 #nprogress {
   .bar {
-    background: #005fc3 !important;
+    background: $blue !important;
   }
   .spinner-icon {
-    border-top-color: #005fc3 !important;
-    border-left-color: #005fc3 !important;
+    border-top-color: $blue !important;
+    border-left-color: $blue !important;
   }
   .peg {
-    box-shadow: 0 0 10px #005fc3, 0 0 5px #005fc3 !important;
+    box-shadow: 0 0 10px $blue, 0 0 5px $blue !important;
   }
 }
 
@@ -130,5 +132,14 @@ a {
   .xMark {
     margin: 5px;
     cursor: pointer;
+  }
+}
+
+.downloadFolderIcon {
+  color: $blue;
+  font-size: 50px !important;
+  cursor: pointer;
+  &:hover {
+    font-size: 60px !important;
   }
 }

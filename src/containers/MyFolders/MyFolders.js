@@ -94,7 +94,7 @@ function Card({
                       disabled={folder.files.length > 0}
                     >
                       <Tooltip title="Générer le pdf">
-                        <FontAwesomeIcon icon={faCloudArrowDown} />
+                        <FontAwesomeIcon className="downloadFolderIcon" icon={faCloudArrowDown} />
                       </Tooltip>
                     </FolderConfirm>
                   ) : (
