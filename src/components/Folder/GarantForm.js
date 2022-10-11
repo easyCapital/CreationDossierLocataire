@@ -68,7 +68,7 @@ export default function GarantForm({
   };
 
   const isEligibleForVisale = () => {
-    const diff = moment().diff(moment(folder.date_of_birth), "years");
+    const diff = moment().diff(moment(folder.person.date_of_birth), "years");
     return diff >= 18 && diff <= 30;
   };
 

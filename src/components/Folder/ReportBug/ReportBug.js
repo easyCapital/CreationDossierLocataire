@@ -1,7 +1,7 @@
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Drawer } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Contact from "../../../containers/Contact/Contact";
 import { ReportBugWrapper } from "./ReportBug.style";
 

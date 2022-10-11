@@ -27,7 +27,9 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
 
   useEffect(() => {
     let tmpFields = [];
-    [folder, ...folder.guarants].map((person, index) => {
+    console.log(folder);
+    [folder, ...folder.guarants].map(({ person }, index) => {
+      console.log(person);
       tmpFields.push([
         "valid_identity_piece",
         ...(index || person.is_fiscally_attached == 0 ? ["tax_notice"] : []),
@@ -57,12 +59,13 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
           : []),
         ...(person.housing_situation == "owner" ? ["forfeit_tax"] : []),
         ...(!index &&
-        person.guarantees.filter((guaranty) => guaranty.value == "visale")
+        folder.guarantees.filter((guaranty) => guaranty.value == "visale")
           .length
           ? ["visale_attestation"]
           : []),
       ]);
     });
+    console.log(tmpFields)
     setFieldsToFill(tmpFields);
   }, [folder]);
 
