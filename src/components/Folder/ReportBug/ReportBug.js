@@ -8,10 +8,6 @@ import { ReportBugWrapper } from "./ReportBug.style";
 export default function ReportBug() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  useEffect(() => {
-    console.log(drawerOpen);
-  });
-
   return (
     <ReportBugWrapper>
       <Button
