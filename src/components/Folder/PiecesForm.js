@@ -27,9 +27,7 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
 
   useEffect(() => {
     let tmpFields = [];
-    console.log(folder);
     [folder, ...folder.guarants].map(({ person }, index) => {
-      console.log(person);
       tmpFields.push([
         "valid_identity_piece",
         ...(index || person.is_fiscally_attached == 0 ? ["tax_notice"] : []),
@@ -65,7 +63,6 @@ export default function PiecesForm({ folder, handleCurrentStepChanged }) {
           : []),
       ]);
     });
-    console.log(tmpFields)
     setFieldsToFill(tmpFields);
   }, [folder]);
 
