@@ -45,13 +45,14 @@ export default function SituationForm({
     let ok = true;
     [
       "activity_id",
+      "course",
       ...(getActivityType(form.getFieldValue("activity_id")) == "employee"
         ? [
             "company_name",
-            "employer_firstname",
-            "employer_lastname",
-            "employer_phone",
-            "employer_email",
+            // "employer_firstname",
+            // "employer_lastname",
+            // "employer_phone",
+            // "employer_email",
           ]
         : []),
       "housing_situation",
