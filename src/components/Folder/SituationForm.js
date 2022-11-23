@@ -57,6 +57,7 @@ export default function SituationForm({
         : []),
       "housing_situation",
     ].forEach((e) => {
+      console.log(e, form.getFieldValue(e));
       if (!form.getFieldValue(e)) ok = false;
     });
     setIsFormFinished(ok);
