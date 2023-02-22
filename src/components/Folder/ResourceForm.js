@@ -52,7 +52,7 @@ export default function ResourceForm({
         : false,
     annual_income_tax_1: folder.person.annual_income_tax_1,
     annual_income_tax_2: folder.person.annual_income_tax_2,
-    other_monthly_incomes: folder.person.other_monthly_incomes,
+    other_monthly_incomes: folder.person.other_monthly_incomes ?? 0,
     rent_amount: folder.person.rent_amount,
   };
   const [isFormFinished, setIsFormFinished] = useState();
@@ -61,6 +61,7 @@ export default function ResourceForm({
   useEffect(() => {
     let ok = true;
     fieldsToFill.forEach((e) => {
+      console.log(e, form.getFieldValue(e));
       if (form.getFieldValue(e) === null) ok = false;
     });
     setIsFormFinished(ok);
