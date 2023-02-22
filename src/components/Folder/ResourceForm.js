@@ -61,7 +61,7 @@ export default function ResourceForm({
   useEffect(() => {
     let ok = true;
     fieldsToFill.forEach((e) => {
-      if (form.getFieldValue(e) == null) ok = false;
+      if (form.getFieldValue(e) === null) ok = false;
     });
     setIsFormFinished(ok);
   }, [fieldsToFill]);
